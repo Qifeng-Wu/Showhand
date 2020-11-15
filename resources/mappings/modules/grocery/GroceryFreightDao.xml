@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.grocery.dao.GroceryFreightDao">
+    
+	<sql id="groceryFreightColumns">
+		a.freightId AS "freightId",
+		a.province AS "province",
+		a.freight AS "freight",
+		a.createTime AS "createTime"
+	</sql>
+	   
+	<select id="get" resultType="GroceryFreight">
+		SELECT 
+			<include refid="groceryFreightColumns"/>
+		FROM g_freight a
+		WHERE a.freightId = #{freightId}
+	</select>
+	
+	<select id="findList" resultType="GroceryFreight">
+		SELECT 
+			<include refid="groceryFreightColumns"/>
+		FROM g_freight a
+		<where>
+			<if test="province != null and province != ''">
+				AND a.province LIKE concat('%',#{province},'%')
+			</if>
+		</where>
+		ORDER BY a.createTime DESC
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert"  parameterType="GroceryFreight" useGeneratedKeys="true" keyProperty="freightId">
+		INSERT INTO g_freight(
+			province,
+			freight,
+			createTime
+		) VALUES (
+			#{province},
+			#{freight},
+			#{createTime}
+		)
+	</insert>
+	
+	<update id="update" parameterType="GroceryFreight" useGeneratedKeys="true" keyProperty="freightId">
+		UPDATE g_freight 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="province != null">province = #{province},</if>
+			<if test="freight != null">freight = #{freight},</if>
+			<if test="createTime != null">createTime = #{createTime}</if>
+		 </trim>
+		WHERE freightId = #{freightId}
+	</update>
+		
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM g_freight
+		WHERE freightId = #{freightId}
+	</update>
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="GroceryFreight" statementType="STATEMENT">
+		select * FROM g_freight  where ${propertyName} = '${value}'
+	</select>
+</mapper>

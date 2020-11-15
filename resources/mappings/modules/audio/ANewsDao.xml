@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.audio.dao.ANewsDao">
+    
+	<sql id="aNewsColumns">
+		a.id AS "id",
+		a.title AS "title",
+		a.label AS "label",
+		a.summary AS "summary",
+		a.picture AS "picture",
+		a.content AS "content",
+		a.sort AS "sort",
+		a.state AS "state"
+	</sql>
+	
+	<sql id="aNewsJoins">
+	</sql>
+    
+	<select id="get" resultType="ANews">
+		SELECT 
+			<include refid="aNewsColumns"/>
+		FROM a_news a
+		<include refid="aNewsJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="ANews">
+		SELECT 
+			<include refid="aNewsColumns"/>
+		FROM a_news a
+		<include refid="aNewsJoins"/>
+		<where>
+			<if test="state != null and state != ''">
+				AND a.state = #{state}				
+			</if>
+			<if test="title != null and title != ''">
+				AND (a.title LIKE concat('%',#{title},'%'))				
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.sort
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO a_news(
+			id,
+			title,
+			label,
+			summary,
+			picture,
+			content,
+			sort,
+			state
+		) VALUES (
+			#{id},
+			#{title},
+			#{label},
+			#{summary},
+			#{picture},
+			#{content},
+			#{sort},
+			#{state}
+		)
+	</insert>
+	
+	<update id="update" parameterType="ANews" useGeneratedKeys="true" keyProperty="id">
+		UPDATE a_news 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="title != null">title = #{title},</if>
+			<if test="label != null">label = #{label},</if>
+			<if test="summary != null">summary = #{summary},</if>
+			<if test="picture != null">picture = #{picture},</if>
+			<if test="content != null">content = #{content},</if>
+			<if test="sort != null">sort = #{sort},</if>
+			<if test="state != null">state = #{state}</if>
+		 </trim>
+		WHERE id = #{id}
+	</update>
+
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM a_news
+		WHERE id = #{id}
+	</update>	
+</mapper>

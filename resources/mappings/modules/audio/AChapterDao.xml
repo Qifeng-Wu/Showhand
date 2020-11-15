@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.audio.dao.AChapterDao">
+    
+	<sql id="aChapterColumns">
+		a.chapterId AS "chapterId",	
+		a.storyId AS "storyId",
+		a.is_free AS "isFree",
+		a.title AS "title",
+		a.price AS "price",
+		a.status AS "status",
+		a.sort AS "sort",
+		a.delete_flag AS "deleteFlag",
+		a.nodes AS "nodes",
+		a.musics AS "musics",
+		a.update_time AS "updateTime",
+		s.title AS "story.title",
+		s.picture AS "story.picture"
+	</sql>
+	<sql id="aChapterJoins">
+		LEFT JOIN a_story s ON s.storyId = a.storyId		
+	</sql>
+	<select id="get" resultType="AChapter">
+		SELECT 
+			<include refid="aChapterColumns"/>
+		FROM a_chapter a
+			<include refid="aChapterJoins"/>
+		WHERE a.chapterId = #{chapterId}
+	</select>
+	
+	<select id="findList" resultType="AChapter">
+		SELECT 
+			<include refid="aChapterColumns"/>
+		FROM a_chapter a
+			<include refid="aChapterJoins"/>
+		<where>	
+		    <if test="story != null and story.storyId != null and story.storyId != ''">
+				AND s.storyId = #{storyId}			
+			</if>	
+			<if test="storyId != null and storyId != ''">
+				AND a.storyId = #{storyId}			
+			</if>	
+		    <if test="deleteFlag != null">
+				AND a.delete_flag = #{deleteFlag}
+			</if>
+			 <if test="isFree != null">
+				AND a.is_free = #{isFree}
+			</if>		
+			<if test="title != null and title != ''">
+				AND a.title LIKE concat('%',#{title},'%')
+			</if>
+		</where>
+		ORDER BY a.sort, a.update_time DESC 
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert"  parameterType="AChapter" useGeneratedKeys="true" keyProperty="chapterId">
+		INSERT INTO a_chapter(	
+			storyId,
+			is_free,	
+			title,
+			price,
+			sort,
+			status,
+			nodes,
+			musics,
+			update_time,
+			delete_flag
+		) VALUES (	
+			#{storyId},		
+			#{isFree},
+			#{title},
+			#{price},
+			#{sort},
+			#{status},
+			#{nodes},
+			#{musics},
+			#{updateTime},
+			#{deleteFlag}
+		)
+	</insert>
+	
+	<update id="update" parameterType="AChapter" useGeneratedKeys="true" keyProperty="chapterId">
+		UPDATE a_chapter 
+		<trim prefix="set" suffixOverrides=",">
+		    <if test="storyId != null">storyId = #{storyId},</if>
+		    <if test="isFree != null">is_free = #{isFree},</if>
+		    <if test="status != null">status = #{status},</if>
+			<if test="title != null">title = #{title},</if>
+			<if test="price != null">price = #{price},</if>
+			<if test="sort != null">sort = #{sort},</if>
+			<if test="nodes != null">nodes = #{nodes},</if>
+			<if test="musics != null">musics = #{musics},</if>
+			<if test="updateTime != null">update_time = #{updateTime},</if>
+			<if test="deleteFlag != null">delete_flag = #{deleteFlag}</if>
+		 </trim>
+		WHERE chapterId = #{chapterId}
+	</update>
+		<!--逻辑删除-->
+	<update id="delete">
+		UPDATE a_chapter SET delete_flag = #{deleteFlag}
+		WHERE chapterId = #{chapterId}
+	</update>
+	
+	<!-- 获取该故事下最近章回跟新时间 -->
+	<select id="findLastUpdateTime" resultType="Date">
+		SELECT update_time FROM a_chapter WHERE storyId = #{storyId} ORDER BY update_time DESC LIMIT 1
+	</select>	 
+</mapper>

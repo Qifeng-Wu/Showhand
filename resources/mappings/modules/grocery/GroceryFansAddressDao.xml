@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.grocery.dao.GroceryFansAddressDao">
+    
+	<sql id="groceryFansAddressColumns">
+		a.addressId AS "addressId",
+		a.openId AS "openId",
+		a.name AS "name",
+		a.sex AS "sex",
+		a.phone AS "phone",
+		a.province AS "province",
+		a.city AS "city",
+		a.area AS "area",
+		a.address AS "address",
+		a.status AS "status",
+		a.deleteFlag AS "deleteFlag"
+	</sql>
+	   
+	<select id="get" resultType="GroceryFansAddress">
+		SELECT 
+			<include refid="groceryFansAddressColumns"/>
+		FROM g_fans_address a
+		WHERE a.addressId = #{addressId}
+	</select>
+	
+	<select id="findList" resultType="GroceryFansAddress">
+		SELECT 
+			<include refid="groceryFansAddressColumns"/>
+		FROM g_fans_address a
+		<where>			
+			<if test="openId != null and openId != ''">
+				AND a.openId = #{openId}
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
+			</if>
+			<if test="deleteFlag != null and deleteFlag != ''">
+				AND a.deleteFlag = #{deleteFlag}
+			</if>
+		</where>
+		ORDER BY a.addressId DESC
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert"  parameterType="GroceryFansAddress" useGeneratedKeys="true" keyProperty="addressId">
+		INSERT INTO g_fans_address(
+			openId,
+			name,
+			sex,
+			phone,
+			province,
+			city,
+			area,
+			address,
+			status,
+			deleteFlag
+		) VALUES (
+			#{openId},
+			#{name},
+			#{sex},
+			#{phone},
+			#{province},
+			#{city},
+			#{area},
+			#{address},
+			#{status},
+			#{deleteFlag}
+		)
+	</insert>
+	
+	<update id="update" parameterType="GroceryFansAddress" useGeneratedKeys="true" keyProperty="addressId">
+		UPDATE g_fans_address 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="openId != null">openId = #{openId},</if>
+			<if test="name != null">name = #{name},</if>
+			<if test="sex != null">sex = #{sex},</if>
+			<if test="phone != null">phone = #{phone},</if>
+			<if test="province != null">province = #{province},</if>
+			<if test="city != null">city = #{city},</if>
+			<if test="area != null">area = #{area},</if>
+			<if test="address != null">address = #{address},</if>
+			<if test="status != null">status = #{status},</if>
+			<if test="deleteFlag != null">deleteFlag = #{deleteFlag}</if>
+		 </trim>
+		WHERE addressId = #{addressId}
+	</update>
+		
+	<!--逻辑删除-->
+	<update id="delete">
+		UPDATE g_fans_address SET deleteFlag = #{deleteFlag}
+		WHERE addressId = #{addressId}
+	</update>
+	
+	<!--将当前粉丝用户下的收货地址状态-->
+	<update id="settingAddressStatus">
+		UPDATE g_fans_address SET status = #{status}
+		WHERE openId = #{openId}
+	</update>
+</mapper>

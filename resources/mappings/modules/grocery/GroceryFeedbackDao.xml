@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.grocery.dao.GroceryFeedbackDao">
+    
+	<sql id="groceryFeedbackColumns">
+		a.id AS "id",
+		a.openId AS "openId",
+		a.type AS "type",
+		a.description AS "description",
+		a.pictures AS "pictures",
+		a.createTime AS "createTime",
+		f.nickname AS "fans.nickname",			
+		f.avatar AS "fans.avatar"			
+	</sql>
+	
+	<sql id="groceryFeedbackJoins">
+		LEFT JOIN g_fans f ON f.openId = a.openId
+	</sql>
+    
+	<select id="get" resultType="GroceryFeedback">
+		SELECT 
+			<include refid="groceryFeedbackColumns"/>
+		FROM g_feedback a
+		<include refid="groceryFeedbackJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="GroceryFeedback">
+		SELECT 
+			<include refid="groceryFeedbackColumns"/>
+		FROM g_feedback a
+		<include refid="groceryFeedbackJoins"/>
+		<where>
+			<if test="openId != null and openId != ''">
+				AND a.openId = #{openId}				
+			</if>
+			<if test="fans != null and fans.openId != null and fans.openId != ''">
+				AND f.openId = #{openId}
+			</if>	
+			<if test="description != null and description != ''">
+				AND (a.description LIKE concat('%',#{description},'%')
+					OR a.type LIKE concat('%',#{description},'%'))				
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.createTime DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert" parameterType="GroceryFeedback" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO g_feedback(
+			id,
+			openId,
+			type,
+			description,
+			pictures,
+			createTime
+		) VALUES (
+			#{id},
+			#{openId},
+			#{type},
+			#{description},
+			#{pictures},
+			#{createTime}
+		)
+	</insert>
+	
+	<update id="update" parameterType="GroceryFeedback" useGeneratedKeys="true" keyProperty="id">
+		UPDATE g_feedback 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="openId != null">openId = #{openId},</if>
+			<if test="type != null">type = #{type},</if>
+			<if test="description != null">description = #{description},</if>
+			<if test="pictures != null">pictures = #{pictures},</if>
+			<if test="createTime != null">createTime = #{createTime}</if>
+		 </trim>
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="GroceryFeedback" statementType="STATEMENT">
+		select * FROM g_feedback  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.audio.dao.AStoryDao">
+    
+	<sql id="aStoryColumns">
+		a.storyId AS "storyId",	
+		a.status AS "status",
+		a.title AS "title",
+		a.price AS "price",
+		a.remark AS "remark",
+		a.picture AS "picture",
+		a.sort AS "sort",
+		a.recommend AS "recommend",
+		a.delete_flag AS "deleteFlag",
+		(select count(distinct t.openId) from a_order_item t where t.storyId = a.storyId) AS "fansCount",
+		(select sum(tt.price) from a_order_item tt where tt.storyId = a.storyId) AS "sumMoney",
+		(select count(chapterId) from a_chapter c where c.storyId = a.storyId) AS "chapterCount"
+	</sql>
+	   
+	<select id="get" resultType="AStory">
+		SELECT 
+			<include refid="aStoryColumns"/>
+		FROM a_story a
+		WHERE a.storyId = #{storyId}
+	</select>
+	
+	<select id="findList" resultType="AStory">
+		SELECT 
+			<include refid="aStoryColumns"/>
+		FROM a_story a
+		<where>	
+		    <if test="deleteFlag != null">
+				AND a.delete_flag =#{deleteFlag}
+			</if>
+			<if test="status != null">
+				AND a.status =#{status}
+			</if>
+			<if test="recommend != null">
+				AND a.recommend =#{recommend}
+			</if>		
+			<if test="title != null and title != ''">
+				AND a.title LIKE concat('%',#{title},'%')
+			</if>
+		</where>
+		ORDER BY a.sort DESC
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAnotherList" resultType="AStory">
+		SELECT 
+			<include refid="aStoryColumns"/>
+		FROM a_story a
+		<where>	
+		    <if test="openId != null and openId != ''">
+				AND	a.storyId NOT IN (SELECT DISTINCT storyId FROM a_item_free b WHERE b.type = 0 AND b.openId = #{openId})
+			</if>
+		    <if test="deleteFlag != null">
+				AND a.delete_flag =#{deleteFlag}
+			</if>
+			<if test="status != null">
+				AND a.status =#{status}
+			</if>
+			<if test="recommend != null">
+				AND a.recommend =#{recommend}
+			</if>		
+			<if test="title != null and title != ''">
+				AND a.title LIKE concat('%',#{title},'%')
+			</if>
+		</where>
+		ORDER BY a.sort DESC
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert"  parameterType="AStory" useGeneratedKeys="true" keyProperty="storyId">
+		INSERT INTO a_story(	
+			status,	
+			title,
+			price,
+			remark,
+			picture,
+			sort,
+			recommend,
+			delete_flag
+		) VALUES (	
+			#{status},		
+			#{title},
+			#{price},
+			#{remark},
+			#{picture},
+			#{sort},
+			#{recommend},
+			#{deleteFlag}
+		)
+	</insert>
+	
+	<update id="update" parameterType="AStory" useGeneratedKeys="true" keyProperty="storyId">
+		UPDATE a_story 
+		<trim prefix="set" suffixOverrides=",">
+		    <if test="status != null">status = #{status},</if>
+			<if test="title != null">title = #{title},</if>
+			<if test="price != null">price = #{price},</if>
+			<if test="sort != null">sort = #{sort},</if>
+			<if test="recommend != null">recommend = #{recommend},</if>
+			<if test="picture != null">picture = #{picture},</if>
+			<if test="remark != null">remark = #{remark},</if>
+			<if test="deleteFlag != null">delete_flag = #{deleteFlag}</if>
+		 </trim>
+		WHERE storyId = #{storyId}
+	</update>
+		<!--逻辑删除-->
+	<update id="delete">
+		UPDATE a_story SET delete_flag = #{deleteFlag}
+		WHERE storyId = #{storyId}
+	</update>
+	
+	<!--获取N条推荐故事集合-->
+	<select id="findRecommendList" resultType="AStory">
+		SELECT * FROM a_story
+		WHERE delete_flag = 0 AND status = 1 AND recommend = 1 order by sort DESC limit #{num}
+	</select>
+</mapper>

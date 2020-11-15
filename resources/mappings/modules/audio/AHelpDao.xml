@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.audio.dao.AHelpDao">
+    
+	<sql id="aHelpColumns">
+		a.id AS "id",
+		a.title AS "title",
+		a.content AS "content",
+		a.sort AS "sort",
+		a.state AS "state"
+	</sql>
+	
+	<sql id="aHelpJoins">
+	</sql>
+    
+	<select id="get" resultType="AHelp">
+		SELECT 
+			<include refid="aHelpColumns"/>
+		FROM a_help a
+		<include refid="aHelpJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="AHelp">
+		SELECT 
+			<include refid="aHelpColumns"/>
+		FROM a_help a
+		<include refid="aHelpJoins"/>
+		<where>
+			<if test="state != null and state != ''">
+				AND a.state = #{state}				
+			</if>
+			<if test="title != null and title != ''">
+				AND (a.title LIKE concat('%',#{title},'%'))				
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.sort
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO a_help(
+			id,
+			title,
+			content,
+			sort,
+			state
+		) VALUES (
+			#{id},
+			#{title},
+			#{content},
+			#{sort},
+			#{state}
+		)
+	</insert>
+	
+	<update id="update" parameterType="AHelp" useGeneratedKeys="true" keyProperty="id">
+		UPDATE a_help 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="title != null">title = #{title},</if>
+			<if test="content != null">content = #{content},</if>
+			<if test="sort != null">sort = #{sort},</if>
+			<if test="state != null">state = #{state}</if>
+		 </trim>
+		WHERE id = #{id}
+	</update>
+
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM a_help
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="AHelp" statementType="STATEMENT">
+		select * FROM a_help  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>

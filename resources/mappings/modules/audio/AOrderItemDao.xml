@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.audio.dao.AOrderItemDao">
+    
+	<sql id="aOrderItemColumns">
+		a.itemId AS "itemId",
+		a.orderId AS "orderId",
+		a.goodsId AS "goodsId",
+		a.storyId AS "storyId",
+		a.openId AS "openId",
+		a.type AS "type",
+		a.title AS "title",
+		a.price AS "price",
+		a.create_time AS "createTime",
+		o.order_no AS "order.orderNo",
+		s.title AS "story.title",
+		f.nickname AS "fans.nickname",
+		f.cid AS "fans.cid",
+		f.avatar AS "fans.avatar"
+	</sql>
+	   
+	<sql id="aOrderItemJoins">
+		LEFT JOIN a_order o ON o.orderId = a.orderId
+		LEFT JOIN a_story s ON s.storyId = a.storyId
+		LEFT JOIN a_fans f ON f.openId = a.openId			
+	</sql>
+	
+	<select id="get" resultType="AOrderItem">
+		SELECT 
+			<include refid="aOrderItemColumns"/>
+		FROM a_order_item a
+			<include refid="aOrderItemJoins"/>
+		WHERE a.itemId = #{itemId}
+	</select>
+	
+	<select id="findList" resultType="AOrderItem">
+		SELECT 
+			<include refid="aOrderItemColumns"/>
+		FROM a_order_item a
+		<include refid="aOrderItemJoins"/>
+		<where>		
+			<if test="orderId != null">
+				AND a.orderId = #{orderId}			
+			</if>	
+			<if test="storyId != null">
+				AND a.storyId = #{storyId}			
+			</if>
+			<if test="openId != null and openId != ''">
+				AND a.openId = #{openId}			
+			</if>	
+			<if test="fans != null and fans.openId != null and fans.openId != ''">
+				AND f.openId = #{openId}			
+			</if>
+			<if test="title !=null and title !=''">
+			 AND (a.title LIKE concat('%',#{title},'%') 
+				 or o.order_no LIKE concat('%',#{title},'%') 
+			 	 or s.title LIKE concat('%',#{title},'%')
+			 	 or f.nickname LIKE concat('%',#{title},'%')
+			 	 or f.cid LIKE concat('%',#{title},'%'))	
+			</if>			
+		</where>		
+		ORDER BY a.itemId DESC
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert"  parameterType="AOrderItem" useGeneratedKeys="true" keyProperty="itemId">
+		INSERT INTO a_order_item(
+			orderId,
+			goodsId,
+			storyId,
+			openId,
+			type,
+			title,
+			price,
+			create_time
+		) VALUES (
+			#{orderId},
+			#{goodsId},
+			#{storyId},
+			#{openId},
+			#{type},
+			#{title},
+			#{price},
+			#{createTime}
+		)
+	</insert>
+	
+	<update id="update" parameterType="AOrderItem" useGeneratedKeys="true" keyProperty="itemId">
+		UPDATE a_order_item 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="orderId != null">orderId = #{orderId},</if>
+			<if test="goodsId != null">goodsId = #{goodsId},</if>
+			<if test="storyId != null">storyId = #{storyId},</if>
+			<if test="openId != null">openId = #{openId},</if>
+			<if test="type != null">type = #{type},</if>
+			<if test="title != null">title = #{title},</if>
+			<if test="price != null">price = #{price},</if>
+			<if test="createTime != null">create_time = #{createTime}</if>
+		 </trim>
+		WHERE itemId = #{itemId}
+	</update>
+</mapper>

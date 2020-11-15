@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.grocery.dao.GrocerySlideDao">
+    
+	<sql id="grocerySlideColumns">
+		a.slideId AS "slideId",
+		a.title AS "title",
+		a.picture AS "picture",
+		a.description AS "description",
+		a.sort AS "sort",
+		a.status AS "status"
+	</sql>
+	   
+	<select id="get" resultType="GrocerySlide">
+		SELECT 
+			<include refid="grocerySlideColumns"/>
+		FROM g_slide a
+		WHERE a.slideId = #{slideId}
+	</select>
+	
+	<select id="findList" resultType="GrocerySlide">
+		SELECT 
+			<include refid="grocerySlideColumns"/>
+		FROM g_slide a
+		<where>			
+			<if test="title != null and title != ''">
+				AND a.title LIKE concat('%',#{title},'%')
+			</if>
+		</where>
+		ORDER BY a.sort DESC
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert"  parameterType="GrocerySlide" useGeneratedKeys="true" keyProperty="slideId">
+		INSERT INTO g_slide(
+			title,
+			picture,
+			description,
+			sort,
+			status
+		) VALUES (
+			#{title},
+			#{picture},
+			#{description},
+			#{sort},
+			#{status}
+		)
+	</insert>
+	
+	<update id="update" parameterType="GrocerySlide" useGeneratedKeys="true" keyProperty="slideId">
+		UPDATE g_slide 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="title != null">title = #{title},</if>
+			<if test="picture != null">picture = #{picture},</if>
+			<if test="description != null">description = #{description},</if>
+			<if test="sort != null">sort = #{sort},</if>
+			<if test="status != null">status = #{status}</if>
+		 </trim>
+		WHERE slideId = #{slideId}
+	</update>
+		
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM g_slide
+		WHERE slideId = #{slideId}
+	</update>
+</mapper>

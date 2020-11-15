@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.grocery.dao.GroceryFansDao">
+   
+	<sql id="groceryFansDaoColumns">
+		a.openId AS "openId",
+		a.clerk AS "clerk",
+		a.nickname AS "nickname",
+		a.sex AS "sex",
+		a.avatar AS "avatar",
+		a.addtime AS "addtime",
+		a.updatetime AS "updatetime"
+		
+	</sql>
+    
+	<select id="get" resultType="GroceryFans">
+		SELECT 
+			<include refid="groceryFansDaoColumns"/>
+		FROM g_fans a
+		 <where>
+			AND a.openId = #{openId}
+		</where>
+	</select>
+	
+	<select id="findList" resultType="GroceryFans">
+		SELECT 
+			<include refid="groceryFansDaoColumns"/>
+		FROM g_fans a
+		<where>
+			AND a.nickname is not null
+			<if test="openId != null ">
+					AND a.openId = #{openId}
+			</if>
+			<if test="clerk != null and clerk !=''">
+					AND a.clerk = #{clerk}
+			</if>
+			 <if test="nickname != null and nickname != ''">
+				AND a.nickname LIKE concat('%',#{nickname},'%')
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.updatetime DESC
+			</otherwise>
+		</choose>		
+	</select>
+		
+	<insert id="insert"  parameterType="GroceryFans" useGeneratedKeys="true" keyProperty="openId">
+		INSERT INTO g_fans(
+			openId,
+			clerk,
+			nickname,
+			sex,
+			avatar,
+			addtime,
+			updatetime
+		) VALUES (
+			#{openId},
+			#{clerk},
+			#{nickname},
+			#{sex},
+			#{avatar},
+			#{addtime},
+			#{updatetime}
+		)
+	</insert>
+	
+	<update id="update" parameterType="GroceryFans" useGeneratedKeys="true" keyProperty="openId">
+		UPDATE g_fans
+		<trim prefix="set" suffixOverrides=",">
+			<if test="clerk != null">clerk = #{clerk},</if>
+			<if test="nickname != null">nickname = #{nickname},</if>
+			<if test="sex != null">sex = #{sex},</if>
+			<if test="avatar != null">avatar = #{avatar},</if>
+			<if test="addtime != null">addtime = #{addtime},</if>
+			<if test="updatetime != null">updatetime = #{updatetime}</if>
+		 </trim>
+		WHERE openId = #{openId}
+	</update>
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM g_fans
+		WHERE openId = #{openId}
+	</update>
+</mapper>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.grocery.dao.GroceryGoodsClassificationDao">
+    
+	<sql id="groceryGoodsClassificationColumns">
+		a.classificationId AS "classificationId",
+		a.name AS "name",
+		a.sort AS "sort",
+		a.status AS "status",
+		a.deleteFlag AS "deleteFlag"
+	</sql>
+	   
+	<select id="get" resultType="GroceryGoodsClassification">
+		SELECT 
+			<include refid="groceryGoodsClassificationColumns"/>
+		FROM g_goods_classification a
+		WHERE a.classificationId = #{classificationId}
+	</select>
+	
+	<select id="findList" resultType="GroceryGoodsClassification">
+		SELECT 
+			<include refid="groceryGoodsClassificationColumns"/>
+		FROM g_goods_classification a
+		<where>
+			<if test="name != null and name != ''">
+				AND a.name LIKE concat('%',#{name},'%')
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
+			</if>
+			<if test="deleteFlag != null and deleteFlag != ''">
+				AND a.deleteFlag = #{deleteFlag}
+			</if>
+		</where>
+		ORDER BY a.sort DESC
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert"  parameterType="GroceryGoodsClassification" useGeneratedKeys="true" keyProperty="classificationId">
+		INSERT INTO g_goods_classification(
+			name,
+			sort,
+			status,
+			deleteFlag
+		) VALUES (
+			#{name},
+			#{sort},
+			#{status},
+			#{deleteFlag}
+		)
+	</insert>
+	
+	<update id="update" parameterType="GroceryGoodsClassification" useGeneratedKeys="true" keyProperty="classificationId">
+		UPDATE g_goods_classification 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="name != null">name = #{name},</if>
+			<if test="sort != null">sort = #{sort},</if>
+			<if test="status != null">status = #{status},</if>
+			<if test="deleteFlag != null">deleteFlag = #{deleteFlag}</if>
+		 </trim>
+		WHERE classificationId = #{classificationId}
+	</update>
+		
+	<!--逻辑删除-->
+	<update id="delete">
+		UPDATE g_goods_classification SET deleteFlag = #{deleteFlag}
+		WHERE classificationId = #{classificationId}
+	</update>
+</mapper>

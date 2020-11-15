@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.grocery.dao.GroceryGoodsDao">
+    
+	<sql id="groceryGoodsColumns">
+		a.goodsId AS "goodsId",
+		a.classificationId AS "classificationId",
+		a.name AS "name",
+		a.cprice AS "cprice",
+		a.oprice AS "oprice",
+		a.picture AS "picture",
+		a.photos AS "photos",
+		a.description AS "description",
+		a.sold AS "sold",
+		a.sort AS "sort",
+		a.lable AS "lable",
+		a.isRecommend AS "isRecommend",
+		a.status AS "status",
+		a.deleteFlag AS "deleteFlag",
+		c.name AS "goodsClassification.name"
+	</sql>
+	   
+	<sql id="groceryGoodsJoins">
+		LEFT JOIN g_goods_classification c ON c.classificationId = a.classificationId		
+	</sql>
+	
+	<select id="get" resultType="GroceryGoods">
+		SELECT 
+			<include refid="groceryGoodsColumns"/>
+		FROM g_goods a
+			<include refid="groceryGoodsJoins"/>
+		WHERE a.goodsId = #{goodsId}
+	</select>
+	
+	<select id="findList" resultType="GroceryGoods">
+		SELECT 
+			<include refid="groceryGoodsColumns"/>
+		FROM g_goods a
+			<include refid="groceryGoodsJoins"/>
+		<where>		
+			<if test="goodsClassification != null and goodsClassification.classificationId != null and goodsClassification.classificationId != ''">
+				AND c.classificationId = #{classificationId}			
+			</if>	
+			<if test="classificationId != null and classificationId != ''">
+				AND a.classificationId = #{classificationId}			
+			</if>	
+			<if test="name != null and name != ''">
+				AND a.name LIKE concat('%',#{name},'%')
+			</if>
+			<if test="deleteFlag != null and deleteFlag != ''">
+				AND a.deleteFlag =#{deleteFlag}
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status =#{status}
+			</if>
+			<if test="isRecommend != null and isRecommend != ''">
+				AND a.isRecommend =#{isRecommend}
+			</if>
+		</where>
+		<if test="sortType == null and sortType == ''">
+			ORDER BY a.sort DESC
+		</if>
+		<if test="sortType == 1">
+			ORDER BY a.sort DESC
+		</if>
+		<if test="sortType == 2">
+			ORDER BY a.sold DESC
+		</if>
+		<if test="sortType == 3">
+			ORDER BY a.cprice ASC
+		</if>
+		<if test="sortType == 4">
+			ORDER BY a.cprice DESC
+		</if>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert"  parameterType="GroceryGoods" useGeneratedKeys="true" keyProperty="goodsId">
+		INSERT INTO g_goods(
+			classificationId,
+			name,
+			cprice,
+			oprice,
+			picture,
+			photos,
+			description,
+			sold,
+			lable,
+			sort,
+			isRecommend,
+			status,
+			deleteFlag
+		) VALUES (
+			#{classificationId},
+			#{name},
+			#{cprice},
+			#{oprice},
+			#{picture},
+			#{photos},
+			#{description},
+			#{sold},
+			#{lable},
+			#{sort},
+			#{isRecommend},
+			#{status},
+			#{deleteFlag}
+		)
+	</insert>
+	
+	<update id="update" parameterType="GroceryGoods" useGeneratedKeys="true" keyProperty="goodsId">
+		UPDATE g_goods 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="classificationId != null">classificationId = #{classificationId},</if>
+			<if test="name != null">name = #{name},</if>
+			<if test="cprice != null">cprice = #{cprice},</if>
+			<if test="oprice != null">oprice = #{oprice},</if>
+			<if test="picture != null">picture = #{picture},</if>
+			<if test="photos != null">photos = #{photos},</if>
+			<if test="description != null">description = #{description},</if>
+			<if test="sort != null">sort = #{sort},</if>
+			<if test="lable != null">lable = #{lable},</if>
+			<if test="sold != null">sold = #{sold},</if>
+			<if test="isRecommend != null">isRecommend = #{isRecommend},</if>
+			<if test="status != null">status = #{status},</if>
+			<if test="deleteFlag != null">deleteFlag = #{deleteFlag}</if>
+		 </trim>
+		WHERE goodsId = #{goodsId}
+	</update>
+		
+	<!--逻辑删除-->
+	<update id="delete">
+		UPDATE g_goods SET deleteFlag = #{deleteFlag}
+		WHERE goodsId = #{goodsId}
+	</update>
+</mapper>

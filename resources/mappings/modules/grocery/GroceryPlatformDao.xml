@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.grocery.dao.GroceryPlatformDao">
+    
+	<sql id="groceryPlatformColumns">
+		a.platformId AS "platformId",
+		a.name AS "name",
+		a.picture AS "picture",
+		a.phone AS "phone",
+		a.startTime AS "startTime",
+		a.endTime AS "endTime",
+		a.address AS "address",	
+		a.description AS "description",
+		a.notice AS "notice",
+		a.photos AS "photos",
+		a.leftPic AS "leftPic",
+		a.rightTopPic AS "rightTopPic",
+		a.rightBottomPic AS "rightBottomPic"
+	</sql>
+	   
+	<select id="get" resultType="GroceryPlatform">
+		SELECT 
+			<include refid="groceryPlatformColumns"/>
+		FROM g_platform a
+		WHERE a.platformId = #{platformId}
+	</select>
+	
+	<select id="findList" resultType="GroceryPlatform">
+		SELECT 
+			<include refid="groceryPlatformColumns"/>
+		FROM g_platform a
+		<where>			
+			<if test="name != null and name != ''">
+				AND a.name LIKE concat('%',#{name},'%')
+			</if>
+		</where>
+		ORDER BY a.platformId DESC
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert"  parameterType="GroceryPlatform" useGeneratedKeys="true" keyProperty="platformId">
+		INSERT INTO g_platform(
+			name,
+			picture,
+			phone,
+			startTime,
+			endTime,
+			address,
+			description,
+			notice,
+			photos
+			leftPic ,
+			rightTopPic,
+			rightBottomPic
+		) VALUES (
+			#{name},
+			#{picture},
+			#{phone},
+			#{startTime},
+			#{endTime},
+			#{address},
+			#{description},
+			#{notice},
+			#{photos},
+			#{leftPic},
+			#{rightTopPic},
+			#{rightBottomPic}
+		)
+	</insert>
+	
+	<update id="update" parameterType="GroceryPlatform" useGeneratedKeys="true" keyProperty="platformId">
+		UPDATE g_platform 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="name != null">name = #{name},</if>
+			<if test="picture != null">picture = #{picture},</if>
+			<if test="phone != null">phone = #{phone},</if>
+			<if test="startTime != null">startTime = #{startTime},</if>
+			<if test="endTime != null">endTime = #{endTime},</if>
+			<if test="address != null">address = #{address},</if>
+			<if test="description != null">description = #{description},</if>
+			<if test="notice != null">notice = #{notice},</if>
+			<if test="photos != null">photos = #{photos},</if>
+			<if test="leftPic != null">leftPic = #{leftPic},</if>
+			<if test="rightTopPic != null">rightTopPic = #{rightTopPic},</if>
+			<if test="rightBottomPic != null">rightBottomPic = #{rightBottomPic}</if>
+		 </trim>
+		WHERE platformId = #{platformId}
+	</update>
+		
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM g_platform
+		WHERE platformId = #{platformId}
+	</update>
+</mapper>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.grocery.dao.GroceryOrderDao">
+    
+	<sql id="groceryOrderColumns">
+		a.orderId AS "orderId",
+		a.orderNo AS "orderNo",
+		a.status AS "status",
+		a.openId AS "openId",
+		a.addressId AS "addressId",
+		a.payMoney AS "payMoney",
+		a.payType AS "payType",
+		a.payTime AS "payTime",
+		a.remark AS "remark",
+		a.sendTime AS "sendTime",
+		a.receiveTime AS "receiveTime",
+		a.deleteFlag AS "deleteFlag",
+		f.nickname AS "fans.nickname",
+		f.avatar AS "fans.avatar",
+		d.name AS "fansAddress.name",
+		d.sex AS "fansAddress.sex",
+		d.phone AS "fansAddress.phone",
+		d.province AS "fansAddress.province",
+		d.city AS "fansAddress.city",
+		d.area AS "fansAddress.area",
+		d.address AS "fansAddress.address"
+	</sql>
+	   
+	<sql id="groceryOrderJoins">
+		LEFT JOIN g_fans f ON f.openId = a.openId		
+		LEFT JOIN g_fans_address d ON d.addressId = a.addressId	
+	</sql>
+	
+	<select id="get" resultType="GroceryOrder">
+		SELECT 
+			<include refid="groceryOrderColumns"/>
+		FROM g_order a
+			<include refid="groceryOrderJoins"/>
+		WHERE a.orderId = #{orderId}
+	</select>
+	
+	<select id="findList" resultType="GroceryOrder">
+		SELECT 
+			<include refid="groceryOrderColumns"/>
+		FROM g_order a
+		<include refid="groceryOrderJoins"/>
+		<where>		
+			<if test="openId != null and openId != ''">
+				AND a.openId = #{openId}			
+			</if>	
+			<if test="fans != null and fans.openId != null and fans.openId != ''">
+				AND f.openId = #{openId}			
+			</if>	
+			<if test="fansAddress != null and fansAddress.addressId != null and fansAddress.addressId != ''">
+				AND d.addressId = #{addressId}			
+			</if>	
+			<if test="orderNo !=null and orderNo !=''">
+			 AND (a.orderNo LIKE 
+					concat('%',#{orderNo},'%')
+				OR d.name LIKE 
+					concat('%',#{orderNo},'%')
+				OR d.phone LIKE 
+					concat('%',#{orderNo},'%'))	
+			</if>
+			<if test="deleteFlag != null and deleteFlag != ''">
+				AND a.deleteFlag =#{deleteFlag}
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status =#{status}
+			</if>
+		</where>		
+		ORDER BY a.orderId DESC
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert"  parameterType="GroceryOrder" useGeneratedKeys="true" keyProperty="orderId">
+		INSERT INTO g_order(
+			orderNo,
+			status,
+			openId,
+			addressId,
+			payMoney,
+			payType,
+			payTime,
+			remark,
+			sendTime,
+			receiveTime,
+			deleteFlag
+		) VALUES (
+			#{orderNo},
+			#{status},
+			#{openId},
+			#{addressId},
+			#{payMoney},
+			#{payType},
+			#{payTime},
+			#{remark},
+			#{sendTime},
+			#{receiveTime},
+			#{deleteFlag}
+		)
+	</insert>
+	
+	<update id="update" parameterType="GroceryOrder" useGeneratedKeys="true" keyProperty="orderId">
+		UPDATE g_order 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="orderNo != null">orderNo = #{orderNo},</if>
+			<if test="status != null">status = #{status},</if>
+			<if test="openId != null">openId = #{openId},</if>
+			<if test="addressId != null">addressId = #{addressId},</if>
+			<if test="payMoney != null">payMoney = #{payMoney},</if>
+			<if test="payType != null">payType = #{payType},</if>
+			<if test="payTime != null">payTime = #{payTime},</if>
+			<if test="remark != null">remark = #{remark},</if>
+			<if test="sendTime != null">sendTime = #{sendTime},</if>
+			<if test="receiveTime != null">receiveTime = #{receiveTime},</if>
+			<if test="deleteFlag != null">deleteFlag = #{deleteFlag}</if>
+		 </trim>
+		WHERE orderId = #{orderId}
+	</update>
+		
+	<!--逻辑删除-->
+	<update id="delete">
+		UPDATE g_order SET deleteFlag = #{deleteFlag}
+		WHERE orderId = #{orderId}
+	</update>
+</mapper>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.audio.dao.AItemFreeDao">
+    
+	<sql id="aItemFreeColumns">
+		a.freeId AS "freeId",
+		a.openId AS "openId",
+		a.type AS "type",
+		a.goodsId AS "goodsId",
+		a.storyId AS "storyId",
+		a.create_time AS "createTime",
+		s.title AS "story.title",
+		f.nickname AS "fans.nickname",
+		f.cid AS "fans.cid",
+		f.avatar AS "fans.avatar"
+	</sql>
+	   
+	<sql id="aItemFreeJoins">
+		LEFT JOIN a_story s ON s.storyId = a.storyId
+		LEFT JOIN a_fans f ON f.openId = a.openId			
+	</sql>
+	
+	<select id="get" resultType="AItemFree">
+		SELECT 
+			<include refid="aItemFreeColumns"/>
+		FROM a_item_free a
+			<include refid="aItemFreeJoins"/>
+		WHERE a.freeId = #{freeId}
+	</select>
+	
+	<select id="findList" resultType="AItemFree">
+		SELECT 
+			<include refid="aItemFreeColumns"/>
+		FROM a_item_free a
+		<include refid="aItemFreeJoins"/>
+		<where>		
+			<if test="storyId != null">
+				AND a.storyId = #{storyId}			
+			</if>
+			<if test="openId != null and openId != ''">
+				AND a.openId = #{openId}			
+			</if>	
+			<if test="fans != null and fans.openId != null and fans.openId != ''">
+				AND f.openId = #{openId}			
+			</if>
+			<if test="title !=null and title !=''">
+			 AND s.title LIKE concat('%',#{title},'%')
+			</if>			
+		</where>		
+		ORDER BY a.freeId DESC
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert"  parameterType="AItemFree" useGeneratedKeys="true" keyProperty="freeId">
+		INSERT INTO a_item_free(
+			openId,
+			type,
+			goodsId,
+			storyId,
+			create_time
+		) VALUES (
+			#{openId},
+			#{type},
+			#{goodsId},
+			#{storyId},
+			#{createTime}
+		)
+	</insert>
+	
+	<update id="update" parameterType="AItemFree" useGeneratedKeys="true" keyProperty="freeId">
+		UPDATE a_item_free 
+		<trim prefix="set" suffixOverrides=",">
+		    <if test="openId != null">openId = #{openId},</if>
+		    <if test="type != null">type = #{type},</if>
+			<if test="goodsId != null">goodsId = #{goodsId},</if>
+			<if test="storyId != null">storyId = #{storyId},</if>
+			<if test="createTime != null">create_time = #{createTime}</if>
+		 </trim>
+		WHERE freeId = #{freeId}
+	</update>
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM a_item_free
+		WHERE freeId = #{freeId}
+	</update>
+</mapper>

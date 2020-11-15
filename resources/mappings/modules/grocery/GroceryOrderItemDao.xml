@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.grocery.dao.GroceryOrderItemDao">
+    
+	<sql id="groceryOrderItemColumns">
+		a.itemId AS "itemId",
+		a.orderId AS "orderId",
+		a.goodsId AS "goodsId",
+		a.name AS "name",
+		a.price AS "price",
+		a.quantity AS "quantity",
+		a.picture AS "picture",
+		a.createTime AS "createTime",
+		o.orderNo AS "order.orderNo"
+	</sql>
+	   
+	<sql id="groceryOrderItemJoins">
+		LEFT JOIN g_order o ON o.orderId = a.orderId		
+	</sql>
+	
+	<select id="get" resultType="GroceryOrderItem">
+		SELECT 
+			<include refid="groceryOrderItemColumns"/>
+		FROM g_order_item a
+			<include refid="groceryOrderItemJoins"/>
+		WHERE a.itemId = #{itemId}
+	</select>
+	
+	<select id="findList" resultType="GroceryOrderItem">
+		SELECT 
+			<include refid="groceryOrderItemColumns"/>
+		FROM g_order_item a
+		<include refid="groceryOrderItemJoins"/>
+		<where>		
+			<if test="orderId != null and orderId != ''">
+				AND a.orderId = #{orderId}			
+			</if>		
+			<if test="name !=null and name !=''">
+			 AND (a.name LIKE concat('%',#{name},'%') or o.orderNo LIKE concat('%',#{name},'%'))	
+			</if>			
+		</where>		
+		ORDER BY a.itemId DESC
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert"  parameterType="GroceryOrderItem" useGeneratedKeys="true" keyProperty="itemId">
+		INSERT INTO g_order_item(
+			orderId,
+			goodsId,
+			name,
+			price,
+			quantity,
+			picture,
+			createTime
+		) VALUES (
+			#{orderId},
+			#{goodsId},
+			#{name},
+			#{price},
+			#{quantity},
+			#{picture},	
+			#{createTime}
+		)
+	</insert>
+	
+	<update id="update" parameterType="GroceryOrderItem" useGeneratedKeys="true" keyProperty="itemId">
+		UPDATE g_order_item 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="orderId != null">orderId = #{orderId},</if>
+			<if test="goodsId != null">goodsId = #{goodsId},</if>
+			<if test="name != null">name = #{name},</if>
+			<if test="price != null">price = #{price},</if>
+			<if test="quantity != null">quantity = #{quantity},</if>
+			<if test="picture != null">picture = #{picture},</if>
+			<if test="createTime != null">createTime = #{createTime}</if>
+		 </trim>
+		WHERE itemId = #{itemId}
+	</update>
+</mapper>

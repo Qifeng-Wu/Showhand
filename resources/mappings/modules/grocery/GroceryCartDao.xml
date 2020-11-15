@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.grocery.dao.GroceryCartDao">
+    
+	<sql id="groceryCartColumns">
+		a.cartId AS "cartId",
+		a.openId AS "openId",
+		a.goodsId AS "goodsId",
+		a.quantity AS "quantity",
+		a.createTime AS "createTime",
+		a.payFlag AS "payFlag",
+		a.payTime AS "payTime",
+		f.nickname AS "fans.nickname",			
+		f.avatar AS "fans.avatar",
+		g.goodsId AS "goods.goodsId",
+		g.name AS "goods.name",
+		g.cprice AS "goods.cprice",
+		g.oprice AS "goods.oprice",
+		g.picture AS "goods.picture",
+		g.photos AS "goods.photos",
+		g.description AS "goods.description",
+		g.sold AS "goods.sold",
+		g.sort AS "goods.sort",
+		g.lable AS "goods.lable",
+		g.isRecommend AS "goods.isRecommend",
+		g.status AS "goods.status",
+		g.deleteFlag AS "goods.deleteFlag"		
+	</sql>
+	
+	<sql id="groceryCartJoins">
+		LEFT JOIN g_fans f ON f.openId = a.openId
+		LEFT JOIN g_goods g ON g.goodsId = a.goodsId
+	</sql>
+    
+	<select id="get" resultType="GroceryCart">
+		SELECT 
+			<include refid="groceryCartColumns"/>
+		FROM g_cart a
+		<include refid="groceryCartJoins"/>
+		WHERE a.cartId = #{cartId}
+	</select>
+	
+	<select id="findList" resultType="GroceryCart">
+		SELECT 
+			<include refid="groceryCartColumns"/>
+		FROM g_cart a
+		<include refid="groceryCartJoins"/>
+		<where>
+			<if test="openId != null and openId != ''">
+				AND a.openId = #{openId}				
+			</if>
+			<if test="fans != null and fans.openId != null and fans.openId != ''">
+				AND f.openId = #{openId}
+			</if>
+			<if test="payFlag != null and payFlag != ''">
+				AND a.payFlag = #{payFlag}				
+			</if>
+			<if test="fans != null and fans.openId != null and fans.openId != ''">
+				AND (f.nickname LIKE concat('%',#{fans.nickname},'%')
+					OR g.name LIKE concat('%',#{fans.nickname},'%'))				
+			</if>	
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.createTime DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert" parameterType="GroceryCart" useGeneratedKeys="true" keyProperty="cartId">
+		INSERT INTO g_cart(
+			openId,
+			goodsId,
+			quantity,
+			createTime,
+			payFlag
+		) VALUES (
+			#{openId},
+			#{goodsId},
+			#{quantity},
+			#{createTime},
+			#{payFlag}
+		)
+	</insert>
+	
+	<update id="update" parameterType="GroceryCart" useGeneratedKeys="true" keyProperty="id">
+		UPDATE g_cart 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="openId != null">openId = #{openId},</if>
+			<if test="goodsId != null">goodsId = #{goodsId},</if>
+			<if test="quantity != null">quantity = #{quantity},</if>
+			<if test="createTime != null">createTime = #{createTime},</if>
+			<if test="payFlag != null">payFlag = #{payFlag},</if>
+			<if test="payTime != null">payTime = #{payTime}</if>
+		 </trim>
+		WHERE cartId = #{cartId}
+	</update>
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM g_cart
+		WHERE cartId = #{cartId}
+	</update>
+</mapper>

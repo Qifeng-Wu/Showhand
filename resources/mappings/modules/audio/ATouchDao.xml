@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.audio.dao.ATouchDao">
+    
+	<sql id="aTouchColumns">
+		a.touchId AS "touchId",
+		a.action AS "action",
+		a.name AS "name",
+		a.audio AS "audio"
+	</sql>
+	   
+	<select id="get" resultType="ATouch">
+		SELECT 
+			<include refid="aTouchColumns"/>
+		FROM a_touch a
+		WHERE a.touchId = #{touchId}
+	</select>
+	
+	<select id="findList" resultType="ATouch">
+		SELECT 
+			<include refid="aTouchColumns"/>
+		FROM a_touch a
+		<where>			
+			<if test="name != null and name != ''">
+				AND a.name LIKE concat('%',#{name},'%')
+			</if>
+		</where>
+		ORDER BY a.touchId DESC
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert"  parameterType="ATouch" useGeneratedKeys="true" keyProperty="touchId">
+		INSERT INTO a_touch(
+			action,
+			name,
+			audio
+		) VALUES (
+			#{action},
+			#{name},
+			#{audio}
+		)
+	</insert>
+	
+	<update id="update" parameterType="ATouch" useGeneratedKeys="true" keyProperty="touchId">
+		UPDATE a_touch 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="action != null">action = #{action},</if>
+			<if test="name != null">name = #{name},</if>
+			<if test="audio != null">audio = #{audio}</if>
+		 </trim>
+		WHERE touchId = #{touchId}
+	</update>
+		
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM a_touch
+		WHERE touchId = #{touchId}
+	</update>
+</mapper>
