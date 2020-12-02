@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import com.jeeplus.common.utils.FileUtils;
-import com.jeeplus.modules.grocery.utils.ConfigurationFileHelper;
+import com.jeeplus.modules.audio.utils.ConfigurationFileHelper;
 
 /**
  * 微信小程序上传图片
