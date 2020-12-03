@@ -51,7 +51,7 @@
 				<table:addRow url="${ctx}/audio/questionnaire/form" title="添加"></table:addRow><!-- 增加按钮 -->
 			</shiro:hasPermission>	
 			<shiro:hasPermission name="audio:questionnaire:edit">
-			    <table:editRow url="${ctx}/audio/questionnaire/form" title="客编辑" id="contentTable"></table:editRow><!-- 编辑按钮 -->
+			    <table:editRow url="${ctx}/audio/questionnaire/form" title="编辑" id="contentTable"></table:editRow><!-- 编辑按钮 -->
 			</shiro:hasPermission>
 			<shiro:hasPermission name="audio:questionnaire:export">
 	       		<table:exportExcel url="${ctx}/audio/questionnaire/export"></table:exportExcel><!-- 导出按钮 -->
