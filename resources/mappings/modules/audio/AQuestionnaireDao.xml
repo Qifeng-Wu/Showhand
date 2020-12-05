@@ -31,8 +31,10 @@
 		<where>			
 			<if test="name != null and name != ''">
 				 AND (a.room LIKE concat('%',#{name},'%')
-				 OR a.name LIKE concat('%',#{name},'%')
-				 OR a.inspector LIKE concat('%',#{name},'%'))	
+				 OR a.name LIKE concat('%',#{name},'%'))	
+			</if>
+			<if test="inspector != null and inspector != ''">
+				 AND a.inspector = #{inspector}
 			</if>
 		</where>
 		ORDER BY a.questionnaireId DESC

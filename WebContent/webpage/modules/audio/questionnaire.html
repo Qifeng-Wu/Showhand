@@ -192,7 +192,6 @@ $questionnaire.on('change','input[type="radio"]',function(){
 		$label.eq($label.children('input').index(this)-1).nextAll('label').children('img').attr('src','https://wu.stephen7.top/Showhand/static/questionnaire/star_light.png');
 	}
 }).on('click','.submit-btn',function(){
-	var _run = true;
 	if(form.room.value == ''){
 		dialogueTips('请填写房号');
 	}else if(form.name.value == ''){
@@ -231,12 +230,13 @@ $questionnaire.on('change','input[type="radio"]',function(){
 				remark:form.msg.value,
 			};
 			$.post("https://wu.stephen7.top/Showhand/a-api/questionnaire/save",ins,function(json){
-				_run = true;
 				if(json.success==true){
 					$('body,html').css({'height':'100%'});
 					$questionnaire.css({'background':'#fff','background-image':'none','height':'100%'}).html('<div><img class="success" src="https://wu.stephen7.top/Showhand/static/questionnaire/success.png"></div><p class="end">提交成功</p>');
+					_run = true;
 				} else {
 					dialogueTips(json.msg);
+					_run = true;
 					return false;
 				}
 			},'json');

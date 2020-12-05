@@ -42,8 +42,10 @@
 			<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 			<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 			<div class="form-group pull-left">
-				<form:input path="name" placeholder="请输入房号、姓名、验房者编号查询" style="width:300px" htmlEscape="false" maxlength="20"  class=" form-control input-sm"/>
-		          	<button type="button" class="btn btn-sm btn-primary" onclick="search();"> <i class="fa fa-search"></i> 搜索</button>
+				<form:input path="name" placeholder="请输入房号、姓名查询" style="width:250px" htmlEscape="false" maxlength="20"  class=" form-control input-sm"/>
+				<form:input path="inspector" placeholder="请输入验房者编号查询" style="width:250px" htmlEscape="false" maxlength="10"  class=" form-control input-sm"/>
+		        <button type="button" class="btn btn-sm btn-primary" onclick="search();"> <i class="fa fa-search"></i> 搜索</button>
+		        <button type="button" class="btn btn-sm btn-primary" onclick="reset()" ><i class="fa fa-refresh"></i> 重置</button>
 			 </div>	
 		</form:form>
 		<div class="pull-right">
