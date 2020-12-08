@@ -1,6 +1,8 @@
 package com.jeeplus.modules.audio.web;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -106,7 +108,7 @@ public class AQuestionnaireController extends BaseController {
 		for(String id : idArray){
 			aQuestionnaireService.delete(aQuestionnaireService.get(id));
 		}
-		addMessage(redirectAttributes, "删除成功");
+		addMessage(redirectAttributes, "批量删除成功");
 		return "redirect:"+Global.getAdminPath()+"/audio/questionnaire/?repage";
 	}
 	
@@ -115,11 +117,22 @@ public class AQuestionnaireController extends BaseController {
 	 */
 	@RequiresPermissions("audio:questionnaire:export")
     @RequestMapping(value = "export", method=RequestMethod.POST)
-    public String exporQisile(AQuestionnaire aQuestionnaire, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
+    public String exporQisile(AQuestionnaire aQuestionnaire, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes, String ids) {
 		try {
             String fileName = "回访问卷记录"+DateUtils.getDate("yyyyMMddHHmmss")+".xlsx";
-            Page<AQuestionnaire> page = aQuestionnaireService.findPage(new Page<AQuestionnaire>(request, response, -1), aQuestionnaire);
-    		new ExportExcel("回访问卷记录", AQuestionnaire.class).setDataList(page.getList()).write(response, fileName).dispose();
+            Page<AQuestionnaire> page = new Page<>();
+            if (StringUtils.isNotBlank(ids)) {
+                String idArray[] = ids.split(",");
+                List<AQuestionnaire> list = new ArrayList<>();
+                for (String id : idArray) {
+                	AQuestionnaire questionnaire = aQuestionnaireService.get(id);
+                    list.add(questionnaire);
+                }
+                page.setList(list);
+            } else {
+                page = aQuestionnaireService.findPage(new Page<AQuestionnaire>(request, response, -1), aQuestionnaire);
+            }
+            new ExportExcel("回访问卷记录", AQuestionnaire.class).setDataList(page.getList()).write(response, fileName).dispose();
     		return null;
 		} catch (Exception e) {
 			addMessage(redirectAttributes, "导出回访问卷记录失败！失败信息："+e.getMessage());

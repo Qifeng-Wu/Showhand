@@ -8,6 +8,16 @@ $(document).ready(function() {
 
 	$("#btnExport").click(function(){
 		top.layer.confirm('确认要导出Excel吗?', {icon: 3, title:'系统提示'}, function(index){
+			  var str="", ids="";
+			  $("#contentTable tbody tr td input.i-checks:checkbox").each(function(){
+			    if(true == $(this).is(':checked')){
+			      str+=$(this).attr("id")+",";
+			    }
+			  });
+			  if(str.substr(str.length-1)== ','){
+			    ids = str.substr(0,str.length-1);
+			  }
+			  
 		    //do something
 		    	//导出之前备份
 		    	var url =  $("#searchForm").attr("action");
@@ -15,6 +25,7 @@ $(document).ready(function() {
 		    	var pageSize = $("#pageSize").val();
 		    	//导出excel
 		        $("#searchForm").attr("action","${url}");
+		        $("#ids").val(ids);
 			    $("#pageNo").val(-1);
 				$("#pageSize").val(-1);
 				$("#searchForm").submit();

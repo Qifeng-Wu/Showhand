@@ -41,6 +41,7 @@
 		<form:form id="searchForm" modelAttribute="aQuestionnaire" action="${ctx}/audio/questionnaire/list" method="post" class="form-inline">
 			<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 			<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
+			<input id="ids" name="ids" type="hidden"/>
 			<div class="form-group pull-left">
 				<form:input path="name" placeholder="请输入房号、姓名查询" style="width:250px" htmlEscape="false" maxlength="20"  class=" form-control input-sm"/>
 				<form:input path="inspector" placeholder="请输入验房者编号查询" style="width:250px" htmlEscape="false" maxlength="10"  class=" form-control input-sm"/>
@@ -55,6 +56,9 @@
 			<shiro:hasPermission name="audio:questionnaire:edit">
 			    <table:editRow url="${ctx}/audio/questionnaire/form" title="编辑" id="contentTable"></table:editRow><!-- 编辑按钮 -->
 			</shiro:hasPermission>
+			<shiro:hasPermission name="audio:questionnaire:delete">
+				<table:delRow url="${ctx}/audio/questionnaire/deleteAll" id="contentTable"></table:delRow><!-- 删除按钮 -->
+			</shiro:hasPermission>	
 			<shiro:hasPermission name="audio:questionnaire:export">
 	       		<table:exportExcel url="${ctx}/audio/questionnaire/export"></table:exportExcel><!-- 导出按钮 -->
 	       	</shiro:hasPermission>
