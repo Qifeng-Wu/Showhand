@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8">
+<title>业主信息录入</title>
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<script src="https://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jqueryui/1.12.0-rc.2/jquery-ui.js"></script>
+<style>
+body,html{margin:0;padding:0}
+.container{height:100%;background:#99e1fe}
+.content{width:100%;height:70%}
+.title{text-align:center; padding-top: 13%;}
+.title_label{font-size: 26px; font-weight:bold;color: #000;margin-bottom:0px}
+.title_tip{font-size: 12px;font-weight:bold;color: #ff9900;}
+.info{margin-top:8%}
+.tip{text-align:center}
+.submit{text-align: center}
+.img{width:100%;height:30%;background:url(https://wu.stephen7.top/Showhand/static/questionnaire/farm/banner.png) no-repeat 0 0/100% 100%;}
+.submit button{color: #fff;background-color: #ff9900;width: 80%;height: 40px;border: solid 1px #ff9900;letter-spacing: 3px;font-size: 18px;border-radius: 7px;line-height: 1px;margin-top:15%}
+.dialogue-tips{background:rgba(0,0,0,.6);width:50%;position:fixed;left:20%;top:40%;margin-top:-25px;z-index:999;border-radius:20px;color:#fff;text-align:center;padding:5%;line-height:1.5}
+</style>
+
+<style>
+    .form-line{
+        border: 0 none;background-image: linear-gradient(#ff8800,#ff8800),linear-gradient(gray,gray);
+        background-size: 0px 2px,100% 1px;
+        background-repeat: no-repeat;background-position: center bottom,center calc(100% - 1px);
+        background-color: rgba(255,255,255,0);
+    }
+   /* input[type="text"]:focus{
+        background-size: 100% 2px,100% 1px;
+        transition: all .5s;
+        border: none;
+        outline: none;
+    }*/
+    .input-focus{
+        background-size: 100% 2px,100% 1px;
+        transition: all .3s;
+        border: none;
+        outline: none;
+    }
+
+    select,input{
+        height: 25px;
+        width:100%;
+        font-size:16px;
+        color:#373737;
+        background-color: transparent;
+    }
+    input:focus{
+        outline:none;
+        border-color:transparent;
+    }
+    .item{
+        padding: 7% 10%;
+        position: relative;
+    }
+    .item .item_label{
+        position: absolute;
+        color:#000;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    .item .item_labels{
+        position: absolute;
+        color:#777;
+        font-size: 13px;
+        font-weight: bold;
+    }
+    .room_input{
+   		text-align:center;
+    	width:8%;
+    	border:0;
+    }
+    .unit{
+    	font-size:16px;
+    	font-weight: bold;
+    	color:#ff9900;
+    }
+    input{
+    	color:#000;
+    	font-size:16px;
+    	font-weight: bold;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+	<div class="content">
+		<div class="title">
+			<p class="title_label">业主信息填写页</p>
+			<span class="title_tip">（仅限：远洋 · 大河宸章业主参与）</span>
+		</div>
+		<div class="info">
+			<form class="form" name="form">
+				<div class="item">
+			        <label for="" class="item_label">姓名</label>
+			        <input type="text" class="form-line" name="name" maxlength="15"/> 
+			    </div>
+				<div class="item">
+			        <label for="" class="item_label">手机</label>
+			        <input type="number" class="form-line" name="phone" maxlength="15"/> 
+			    </div>
+			    <div class="item">
+			        <label for="" class="item_label">房号</label>
+			        <input type="text" class="form-line" id="room" maxlength="15"/> 
+			        <div style="display:none;margin-top:-29px" id="room_div">
+			        	<input type="number" id="room_block" name="room_block" class="room_input" maxlength="3"><span class="unit"> 幢</span>
+						<input type="number" id="room_unit" name="room_unit" class="room_input" maxlength="3"><span class="unit"> 单元</span>
+						<input type="number" id="room_room" name="room_room" class="room_input" maxlength="3"><span class="unit"> 室</span>
+			        </div>
+			    </div>
+			</form>
+		</div>
+		<div class="tip">
+			<p class="title_tip">请确认信息无误，提交后不可修改</p>
+			<div class="submit">
+				<button onclick="infoSubmit()">提交</button>
+			</div>
+		</div>
+	</div>
+	<div class="img">
+	</div>
+</div>
+<script src="https://wu.stephen7.top/Showhand/static/questionnaire/jquery-2.2.0.min.js"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+<script>
+    $(function(){
+        //输入框点击事件
+        $(".form-line").click(function(){
+            //$(this).css({"backgroundSize":"100% 2px,100% 1px","transition":"all .5s",'border':"none","outline":"none"});
+            $(this).prev().animate({'top':"-1px","font-size":"13px"},300);
+            if($(this).attr('id')=='room'){
+            	$('#room_div').show();
+            	$('#room_block').focus();
+            }
+        });
+        //输入框获取到焦点
+        $(".form-line").focus(function(){
+        	if($(this).attr('id')=='room'){
+            	return
+            }
+            $(this).addClass("input-focus");
+            $(this).prev().removeClass("item_label");
+            $(this).prev().addClass("item_labels");
+        });
+        //输入框失去焦点事件
+        $(".form-line").blur(function(){
+        	if($(this).attr('id')=='room'){
+        		$(this).addClass("input-focus");
+            	$(this).prev().removeClass("item_label");
+                $(this).prev().addClass("item_labels");
+            	return
+            }
+            if(!$(this).val()){
+                $(this).prev().animate({'top':"24px","font-size":"16px"},300);  
+                $(this).removeClass("input-focus"); 
+                $(this).prev().removeClass("item_labels");
+                $(this).prev().addClass("item_label");
+            }else{
+            	$(this).addClass("input-focus");
+            	$(this).prev().removeClass("item_label");
+                $(this).prev().addClass("item_labels");
+            } 
+        });    
+        
+    })
+
+</script>
+<script type="text/javascript">
+$("body").height($(window).height());
+var run_flag = true;
+var openId = getWXUserInfo();
+info(openId);
+
+function info(openId){
+	if(openId){
+		var infos = {openId: openId};
+		$.post("https://wu.stephen7.top/Showhand/a-api/farm/list",infos,function(json){
+			if(json.success==true){
+				var list = json.body.list;
+				if(list.length>0){
+					if(list[0].farm){
+						dialogueTips('您已经秒杀过啦 正在跳转...');
+						setTimeout(function(){
+							document.location.href = 'list.html';
+						},2000);
+					}else{
+						dialogueTips('信息已填写 正在跳转...');
+						setTimeout(function(){
+							document.location.href = 'index.html';
+						},1500);
+					}
+				}
+			} else {
+				dialogueTips(json.msg);
+			}
+		},'json');
+	}else{
+		//dialogueTips('微信授权错误');
+	}
+}
+
+
+function infoSubmit(){
+	var nameReg = /^[\u4E00-\u9FA5A-Za-z]+$/;
+	var phoneReg = /^[1][3,4,5,7,8][0-9]{9}$/;
+	//var roomReg = /^[1-9][0-9-]*[1-9]$/;
+	var numberReg = /^[0-9]{1,3}$/;
+	if(form.name.value == ''){
+		dialogueTips('请填写姓名');
+	}else if(!nameReg.test(form.name.value)){
+		dialogueTips('姓名格式不正确');
+	}else if(form.phone.value == ''){
+		dialogueTips('请填写手机号码');
+	}else if(!phoneReg.test(form.phone.value)){
+		dialogueTips('手机号码格式不正确');
+	}else if(form.room_block.value == ''){
+		dialogueTips('请填写幢');
+	}else if(!numberReg.test(form.room_block.value)){
+		dialogueTips('幢格式不正确');
+	}else if(form.room_unit.value == ''){
+		dialogueTips('请填写单元');
+	}else if(!numberReg.test(form.room_unit.value)){
+		dialogueTips('单元格式不正确');
+	}else if(form.room_room.value == ''){
+		dialogueTips('请填写室');
+	}else if(!numberReg.test(form.room_room.value)){
+		dialogueTips('室格式不正确');
+	}else{
+		if(run_flag){
+			run_flag = false;
+			var ins = {
+				farmId:0,
+				openId: openId,	
+				name:form.name.value,
+				phone:form.phone.value,
+				room:form.room_block.value+'-'+form.room_unit.value+'-'+form.room_room.value
+			};
+			$.post("https://wu.stephen7.top/Showhand/a-api/farm/save",ins,function(json){
+				if(json.success==true){
+					if(json.errorCode=="1"){
+						dialogueTips(json.msg);
+						run_flag = true;
+					}else if(json.errorCode=="2"){
+						dialogueTips(json.msg);
+						run_flag = true;
+					}else{
+						dialogueTips("提交成功");
+						setTimeout(function(){
+							document.location.href = 'index.html';
+							run_flag = true;
+						},1500);
+					}
+				} else {
+					dialogueTips(json.msg);
+					run_flag = true;
+					return false;
+				}
+			},'json');
+		}else{
+			dialogueTips('正在提交');
+		}
+	}
+}
+
+function dialogueTips(txt){
+	var _html = '<div class="dialogue-tips" id="J_error">'+txt+'</div>';
+	if($('.dialogue-tips').size()>0){
+		$('.dialogue-tips').remove();
+		clearTimeout(t);
+	}
+	$('body').append(_html);
+	var t = setTimeout(function(){
+		$('#J_error').remove();
+		clearTimeout(t);
+	},1500);
+}
+
+function getWXUserInfo(){
+	var appid = 'wxe112e7675a5d5f98';
+	var openId = localStorage.getItem("openId-"+appid);
+	var access_code = getUrlParam('code');	
+	if(appid != ""){
+		if (openId == "" || openId == null) {
+			//----------------------------获取code--------------------------------------
+			if(access_code == "" || access_code == null || access_code =="null"){
+				var fromurl = location.href;
+				//https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect
+				var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+ appid +'&redirect_uri=' + encodeURIComponent(fromurl)
+						+ '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+				location.href = url;
+			} else {
+				$.ajax('https://wu.stephen7.top/Showhand/a-api/wx/authorize', {
+					data : {
+						code : access_code,
+						scope: 'snsapi_base'
+					},
+					async : false,
+					cache : false,
+					dataType : 'json',//服务器返回json格式数据
+					type : 'post',//HTTP请求类型
+					success : function(result) {
+						if (result.success == true) {
+							openId = result.body.wxUser.openId;
+							localStorage.setItem("openId-"+ appid, openId);
+						} else {
+							alert("微信身份识别失败");
+						}
+					},
+					error : function(xhr, type, errorThrown) {
+						
+					}
+				});
+			}
+		}
+	}
+	return openId
+}
+function getUrlParam(name) {
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+	var r = window.location.search.substr(1).match(reg);
+	if (r != null) {
+		return unescape(r[2]);
+	} else {
+		return null;
+	}
+} 
+</script>
+
+</body></html>

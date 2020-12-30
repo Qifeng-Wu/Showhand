@@ -6,7 +6,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.codec.binary.Hex;
+import org.jeewx.api.core.exception.WexinReqException;
 import org.jeewx.api.mp.aes.AesException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,10 +16,13 @@ import org.xml.sax.SAXException;
 
 import com.jeeplus.common.json.AjaxJson;
 import com.jeeplus.common.web.BaseController;
+import com.jeeplus.modules.audio.entity.WXUser;
+import com.jeeplus.modules.audio.service.WXUserService;
 
 import net.sf.json.JSONObject;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Random;
 import java.io.IOException;
@@ -33,6 +38,86 @@ public class WXAuthorization extends BaseController {
 	public static final String TOKEN = "stephen1234567";
     public static final String APPID = "wxe112e7675a5d5f98"; // 微信appid---微信公众平台
     public static final String APPSECRET = "2b52a387b7af83e753114eecf4e7c966"; // 微信AppSecret---微信公众平台
+    
+    @Autowired
+	private WXUserService wxUserService;
+    /**
+	 * OAuth2.0网页授权获取(scopesnsapi_base)
+	 * @param description
+	 * @throws WexinReqException
+	 */
+	@RequestMapping(value = "authorize")
+	@ResponseBody
+	public synchronized AjaxJson authorize(WXUser wxUser, HttpServletRequest request) throws WexinReqException{
+		AjaxJson ajax = new AjaxJson();
+		String openId = null;
+		String access_token = null;
+		
+		String scope = request.getParameter("scope");
+		String code = request.getParameter("code");
+		
+		JSONObject authResult;
+		try {
+			//网页授权
+			authResult = WxCommonAPI.getAuthAccessToken(APPID,APPSECRET,code);
+			openId = authResult.getString("openid");
+		} catch (WexinReqException e) {
+			ajax.setSuccess(false);
+			ajax.setErrorCode("-3");
+			ajax.setMsg("网页授权失败！");
+			return ajax;
+		}
+		if("snsapi_base".equals(scope)) {
+			
+		}else {
+			
+		}
+		if (openId != null) {
+			//以snsapi_base为scope发起的网页授权，是用来获取进入页面的用户的openid的，并且是静默授权并自动跳转到回调页的。用户感知的就是直接进入了回调页（往往是业务页面）
+			//以snsapi_userinfo为scope发起的网页授权，是用来获取用户的基本信息的。但这种授权需要用户手动同意，并且由于用户同意过，所以无须关注，就可在授权后获取该用户的基本信息
+			if(!"snsapi_base".equals(scope)) {
+				JSONObject userInfo = WxCommonAPI.getUserInfo(access_token,openId);//获取用户信息
+				String nickname = userInfo.getString("nickname");
+				String sex = userInfo.getString("sex");
+				String province = userInfo.getString("province");
+				String city = userInfo.getString("city");
+				String country = userInfo.getString("country");
+				String headimgurl = userInfo.getString("headimgurl");
+					
+				wxUser.setNickname(nickname);
+				wxUser.setSex(sex);
+				wxUser.setProvince(province);
+				wxUser.setCity(city);
+				wxUser.setCountry(country);
+				wxUser.setHeadimgurl(headimgurl);
+			}
+			
+			// 查询下我们的表中是否存在此数据
+			WXUser user = wxUserService.get(openId);
+			wxUser.setOpenId(openId);
+			if (user != null) {
+				// 若存在就更新下数据，防止出现更换微信头像昵称的情况出现
+				wxUser.setUpdatetime(new Date());
+				wxUserService.customSave(wxUser);//跟新
+			} else {// 若不存在此数据
+				// 将这些数据插入到数据库
+				wxUser.setCreatetime(new Date());
+				wxUser.setUpdatetime(new Date());
+				wxUserService.save(wxUser);//新增
+			}	
+			
+			LinkedHashMap<String, Object> body = new LinkedHashMap<String, Object>();	
+			body.put("wxUser", wxUser);
+			ajax.setBody(body);
+			return ajax;
+	
+		}else {
+			ajax.setSuccess(false);
+			ajax.setErrorCode("-2");
+			ajax.setMsg("网页授权失败！");
+		}
+		return ajax;
+	}
 
     @RequestMapping("/getSignature")
     @ResponseBody

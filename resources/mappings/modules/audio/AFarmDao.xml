@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.audio.dao.AFarmDao">
+    
+	<sql id="aFarmColumns">
+		a.farmId AS "farmId",
+		a.openId AS "openId",
+		a.name AS "name",
+		a.phone AS "phone",
+		a.room AS "room",
+		a.farm AS "farm",
+		a.getTime AS "getTime",
+		a.createTime AS "createTime"
+	</sql>
+	   
+	<select id="get" resultType="AFarm">
+		SELECT 
+			<include refid="aFarmColumns"/>
+		FROM a_farm a
+		WHERE a.farmId = #{farmId}
+	</select>
+	
+	<select id="findList" resultType="AFarm">
+		SELECT 
+			<include refid="aFarmColumns"/>
+		FROM a_farm a
+		<where>			
+			<if test="name != null and name != ''">
+				 AND (a.name LIKE concat('%',#{name},'%')
+				 OR a.phone LIKE concat('%',#{name},'%'))	
+			</if>
+			<if test="openId != null and openId != ''">
+				 AND a.openId = #{openId}
+			</if>
+			<if test="room != null and room != ''">
+				 AND a.room = #{room}
+			</if>
+			<if test="farm != null and farm != ''">
+				 AND a.farm = #{farm}
+			</if>
+			<if test="filter == 1">
+				 AND a.farm is not null
+			</if>
+			<if test="filter == 2">
+				 AND a.farm is null
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			    ORDER BY a.getTime DESC,a.farmId DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert"  parameterType="AFarm" useGeneratedKeys="true" keyProperty="farmId">
+		INSERT INTO a_farm(
+			openId,
+			name,
+			phone,
+			room,
+			farm,
+			getTime,
+			createTime
+		) VALUES (
+			#{openId},
+			#{name},
+			#{phone},
+			#{room},
+			#{farm},
+			#{getTime},
+			#{createTime}
+		)
+	</insert>
+	
+	<update id="update" parameterType="AFarm" useGeneratedKeys="true" keyProperty="farmId">
+		UPDATE a_farm 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="openId != null">openId = #{openId},</if>
+			<if test="name != null">name = #{name},</if>
+			<if test="phone != null">phone = #{phone},</if>
+			<if test="room != null">room = #{room},</if>
+			<if test="farm != null">farm = #{farm},</if>
+			<if test="getTime != null">getTime = #{getTime}</if>
+		 </trim>
+		WHERE farmId = #{farmId}
+	</update>
+		
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM a_farm
+		WHERE farmId = #{farmId}
+	</update>
+</mapper>

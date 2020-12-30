@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.audio.dao.WXUserDao">
+   
+	<sql id="WXUserColumns">
+		a.openId AS "openId",
+		a.nickname AS "nickname",
+		a.sex AS "sex",
+		a.province AS "province",
+		a.city AS "city",
+		a.country AS "country",
+		a.headimgurl AS "headimgurl",
+		a.createtime AS "createtime",
+		a.updatetime AS "updatetime"	
+	</sql>
+    
+	<select id="get" resultType="WXUser">
+		SELECT 
+			<include refid="WXUserColumns"/>
+		FROM wx_user a
+		 <where>
+			AND a.openId = #{openId}
+		</where>
+	</select>
+	
+	<select id="findList" resultType="WXUser">
+		SELECT 
+			<include refid="WXUserColumns"/>
+		FROM wx_user a
+		<where>
+			AND a.nickname is not null
+			<if test="openId != null ">
+					AND a.openId = #{openId}
+			</if>
+			 <if test="nickname != null and nickname != ''">
+				AND a.nickname LIKE concat('%',#{nickname},'%')
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.updatetime DESC
+			</otherwise>
+		</choose>		
+	</select>
+		
+	<insert id="insert"  parameterType="WXUser" useGeneratedKeys="true" keyProperty="openId">
+		INSERT INTO wx_user(
+			openId,
+			nickname,
+			sex,
+			province,
+			city,
+			country,
+			headimgurl,
+			createtime,
+			updatetime
+		) VALUES (
+			#{openId},
+			#{nickname},
+			#{sex},
+			#{province},
+			#{city},
+			#{country},
+			#{headimgurl},
+			#{createtime},
+			#{updatetime}
+		)
+	</insert>
+	
+	<update id="update" parameterType="WXUser" useGeneratedKeys="true" keyProperty="openId">
+		UPDATE wx_user
+		<trim prefix="set" suffixOverrides=",">
+			<if test="nickname != null">nickname = #{nickname},</if>
+			<if test="sex != null">sex = #{sex},</if>
+			<if test="province != null">province = #{province},</if>
+			<if test="city != null">city = #{city},</if>
+			<if test="country != null">country = #{country},</if>
+			<if test="headimgurl != null">headimgurl = #{headimgurl},</if>
+			<if test="createtime != null">createtime = #{createtime},</if>
+			<if test="updatetime != null">updatetime = #{updatetime}</if>
+		 </trim>
+		WHERE openId = #{openId}
+	</update>
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM wx_user
+		WHERE openId = #{openId}
+	</update>
+</mapper>
