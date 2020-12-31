@@ -141,4 +141,12 @@ public class AFarmController extends BaseController {
 		}
 		return "redirect:"+Global.getAdminPath()+"/audio/farm/?repage";
     }
+	
+	/**
+	 * 查看剩余菜园编号
+	 */
+	@RequestMapping(value = "remain")
+	public String remain() {
+		return "modules/audio/farm/remainFarmList";
+	}
 }

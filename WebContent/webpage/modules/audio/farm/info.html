@@ -23,6 +23,7 @@ body,html{margin:0;padding:0}
 .img{width:100%;height:30%;background:url(https://wu.stephen7.top/Showhand/static/questionnaire/farm/banner.png) no-repeat 0 0/100% 100%;}
 .submit button{color: #fff;background-color: #ff9900;width: 80%;height: 40px;border: solid 1px #ff9900;letter-spacing: 3px;font-size: 18px;border-radius: 7px;line-height: 1px;margin-top:15%}
 .dialogue-tips{background:rgba(0,0,0,.6);width:50%;position:fixed;left:20%;top:40%;margin-top:-25px;z-index:999;border-radius:20px;color:#fff;text-align:center;padding:5%;line-height:1.5}
+.end{text-align:center;margin-top:80%;-webkit-transform:translateY(-50%);-ms-transform:translateY(-50%);transform:translateY(-50%);font-size:19px;position:absolute;width:100%;left:0}
 </style>
 
 <style>
@@ -94,7 +95,7 @@ body,html{margin:0;padding:0}
 	<div class="content">
 		<div class="title">
 			<p class="title_label">业主信息填写页</p>
-			<span class="title_tip">（仅限：远洋 · 大河宸章业主参与）</span>
+			<span class="title_tip" id="title_tip"></span>
 		</div>
 		<div class="info">
 			<form class="form" name="form">
@@ -174,13 +175,31 @@ body,html{margin:0;padding:0}
 </script>
 <script type="text/javascript">
 $("body").height($(window).height());
-var run_flag = true;
-var openId = getWXUserInfo();
-info(openId);
+var community = getUrlParam("community");
+if(community && community<=4){
+	var title = ""
+	if(community==1) {title = "大河宸章"};
+	if(community==2) title = "上河宸章";
+	if(community==3) title = "上塘宸章";
+	if(community==4) title = "远洋香奈";
+	$("title").text(title+"业主信息录入")
+	if(community==4){
+		$("#title_tip").text('（仅限：'+title+'业主参与）')
+	}else{
+		$("#title_tip").text('（仅限：远洋 · '+title+'业主参与）')
+	}
+	
+	var run_flag = true;
+	var openId = getWXUserInfo();
+	info(openId,community);
+}else{
+	$('body,html').css({'height':'100%'});
+	$(".container").css({'background':'#fff','background-image':'none','height':'100%'}).html('<p class="end">页面不存在</p>');
+}
 
-function info(openId){
+function info(openId,community){
 	if(openId){
-		var infos = {openId: openId};
+		var infos = {openId:openId, community:community};
 		$.post("https://wu.stephen7.top/Showhand/a-api/farm/list",infos,function(json){
 			if(json.success==true){
 				var list = json.body.list;
@@ -188,12 +207,12 @@ function info(openId){
 					if(list[0].farm){
 						dialogueTips('您已经秒杀过啦 正在跳转...');
 						setTimeout(function(){
-							document.location.href = 'list.html';
+							document.location.href = 'list.html?community='+community;
 						},2000);
 					}else{
 						dialogueTips('信息已填写 正在跳转...');
 						setTimeout(function(){
-							document.location.href = 'index.html';
+							document.location.href = 'index.html?community='+community;
 						},1500);
 					}
 				}
@@ -237,6 +256,7 @@ function infoSubmit(){
 			run_flag = false;
 			var ins = {
 				farmId:0,
+				community: community,
 				openId: openId,	
 				name:form.name.value,
 				phone:form.phone.value,
@@ -253,7 +273,7 @@ function infoSubmit(){
 					}else{
 						dialogueTips("提交成功");
 						setTimeout(function(){
-							document.location.href = 'index.html';
+							document.location.href = 'index.html?community='+community;
 							run_flag = true;
 						},1500);
 					}

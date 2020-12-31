@@ -19,6 +19,7 @@ public class AFarm extends DataEntity<AFarm> {
 	private static final long serialVersionUID = 1L;
 	private Integer farmId;		// 主键ID
 	private String openId;	    // 用户OPNEID
+	private String community;	//小区
 	private String name;	    // 姓名
 	private String phone;	    // 手机号码
 	private String room;	    // 房间号
@@ -52,8 +53,18 @@ public class AFarm extends DataEntity<AFarm> {
 		this.openId = openId;
 	}
 	
+	@Length(min=0, max=100, message="小区名称必须介于 0 和 50之间")
+	@ExcelField(title="小区名称", align=2, sort=1, dictType="farm_community")
+	public String getCommunity() {
+		return community;
+	}
+
+	public void setCommunity(String community) {
+		this.community = community;
+	}
+
 	@Length(min=0, max=50, message="姓名必须介于 0 和 50 之间")
-	@ExcelField(title="姓名", align=2, sort=1)
+	@ExcelField(title="姓名", align=2, sort=2)
 	public String getName() {
 		return name;
 	}
@@ -63,7 +74,7 @@ public class AFarm extends DataEntity<AFarm> {
 	}
 
 	@Length(min=0, max=50, message="手机号必须介于 0 和 50 之间")
-	@ExcelField(title="手机号", align=2, sort=2)
+	@ExcelField(title="手机号", align=2, sort=3)
 	public String getPhone() {
 		return phone;
 	}
@@ -73,7 +84,7 @@ public class AFarm extends DataEntity<AFarm> {
 	}
 
 	@Length(min=0, max=50, message="房屋号必须介于 0 和 50 之间")
-	@ExcelField(title="房屋号", align=2, sort=3)
+	@ExcelField(title="房屋号", align=2, sort=4)
 	public String getRoom() {
 		return room;
 	}
@@ -83,7 +94,7 @@ public class AFarm extends DataEntity<AFarm> {
 	}
 
 	@Length(min=0, max=50, message="菜园编号必须介于 0 和 50 之间")
-	@ExcelField(title="菜园编号", align=2, sort=4)
+	@ExcelField(title="菜园编号", align=2, sort=5)
 	public String getFarm() {
 		return farm;
 	}
@@ -93,7 +104,7 @@ public class AFarm extends DataEntity<AFarm> {
 	}
 
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	@ExcelField(title="秒杀时间", type=1, align=2, sort=5)
+	@ExcelField(title="秒杀时间", type=1, align=2, sort=6)
 	public Date getGetTime() {
 		return getTime;
 	}

@@ -48,6 +48,13 @@
 					 <option value="1" <c:if test='${aFarm.filter == 1}'>  selected='selected'  </c:if>>已秒杀</option>
 					 <option value="2" <c:if test='${aFarm.filter == 2}'>  selected='selected'  </c:if>>未秒杀</option>
 				</select>
+				<select name="community" class="form-control input-sm">
+					 <option value="">全部</option>
+					 <option value="1" <c:if test='${aFarm.community eq "1"}'>  selected='selected'  </c:if>>大河宸章</option>
+					 <option value="2" <c:if test='${aFarm.community eq "2"}'>  selected='selected'  </c:if>>上河宸章</option>
+					 <option value="3" <c:if test='${aFarm.community eq "3"}'>  selected='selected'  </c:if>>上塘宸章</option>
+					 <option value="4" <c:if test='${aFarm.community eq "4"}'>  selected='selected'  </c:if>>远洋香奈</option>
+				</select>
 				<form:input path="name" placeholder="请输入姓名、手机号查询" style="width:200px" htmlEscape="false" maxlength="20"  class=" form-control input-sm"/>
 				<form:input path="room" placeholder="请输入房号查询" style="width:200px" htmlEscape="false" maxlength="10"  class=" form-control input-sm"/>
 				<form:input path="farm" placeholder="请输入菜园编号查询" style="width:200px" htmlEscape="false" maxlength="10"  class=" form-control input-sm"/>
@@ -56,6 +63,8 @@
 			 </div>	
 		</form:form>
 		<div class="pull-right">
+			<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" 
+				onclick="openDialogView('查看剩余菜园编号', '${ctx}/audio/farm/remain','800px', '500px')"><i class="fa fa-search-plus"></i> 查看剩余菜园</button>
 			<shiro:hasPermission name="audio:farm:edit">
 			    <table:editRow url="${ctx}/audio/farm/form" title="编辑" id="contentTable"></table:editRow><!-- 编辑按钮 -->
 			</shiro:hasPermission>
@@ -75,9 +84,11 @@
 		<thead>
 			<tr>
 				<th> <input type="checkbox" class="i-checks"></th>
+				<th class="sort-column community">小区</th>
 				<th class="sort-column room">房号</th>
 				<th class="sort-column name">姓名</th>
 				<th class="sort-column phone">手机号</th>
+				<th class="sort-column farm">状态</th>
 				<th class="sort-column farm">菜园编号</th>
 				<th class="sort-column getTime">秒杀时间</th>
 				<th class="sort-column">操作</th>
@@ -87,9 +98,16 @@
 		<c:forEach items="${page.list}" var="aFarm">
 			<tr>
 				<td> <input type="checkbox" id="${aFarm.farmId}" class="i-checks"></td>
+				<td>
+					<c:if test="${aFarm.community eq '1'}">大河宸章</c:if>
+					<c:if test="${aFarm.community eq '2'}">上河宸章</c:if>
+					<c:if test="${aFarm.community eq '3'}">上塘宸章</c:if>
+					<c:if test="${aFarm.community eq '4'}">远洋香奈</c:if>
+				</td>
 				<td>${aFarm.room}</td>
 				<td>${aFarm.name}</td>
 				<td>${aFarm.phone}</td>
+				<td>${aFarm.farm eq null?"未秒杀":"已秒杀"}</td>
 				<td>${aFarm.farm}</td>
 				<td><fmt:formatDate value="${aFarm.getTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 				<td>

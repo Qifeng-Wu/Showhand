@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html><head>
 <meta charset="utf-8">
-<title>远洋大河宸章秒杀结果</title>
+<title>远洋地产秒杀结果</title>
 <meta charset="utf-8">
 <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
 <meta content="yes" name="apple-mobile-web-app-capable">
@@ -14,6 +14,7 @@ body,html{margin:0;padding:0}
 .content{width:100%;height:70%;}
 .img{width:100%;height:30%;background:url(https://wu.stephen7.top/Showhand/static/questionnaire/farm/banner.png) no-repeat 0 0/100% 100%;}
 .dialogue-tips{background:rgba(0,0,0,.6);width:50%;position:fixed;left:20%;top:40%;margin-top:-25px;z-index:999;border-radius:20px;color:#fff;text-align:center;padding:5%;line-height:1.5}
+.end{text-align:center;margin-top:80%;-webkit-transform:translateY(-50%);-ms-transform:translateY(-50%);transform:translateY(-50%);font-size:19px;position:absolute;width:100%;left:0}
 </style>
 <style type="text/css">
     	.mytable {
@@ -93,12 +94,25 @@ body,html{margin:0;padding:0}
 <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
 <script type="text/javascript">
 $("body").height($(window).height());
-var openId = getWXUserInfo();
-farmList()
-info(openId);
+var community = getUrlParam("community");
+if(community && community<=4){
+	var title = ""
+	if(community==1) title = "远洋大河宸章秒杀结果";
+	if(community==2) title = "远洋上河宸章秒杀结果";
+	if(community==3) title = "远洋上塘宸章秒杀结果";
+	if(community==4) title = "远洋香奈秒杀结果";
+	$("title").text(title)
+	var openId = getWXUserInfo();
+	info(openId,community);
+	farmList(community);
+}else{
+	$('body,html').css({'height':'100%'});
+	$(".container").css({'background':'#fff','background-image':'none','height':'100%'}).html('<p class="end">页面不存在</p>');
+}
+
 //获取菜农列表
-function farmList(){
-		$.post("https://wu.stephen7.top/Showhand/a-api/farm/list",{},function(json){
+function farmList(community){
+		$.post("https://wu.stephen7.top/Showhand/a-api/farm/list",{community:community,filter:'1'},function(json){
 			if(json.success==true){
 				var list = json.body.list;
 				if(list.length>0){
@@ -129,9 +143,9 @@ function farmList(){
 			}
 		},'json');
 }
-function info(openId){
+function info(openId,community){
 	if(openId){
-		var infos = {openId: openId};
+		var infos = {openId:openId, community:community};
 		$.post("https://wu.stephen7.top/Showhand/a-api/farm/list",infos,function(json){
 			if(json.success==true){
 				var list = json.body.list;
@@ -144,7 +158,7 @@ function info(openId){
 						$('#img_fail').show();
 						dialogueTips('现在去秒杀 正在跳转...');
 						setTimeout(function(){
-							document.location.href = 'info.html';
+							document.location.href = 'info.html?community='+community;
 						},1500);
 					}
 				}else{
@@ -152,7 +166,7 @@ function info(openId){
 					$('#img_fail').show();
 					dialogueTips('请填写业主信息 正在跳转...');
 					setTimeout(function(){
-						document.location.href = 'info.html';
+						document.location.href = 'info.html?community='+community;
 					},1500);
 				}
 			} else {
@@ -228,7 +242,7 @@ function getUrlParam(name) {
 } 
 //js解析时间（格式：HH-MM）
 function getDate(tm){
-	if(tm != ""){
+	if(tm && tm != ""){
 		var date = new Date(tm.replace(/\-/g, '/'));
 		date.setHours(date.getHours()+8);
 		h = (date.getHours() < 10 ? ('0'+date.getHours()) : date.getHours())+ ':';

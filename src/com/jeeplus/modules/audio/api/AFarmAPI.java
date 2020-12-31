@@ -37,6 +37,7 @@ public class AFarmAPI extends BaseController {
 	public synchronized AjaxJson save(AFarm aFarm, HttpServletRequest request) {	
 		
 		String openId = request.getParameter("openId");
+		String community = request.getParameter("community");
 		String name = request.getParameter("name");
 		String phone = request.getParameter("phone");
 		String room = request.getParameter("room");
@@ -47,6 +48,7 @@ public class AFarmAPI extends BaseController {
 			//判断房间是否存在
 			AFarm farmer1 = new AFarm();
 			farmer1.setRoom(room);
+			farmer1.setCommunity(community);
 			List<AFarm> list1 = aFarmService.findList(farmer1);
 			if(list1!=null && list1.size()>0) {
 				ajax.setMsg("该房号已被使用啦");
@@ -56,6 +58,7 @@ public class AFarmAPI extends BaseController {
 			//判断当前用户是否已经提交
 			AFarm farmer2 = new AFarm();
 			farmer2.setOpenId(openId);
+			farmer2.setCommunity(community);
 			List<AFarm> list2 = aFarmService.findList(farmer2);
 			if(list2!=null && list2.size()>0) {
 				ajax.setMsg("您已经提交过信息啦");
@@ -64,6 +67,7 @@ public class AFarmAPI extends BaseController {
 			}
 			aFarm.setFarmId(null);
 			aFarm.setOpenId(openId);
+			aFarm.setCommunity(community);
 			aFarm.setName(name);
 			aFarm.setPhone(phone);
 			aFarm.setRoom(room);
@@ -72,6 +76,7 @@ public class AFarmAPI extends BaseController {
 		}else {
 			//判断这个菜园是否被秒杀
 			aFarm.setFarm(farm);
+			aFarm.setCommunity(community);
 			List<AFarm> list = aFarmService.findList(aFarm);
 			if(list!=null && list.size()>0) {
 				ajax.setMsg("该菜园已被秒杀啦");
@@ -84,7 +89,47 @@ public class AFarmAPI extends BaseController {
 				ajax.setMsg("你已经秒杀过啦");
 				ajax.setErrorCode("3");
 				return ajax;
+			}else if("23".equals(farm) && (!"邹菊芬".equals(farmer3.getName()) || !"18857177289".equals(farmer3.getPhone()))) {
+				//判断23号菜园是否被指定人抢的(23号菜园指定给 邹菊芬 18857177289)
+				ajax.setMsg("该菜园已被秒杀啦");
+				ajax.setErrorCode("0");
+				return ajax;
 			}
+			
+			//判断是否全部被抢完
+			AFarm farmer4 = new AFarm();
+			farmer4.setCommunity(community);
+			farmer4.setFilter(1);
+			List<AFarm> list4 = aFarmService.findList(farmer4);
+			if(community.equals("1")){
+				if(list4!=null && list4.size()>=42) {//判断大河宸章是否被抢完 预留四个 
+					ajax.setMsg("菜园已被秒杀完啦");
+					ajax.setErrorCode("4");
+					return ajax;
+				}
+			}else if(community.equals("3")) {//判断上塘宸章是否被抢完 预留四个 指定一个
+				AFarm farmer5 = new AFarm();
+				farmer5.setCommunity(community);
+				farmer5.setFarm("23");
+				List<AFarm> list5 = aFarmService.findList(farmer5);
+				if(list4!=null && list5!=null && list5.size()>0 && list4.size()>=42) {
+					ajax.setMsg("菜园已被秒杀完啦");
+					ajax.setErrorCode("4");
+					return ajax;
+				}else if(list4!=null && (list5!=null && list5.size()<=0) && list4.size()>=41 && 
+						(!"邹菊芬".equals(farmer3.getName()) || !"18857177289".equals(farmer3.getPhone()))) {
+					ajax.setMsg("菜园已被秒杀完啦");
+					ajax.setErrorCode("4");
+					return ajax;
+				}
+			}else {
+				if(list4!=null && list4.size()>=46) {
+					ajax.setMsg("菜园已被秒杀完啦");
+					ajax.setErrorCode("4");
+					return ajax;
+				}
+			}
+		
 			aFarm.setFarm(farm);
 			aFarm.setGetTime(new Date());
 		}
