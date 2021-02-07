@@ -43,7 +43,8 @@
 			<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 			<input id="ids" name="ids" type="hidden"/>
 			<div class="form-group pull-left">
-				<form:input path="name" placeholder="请输入房号、姓名查询" style="width:250px" htmlEscape="false" maxlength="20"  class=" form-control input-sm"/>
+				<form:input path="room" placeholder="请输入房号查询" style="width:250px" htmlEscape="false" maxlength="20"  class=" form-control input-sm"/>
+				<form:input path="name" placeholder="请输入姓名查询" style="width:250px" htmlEscape="false" maxlength="20"  class=" form-control input-sm"/>
 				<form:input path="inspector" placeholder="请输入验房者编号查询" style="width:250px" htmlEscape="false" maxlength="10"  class=" form-control input-sm"/>
 		        <button type="button" class="btn btn-sm btn-primary" onclick="search();"> <i class="fa fa-search"></i> 搜索</button>
 		        <button type="button" class="btn btn-sm btn-primary" onclick="reset()" ><i class="fa fa-refresh"></i> 重置</button>
@@ -72,6 +73,7 @@
 		<thead>
 			<tr>
 				<th> <input type="checkbox" class="i-checks"></th>
+				<th class="sort-column community">小区</th>
 				<th class="sort-column room">房号</th>
 				<th class="sort-column name">姓名</th>
 				<th class="sort-column inspector">验房者编号</th>
@@ -90,6 +92,7 @@
 		<c:forEach items="${page.list}" var="aQuestionnaire">
 			<tr>
 				<td> <input type="checkbox" id="${aQuestionnaire.questionnaireId}" class="i-checks"></td>
+				<td>${aQuestionnaire.community}</td>
 				<td>${aQuestionnaire.room}</td>
 				<td>${aQuestionnaire.name}</td>
 				<td>${aQuestionnaire.inspector}</td>

@@ -89,8 +89,13 @@ public class AFarmAPI extends BaseController {
 				ajax.setMsg("你已经秒杀过啦");
 				ajax.setErrorCode("3");
 				return ajax;
-			}else if("23".equals(farm) && (!"邹菊芬".equals(farmer3.getName()) || !"18857177289".equals(farmer3.getPhone()))) {
+			}else if("3".equals(community) && "23".equals(farm) && (!"邹菊芬".equals(farmer3.getName()) || !"18857177289".equals(farmer3.getPhone()))) {
 				//判断23号菜园是否被指定人抢的(23号菜园指定给 邹菊芬 18857177289)
+				ajax.setMsg("该菜园已被秒杀啦");
+				ajax.setErrorCode("0");
+				return ajax;
+			}else if("4".equals(community) && "32".equals(farm) && (!"史长安".equals(farmer3.getName()) || !"13666686321".equals(farmer3.getPhone()))) {
+				//判断32号菜园是否被指定人抢的(32号菜园指定给 史长安 13666686321)
 				ajax.setMsg("该菜园已被秒杀啦");
 				ajax.setErrorCode("0");
 				return ajax;
@@ -107,17 +112,38 @@ public class AFarmAPI extends BaseController {
 					ajax.setErrorCode("4");
 					return ajax;
 				}
+			}if(community.equals("2")){
+				if(list4!=null && list4.size()>=32) {//判断上河
+					ajax.setMsg("菜园已被秒杀完啦");
+					ajax.setErrorCode("4");
+					return ajax;
+				}
 			}else if(community.equals("3")) {//判断上塘宸章是否被抢完 预留四个 指定一个
 				AFarm farmer5 = new AFarm();
 				farmer5.setCommunity(community);
 				farmer5.setFarm("23");
 				List<AFarm> list5 = aFarmService.findList(farmer5);
-				if(list4!=null && list5!=null && list5.size()>0 && list4.size()>=42) {
+				if(list4!=null && list5!=null && list5.size()>0 && list4.size()>=34) {
 					ajax.setMsg("菜园已被秒杀完啦");
 					ajax.setErrorCode("4");
 					return ajax;
-				}else if(list4!=null && (list5!=null && list5.size()<=0) && list4.size()>=41 && 
+				}else if(list4!=null && (list5!=null && list5.size()<=0) && list4.size()>=33 && 
 						(!"邹菊芬".equals(farmer3.getName()) || !"18857177289".equals(farmer3.getPhone()))) {
+					ajax.setMsg("菜园已被秒杀完啦");
+					ajax.setErrorCode("4");
+					return ajax;
+				}
+			}else if(community.equals("4")) {//判断远洋香奈是否被抢完指定一个
+				AFarm farmer6 = new AFarm();
+				farmer6.setCommunity(community);
+				farmer6.setFarm("32");
+				List<AFarm> list6 = aFarmService.findList(farmer6);
+				if(list4!=null && list6!=null && list6.size()>0 && list4.size()>=34) {
+					ajax.setMsg("菜园已被秒杀完啦");
+					ajax.setErrorCode("4");
+					return ajax;
+				}else if(list4!=null && (list6!=null && list6.size()<=0) && list4.size()>=33 && 
+						(!"史长安".equals(farmer3.getName()) || !"13666686321".equals(farmer3.getPhone()))) {
 					ajax.setMsg("菜园已被秒杀完啦");
 					ajax.setErrorCode("4");
 					return ajax;

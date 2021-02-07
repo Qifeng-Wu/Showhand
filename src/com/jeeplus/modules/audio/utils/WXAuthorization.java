@@ -124,7 +124,7 @@ public class WXAuthorization extends BaseController {
     public AjaxJson getSignature() {
     	AjaxJson ajax = new AjaxJson();	
         String appid = APPID;
-        String url="https://wu.stephen7.top/Showhand/webpage/modules/audio/questionnaire.html";//需要显示文字图片的地址
+        String url="https://wu.stephen7.top/Showhand/webpage/modules/audio/questionnaires.html";//需要显示文字图片的地址
         String access_token, ticket, nonceStr, timestamp, signature;
 		try {
 			access_token = getAccessToken();//需要调用微信开放接口获取

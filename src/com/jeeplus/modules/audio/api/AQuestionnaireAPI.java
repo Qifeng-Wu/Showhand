@@ -4,6 +4,8 @@
 package com.jeeplus.modules.audio.api;
 
 import java.util.Date;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,6 +53,12 @@ public class AQuestionnaireAPI extends BaseController {
 			ajax.setMsg("提交参数有误");
 			ajax.setErrorCode("0");
 			return ajax;
+		}
+		AQuestionnaire questionnaire = new AQuestionnaire();
+		questionnaire.setRoom(room);
+		List<AQuestionnaire> list = aQuestionnaireService.findList(questionnaire);
+		if(list!=null && list.size()>0) {
+			aQuestionnaire.setQuestionnaireId(list.get(0).getQuestionnaireId());
 		}
 		
 		aQuestionnaire.setRoom(room);

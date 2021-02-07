@@ -41,6 +41,10 @@
 		<table class="table table-bordered  table-condensed dataTables-example dataTable no-footer">
 		   <tbody>
 		   		<tr>
+		         <td class="active"><label class="pull-right"><font color="red">* </font>小区：</label></td>
+		         <td><form:input path="community" htmlEscape="false" maxlength="15" class="form-control required"/></td>
+		        </tr>
+		   		<tr>
 		         <td class="active"><label class="pull-right"><font color="red">* </font>房号：</label></td>
 		         <td><form:input path="room" htmlEscape="false" maxlength="15" class="form-control required"/></td>
 		         <td class="active"><label class="pull-right"><font color="red">* </font>姓名：</label></td>

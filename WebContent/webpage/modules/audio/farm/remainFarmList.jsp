@@ -21,10 +21,10 @@
 				$("tbody").append('<tr><td></td><td></td><td></td><td></td></tr>')
 			}
 			
-			var arr1 = getArrDifference(selectedFarmArray1,farmArry);
-			var arr2 = getArrDifference(selectedFarmArray2,farmArry);
-			var arr3 = getArrDifference(selectedFarmArray3,farmArry);
-			var arr4 = getArrDifference(selectedFarmArray4,farmArry);
+			var arr1 = getArrDifference(selectedFarmArray1,farmArry1);
+			var arr2 = getArrDifference(selectedFarmArray2,farmArry2);
+			var arr3 = getArrDifference(selectedFarmArray3,farmArry3);
+			var arr4 = getArrDifference(selectedFarmArray4,farmArry4);
 			$("thead th span").eq(0).text('（'+arr1.length+'）');
 			$("thead th span").eq(1).text('（'+arr2.length+'）')
 			$("thead th span").eq(2).text('（'+arr3.length+'）')
@@ -44,9 +44,15 @@
 			
 		});
 		
-		var farmArry = ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20',
+		var farmArry1 = ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20',
 						'21','22','23','24','25','26','27','28','29','30','31','32','33','34','35','36','37','38','39','40',
-						'41','42','43','44','45','46']
+						'41','42','43','44','45','46'];
+		var farmArry2 = ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20',
+			'21','22','23','24','25','26','27','28','29','30','31','32'];
+		var farmArry3 = ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20',
+			'21','22','23','24','25','26','27','28','29','30','31','32','33','34','35','36','37','38'];
+		var farmArry4 = ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20',
+			'21','22','23','24','25','26','27','28','29','30','31','32','33','34'];
 		//获取各个小区已被秒杀菜园编号数组
 		function selectedFarmArray(community){
 			var array = new Array();

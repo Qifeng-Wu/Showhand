@@ -156,10 +156,6 @@ function info(openId,community){
 					}else{
 						$('#img_success').hide();
 						$('#img_fail').show();
-						dialogueTips('现在去秒杀 正在跳转...');
-						setTimeout(function(){
-							document.location.href = 'info.html?community='+community;
-						},1500);
 					}
 				}else{
 					$('#img_success').hide();
@@ -245,6 +241,7 @@ function getDate(tm){
 	if(tm && tm != ""){
 		var date = new Date(tm.replace(/\-/g, '/'));
 		date.setHours(date.getHours()+8);
+		date.setSeconds(date.getSeconds()+6);
 		h = (date.getHours() < 10 ? ('0'+date.getHours()) : date.getHours())+ ':';
 		m = (date.getMinutes() < 10 ? ('0'+date.getMinutes()) : date.getMinutes());
 		var ndate = h+m

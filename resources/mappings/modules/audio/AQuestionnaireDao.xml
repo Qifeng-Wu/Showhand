@@ -4,6 +4,7 @@
     
 	<sql id="aQuestionnaireColumns">
 		a.questionnaireId AS "questionnaireId",
+		a.community AS "community",
 		a.room AS "room",
 		a.name AS "name",
 		a.inspector AS "inspector",
@@ -28,10 +29,15 @@
 		SELECT 
 			<include refid="aQuestionnaireColumns"/>
 		FROM a_questionnaire a
-		<where>			
+		<where>	
+			<if test="community != null and community != ''">
+				 AND a.community = #{community}
+			</if>		
 			<if test="name != null and name != ''">
-				 AND (a.room LIKE concat('%',#{name},'%')
-				 OR a.name LIKE concat('%',#{name},'%'))	
+				 AND a.name LIKE concat('%',#{name},'%')
+			</if>
+			<if test="room != null and room != ''">
+				 AND a.room = #{room}
 			</if>
 			<if test="inspector != null and inspector != ''">
 				 AND a.inspector = #{inspector}
@@ -49,6 +55,7 @@
 	
 	<insert id="insert"  parameterType="AQuestionnaire" useGeneratedKeys="true" keyProperty="questionnaireId">
 		INSERT INTO a_questionnaire(
+			community,
 			room,
 			name,
 			inspector,
@@ -61,6 +68,7 @@
 			remark,
 			create_time
 		) VALUES (
+			#{community},
 			#{room},
 			#{name},
 			#{inspector},

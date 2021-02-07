@@ -5,6 +5,7 @@
 	<sql id="aFarmColumns">
 		a.farmId AS "farmId",
 		a.openId AS "openId",
+		a.community AS "community",
 		a.name AS "name",
 		a.phone AS "phone",
 		a.room AS "room",
@@ -28,6 +29,9 @@
 			<if test="name != null and name != ''">
 				 AND (a.name LIKE concat('%',#{name},'%')
 				 OR a.phone LIKE concat('%',#{name},'%'))	
+			</if>
+			<if test="community != null and community != ''">
+				 AND a.community = #{community}
 			</if>
 			<if test="openId != null and openId != ''">
 				 AND a.openId = #{openId}
@@ -58,6 +62,7 @@
 	<insert id="insert"  parameterType="AFarm" useGeneratedKeys="true" keyProperty="farmId">
 		INSERT INTO a_farm(
 			openId,
+			community,
 			name,
 			phone,
 			room,
@@ -66,6 +71,7 @@
 			createTime
 		) VALUES (
 			#{openId},
+			#{community},
 			#{name},
 			#{phone},
 			#{room},

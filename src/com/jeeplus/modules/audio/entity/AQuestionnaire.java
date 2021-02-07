@@ -17,6 +17,7 @@ public class AQuestionnaire extends DataEntity<AQuestionnaire> {
 	
 	private static final long serialVersionUID = 1L;
 	private Integer questionnaireId;		// 主键ID
+	private String community;			//小区名称
 	private String room;	    		// 房号
 	private String name;	    		// 姓名
 	private String inspector;	    	// 验房者编号
@@ -47,7 +48,17 @@ public class AQuestionnaire extends DataEntity<AQuestionnaire> {
 	}
 	
 	@Length(min=0, max=50, message="房屋编号必须介于 0 和 50 之间")
-	@ExcelField(title="房屋编号", align=2, sort=1)
+	@ExcelField(title="小区名称", align=2, sort=1)
+	public String getCommunity() {
+		return community;
+	}
+
+	public void setCommunity(String community) {
+		this.community = community;
+	}
+
+	@Length(min=0, max=50, message="房屋编号必须介于 0 和 50 之间")
+	@ExcelField(title="房屋编号", align=2, sort=2)
 	public String getRoom() {
 		return room;
 	}
@@ -57,7 +68,7 @@ public class AQuestionnaire extends DataEntity<AQuestionnaire> {
 	}
 
 	@Length(min=0, max=50, message="姓名必须介于 0 和 50 之间")
-	@ExcelField(title="姓名", align=2, sort=2)
+	@ExcelField(title="姓名", align=2, sort=3)
 	public String getName() {
 		return name;
 	}
@@ -67,7 +78,7 @@ public class AQuestionnaire extends DataEntity<AQuestionnaire> {
 	}
 
 	@Length(min=0, max=50, message="验房者编号必须介于 0 和 50 之间")
-	@ExcelField(title="验房者编号", align=2, sort=3)
+	@ExcelField(title="验房者编号", align=2, sort=4)
 	public String getInspector() {
 		return inspector;
 	}
@@ -77,7 +88,7 @@ public class AQuestionnaire extends DataEntity<AQuestionnaire> {
 	}
 
 	@Length(min=0, max=50, message="总体满意度必须介于 0 和 50 之间")
-	@ExcelField(title="总体满意度", align=2, sort=4)
+	@ExcelField(title="总体满意度", align=2, sort=5)
 	public String getQuestion1() {
 		return question1;
 	}
@@ -87,7 +98,7 @@ public class AQuestionnaire extends DataEntity<AQuestionnaire> {
 	}
 
 	@Length(min=0, max=50, message="房屋质量满意度必须介于 0 和 50 之间")
-	@ExcelField(title="房屋质量满意度", align=2, sort=5)
+	@ExcelField(title="房屋质量满意度", align=2, sort=6)
 	public String getQuestion2() {
 		return question2;
 	}
@@ -97,7 +108,7 @@ public class AQuestionnaire extends DataEntity<AQuestionnaire> {
 	}
 
 	@Length(min=0, max=50, message="房屋设计整体满意度必须介于 0 和 50 之间")
-	@ExcelField(title="房屋设计整体满意度", align=2, sort=6)
+	@ExcelField(title="房屋设计整体满意度", align=2, sort=7)
 	public String getQuestion3() {
 		return question3;
 	}
@@ -107,7 +118,7 @@ public class AQuestionnaire extends DataEntity<AQuestionnaire> {
 	}
 
 	@Length(min=0, max=50, message="公共区域装饰及施工质量的满意度必须介于 0 和 50 之间")
-	@ExcelField(title="公共区域装饰及施工质量的满意度", align=2, sort=7)
+	@ExcelField(title="公共区域装饰及施工质量的满意度", align=2, sort=8)
 	public String getQuestion4() {
 		return question4;
 	}
@@ -117,7 +128,7 @@ public class AQuestionnaire extends DataEntity<AQuestionnaire> {
 	}
 
 	@Length(min=0, max=50, message="园区绿化及设计的满意度必须介于 0 和 50 之间")
-	@ExcelField(title="园区绿化及设计的满意度", align=2, sort=8)
+	@ExcelField(title="园区绿化及设计的满意度", align=2, sort=9)
 	public String getQuestion5() {
 		return question5;
 	}
@@ -127,7 +138,7 @@ public class AQuestionnaire extends DataEntity<AQuestionnaire> {
 	}
 
 	@Length(min=0, max=50, message="收楼的整体安排和服务的满意度必须介于 0 和 50 之间")
-	@ExcelField(title="收楼的整体安排和服务的满意度", align=2, sort=9)
+	@ExcelField(title="收楼的整体安排和服务的满意度", align=2, sort=10)
 	public String getQuestion6() {
 		return question6;
 	}
@@ -137,7 +148,7 @@ public class AQuestionnaire extends DataEntity<AQuestionnaire> {
 	}
 
 	@Length(min=0, max=50, message="意见或建议必须介于 0 和 50 之间")
-	@ExcelField(title="意见或建议", align=2, sort=10)
+	@ExcelField(title="意见或建议", align=2, sort=11)
 	public String getRemark() {
 		return remark;
 	}
