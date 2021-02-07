@@ -63,8 +63,10 @@
 			 </div>	
 		</form:form>
 		<div class="pull-right">
-			<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" 
+			
+				<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" 
 				onclick="openDialogView('查看剩余菜园编号', '${ctx}/audio/farm/remain','800px', '500px')"><i class="fa fa-search-plus"></i> 查看剩余菜园</button>
+    		
 			<shiro:hasPermission name="audio:farm:edit">
 			    <table:editRow url="${ctx}/audio/farm/form" title="编辑" id="contentTable"></table:editRow><!-- 编辑按钮 -->
 			</shiro:hasPermission>

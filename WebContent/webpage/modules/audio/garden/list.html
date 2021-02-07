@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8">
+<title>远洋大河宸章菜园秒杀结果</title>
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<style>
+body,html{margin:0;padding:0}
+.container{height:100%;background:#99e1fe}
+.content{width:100%;height:70%;}
+.img{width:100%;height:30%;background:url(https://wu.stephen7.top/Showhand/static/questionnaire/farm/banner.png) no-repeat 0 0/100% 100%;}
+.dialogue-tips{background:rgba(0,0,0,.6);width:50%;position:fixed;left:20%;top:40%;margin-top:-25px;z-index:999;border-radius:20px;color:#fff;text-align:center;padding:5%;line-height:1.5}
+.end{text-align:center;margin-top:80%;-webkit-transform:translateY(-50%);-ms-transform:translateY(-50%);transform:translateY(-50%);font-size:19px;position:absolute;width:100%;left:0}
+</style>
+<style type="text/css">
+    	.mytable {
+		        border: 2px solid #ff9900;
+		        font-size:12px;
+		        color:#ff6600;
+		        background-repeat: repeat-x;
+		        text-align:center;
+		        width:100%
+    		}
+
+		.mytable thead {
+		        color: #FFF;
+		        background-color: #4093c6
+		    }
+		
+		.mytable td,th {
+		        border: 1px solid #FFF;
+		        padding: 0 1em 0;
+		        height: 32px;
+		        width:33%
+		    }
+		    
+		.tr_color_1{
+    		background-color:#f8f8f8;
+    	}
+    	.tr_color_2{
+    		background-color:#fff;
+    	} 
+    	.circle{
+    		background-color: #c7efff;
+		    border-radius: 100px;
+		    width: 200px;
+		    height: 200px;
+		    margin:0 auto;
+		    margin-bottom:6%;
+		    text-align:center;
+    	}   
+    </style>
+</head>
+<body>
+<div class="container">
+	<div class="content">
+		<img style="width: 33%;position: absolute;right: 0px;top: 0px;" src="https://wu.stephen7.top/Showhand/static/questionnaire/farm/cloud.png">
+		<div style="padding-top:7%">
+			<div class="circle" id="img_success"> 
+				<img style="width:180px;margin-top:36px" src="https://wu.stephen7.top/Showhand/static/questionnaire/farm/success.png">
+				<img style="width:165px;" src="https://wu.stephen7.top/Showhand/static/questionnaire/farm/success_tip.png">
+			</div>
+			<div class="circle" id="img_fail" style="display:none">
+				<img style="width:112px;margin-top:36px" src="https://wu.stephen7.top/Showhand/static/questionnaire/farm/fail.png">
+				<img style="width:170px;margin-top:6px" src="https://wu.stephen7.top/Showhand/static/questionnaire/farm/fail_tip.png">
+			</div>
+		</div>
+		<div style="position: absolute;width: 80%;left: 10%;">
+			<table class="mytable">
+	            <thead>
+	            	<tr style="background-color:#FF9933">
+	            		<th>菜园编号</th>
+	            		<th>房号</th>
+		            	<th>秒杀时间</th>
+	            	</tr>
+	            </thead>
+	        </table>
+	        <div style="height:300px;display:block;margin-top:-2px;overflow-y:auto; border: solid 2px #ff9900;">
+		        <table class="mytable" style="border:0">
+		            <tbody>
+		
+					</tbody>
+		        </table>
+	        </div>
+	    </div>
+    </div>
+    <div class="img"></div>
+</div>
+<script src="https://wu.stephen7.top/Showhand/static/questionnaire/jquery-2.2.0.min.js"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+<script type="text/javascript">
+$("body").height($(window).height());
+var gardenId = localStorage.getItem("gardenId");
+info(gardenId);
+farmList();
+
+//获取菜农列表
+function farmList(){
+		$.post("https://wu.stephen7.top/Showhand/a-api/garden/list",{isGet:true},function(json){
+			if(json.success==true){
+				var list = json.body.list;
+				if(list.length>0){
+					$("thead").show();
+					$("tbody").empty();
+					$("tbody").next().remove();
+						for(var i=0;i< list.length;i++){
+							if(list[i].isGet==true){
+								var tr_color = "";
+								if(i%2==0){
+									tr_color = "tr_color_1";
+								}else{
+									tr_color = "tr_color_2";
+								} 	
+								
+								var html = '<tr class="'+tr_color+'">'+
+								            	'<td>'+list[i].garden+'</td>'+			            	
+								            	'<td>'+list[i].room+'</td>'+
+								            	'<td>'+getDate(list[i].getTime)+'</td>'+
+								             '</tr>';
+								$("tbody").append(html);
+						}
+					}
+					
+				}
+			} else {
+				dialogueTips(json.msg);
+			}
+		},'json');
+}
+function info(gardenId){
+	if(gardenId){
+		var infos = {gardenId:gardenId};
+		$.post("https://wu.stephen7.top/Showhand/a-api/garden/info",infos,function(json){
+			if(json.success==true){
+				var aGarden = json.body.aGarden;
+				if(aGarden.isGet==true){
+					$('#img_success').show();
+					$('#img_fail').hide();
+				}else{
+					$('#img_success').hide();
+					$('#img_fail').show();
+				}
+			} else {
+				dialogueTips(json.msg);
+			}
+		},'json');
+	}else{
+		$('#img_success').hide();
+		$('#img_fail').show();
+		dialogueTips('请填写业主信息 正在跳转...');
+		setTimeout(function(){
+			document.location.href = 'info.html';
+		},1500);
+	}
+}
+
+function dialogueTips(txt){
+	var _html = '<div class="dialogue-tips" id="J_error">'+txt+'</div>';
+	if($('.dialogue-tips').size()>0){
+		$('.dialogue-tips').remove();
+		clearTimeout(t);
+	}
+	$('body').append(_html);
+	var t = setTimeout(function(){
+		$('#J_error').remove();
+		clearTimeout(t);
+	},1500);
+}
+//js解析时间（格式：HH-MM）
+function getDate(tm){
+	if(tm && tm != ""){
+		var date = new Date(tm.replace(/\-/g, '/'));
+		date.setHours(date.getHours()+8);
+		date.setSeconds(date.getSeconds()+5);
+		h = (date.getHours() < 10 ? ('0'+date.getHours()) : date.getHours())+ ':';
+		m = (date.getMinutes() < 10 ? ('0'+date.getMinutes()) : date.getMinutes());
+		var ndate = h+m
+		return ndate;
+	}
+	return "";
+}
+</script>
+
+</body></html>

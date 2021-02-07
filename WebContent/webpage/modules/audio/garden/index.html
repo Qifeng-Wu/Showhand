@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html><head>
 <meta charset="utf-8">
-<title>远洋地产秒杀须知</title>
+<title>远洋大河宸章秒杀须知</title>
 <meta charset="utf-8">
 <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
 <meta content="yes" name="apple-mobile-web-app-capable">
@@ -39,7 +39,7 @@ body,html{margin:0;padding:0}
 	<div class="content">
 		<img class="icon" src="https://wu.stephen7.top/Showhand/static/questionnaire/farm/icon.png">
 		<div style="text-align:center;padding-top: 8%;">
-			<img id="community_title" style="width:60%" src="">
+			<img style="width:60%" src="https://wu.stephen7.top/Showhand/static/questionnaire/farm/community1.png">
 		</div>
 		<div class="div1">
 			<div class="area7">
@@ -111,7 +111,7 @@ body,html{margin:0;padding:0}
 			</div>
 		</div>
 		<div class="description">
-			<p><span id="description_title"></span>“开心农场”本次种植区认领采用微信线上秒杀方式，根据业主提交信息的时间顺序自主选择相应种植区号码。即第一个进入的业主可自主选择编号菜地，后续进来的业主则无法选择已被选中的种植区编号，依次类推，至最后一块菜地编号截止。</p>
+			<p>远洋大河宸章“开心农场”本次种植区认领采用微信线上秒杀方式，根据业主提交信息的时间顺序自主选择相应种植区号码。即第一个进入的业主可自主选择编号菜地，后续进来的业主则无法选择已被选中的种植区编号，依次类推，至最后一块菜地编号截止。</p>
 		</div>
 		<div class="submit">
 			<button class="button1" id="miaosha" onclick="miaosha()">选中</button>
@@ -123,35 +123,18 @@ body,html{margin:0;padding:0}
 <script src="https://wu.stephen7.top/Showhand/static/questionnaire/jquery-2.2.0.min.js"></script>
 <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
 <script type="text/javascript">
-function checkAuditTime(beginTime, endTime) {
-	var nowDate = new Date();
-	var beginDate = new Date(beginTime);
-	var endDate = new Date(endTime);
-	alert(nowDate)
-	alert(beginDate)
-	alert(endDate)
-	return nowDate.getTime()  >= beginDate.getTime() && nowDate.getTime() <= endDate.getTime();
+$("body").height($(window).height());
+var gardenId = localStorage.getItem("gardenId");
+var run_flag = true;
+if(gardenId){
+	infos(gardenId);
+}else{
+	dialogueTips('请填写业主信息 正在跳转...');
+	setTimeout(function(){
+		document.location.href = 'info.html';
+	},1500);
 }
 
-alert(checkAuditTime("2020/12/31 22:47:00", "2020/12/31 22:48:00"))
-$("body").height($(window).height());
-var community = getUrlParam("community");
-if(community && community<=4){
-	var title = ""
-	if(community==1) title = "远洋大河宸章";
-	if(community==2) title = "远洋上河宸章";
-	if(community==3) title = "远洋上塘宸章";
-	if(community==4) title = "远洋香奈";
-	$("title").text(title+"秒杀须知");
-	$("#description_title").text(title);
-	$("#community_title").attr('src','https://wu.stephen7.top/Showhand/static/questionnaire/farm/community'+community+'.png');
-	var run_flag = true;
-	var openId = getWXUserInfo();
-	var farmId = infos(openId,community);
-}else{
-	$('body,html').css({'height':'100%'});
-	$(".container").css({'background':'#fff','background-image':'none','height':'100%'}).html('<p class="end">页面不存在</p>');
-}
 
 $(function(){
 	$('input[type="button"]').click(function(){
@@ -163,24 +146,23 @@ $(function(){
 });
 
 function goList(){
-	document.location.href = 'list.html?community='+community;
+	document.location.href = 'list.html';
 }
 function miaosha(){
 	var btn_farm_on_length = $('.btn_farm_on').length;
 	if(btn_farm_on_length<=0){
 		dialogueTips('请选择菜园编号');
 	}else{
-		var farm = $('.btn_farm_on').val();
+		var garden = $('.btn_farm_on').val();
 		if(run_flag){
 			run_flag = false;
 			var ins = {
-				farmId:farmId,
-				community: community,
-				farm: farm
+				gardenId:gardenId,
+				garden: garden
 			};
-			$.post("https://wu.stephen7.top/Showhand/a-api/farm/save",ins,function(json){
+			$.post("https://wu.stephen7.top/Showhand/a-api/garden/save",ins,function(json){
 				if(json.success==true){
-					if(json.errorCode=="0"){
+					if(json.errorCode=="2"){
 						//该菜园已被秒杀
 						dialogueTips(json.msg);
 						farmList();//刷新
@@ -199,9 +181,9 @@ function miaosha(){
 						//秒杀成功
 						dialogueTips("恭喜您 秒杀成功");
 						setTimeout(function(){
-							document.location.href = 'list.html?community='+community;
+							document.location.href = 'list.html';
 							run_flag = true;
-						},2000);
+						},1600);
 					}
 				} else {
 					dialogueTips(json.msg);
@@ -216,22 +198,22 @@ function miaosha(){
 }
 //解析菜园编号
 function farmList(){
-		$.post("https://wu.stephen7.top/Showhand/a-api/farm/list",{community:community,filter:'1'},function(json){
+		$.post("https://wu.stephen7.top/Showhand/a-api/garden/list",{isGet:true},function(json){
 			if(json.success==true){
 				var list = json.body.list;
 				if(list.length>0){
 					var length = $('.btn_farm').length;
 					var leng = $('.btn_farm_on').length;
 					for(var i=0; i<list.length; i++){
-						if(list[i].farm){
+						if(list[i].isGet==true){
 							for(var j=0; j<length; j++){
-								if($('.btn_farm').eq(j).val()==list[i].farm){
+								if($('.btn_farm').eq(j).val()==list[i].garden){
 									$('.btn_farm').eq(j).removeClass('btn_farm').addClass('btn_farm_gray');
 									break;
 								}
 							}
 							for(var k=0; k<leng; k++){
-								if($('.btn_farm_on').eq(k).val()==list[i].farm){
+								if($('.btn_farm_on').eq(k).val()==list[i].garden){
 									$('.btn_farm_on').eq(k).removeClass('btn_farm_on').addClass('btn_farm_gray');
 									break;
 								}
@@ -241,75 +223,37 @@ function farmList(){
 					
 					//判断是否已被抢完
 					var len = $('.btn_farm_gray').length;
-					if(community==1 || community==3){
-						//判断是否已被抢完 预留4块菜园
-						if(len==42){
-							$('.btn_farm').removeClass('btn_farm').addClass('btn_farm_gray');
-							$("#miaosha").hide();
-							$("#chakan").show();
-						}
-					}else{
-						//判断是否已被抢完
-						if(len==46){
-							$("#miaosha").hide();
-							$("#chakan").show();
-						}
+					//判断是否已被抢完
+					if(len==46){
+						$("#miaosha").hide();
+						$("#chakan").show();
 					}
-					
 				}
 			} else {
 				dialogueTips(json.msg);
 			}
 		},'json');
 }
-function infos(openId,community){
-	if(openId){
-		var infos = {openId:openId, community:community};
-		$.post("https://wu.stephen7.top/Showhand/a-api/farm/list",infos,function(json){
+function infos(gardenId){
+	if(gardenId){
+		var infos = {gardenId:gardenId};
+		$.post("https://wu.stephen7.top/Showhand/a-api/garden/info",infos,function(json){
 			if(json.success==true){
-				var list = json.body.list;
-				if(list.length>0){
-					if(list[0].farm){
-						farmList();//解析菜园
-						dialogueTips('您已经秒杀过啦');
-						$("#miaosha").hide();
-						$("#chakan").show();
-					}else{
-						if(community==3 && list[0].name=="邹菊芬" && list[0].phone=="18857177289"){
-						//if(community==3 && list[0].name=="吴奇峰" && list[0].phone=="15852783558"){
-							//给上塘宸章指定用户指定秒杀23号地块
-							$("#farm23").removeClass().addClass('btn_farm');
-						}else{
-							$("#farm23").removeClass().addClass('btn_farm_gray');
-						}
-						farmList();//解析菜园
-						//判断是否已被抢完
-						setTimeout(function(){
-							var len = $('.btn_farm_gray').length;
-							if(community==1 || community==3){
-								//判断是否已被抢完 预留4块菜园
-								if(len==42){
-									$('.btn_farm').removeClass('btn_farm').addClass('btn_farm_gray');
-									$("#miaosha").hide();
-									$("#chakan").show();
-									dialogueTips('很遗憾 您来晚了');
-								}
-							}else{
-								if(len==46){
-									$("#miaosha").hide();
-									$("#chakan").show();
-									dialogueTips('很遗憾 您来晚了');
-								}
-							}
-						},2000);
-						
-						//停留在当前页面秒杀
-						farmId = list[0].farmId
-					}
+				var aGarden = json.body.aGarden;
+				farmList();//解析菜园
+				if(aGarden.isGet==true){
+					dialogueTips('您已经秒杀过啦');
+					$("#miaosha").hide();
+					$("#chakan").show();
 				}else{
-					dialogueTips('请填写业主信息 正在跳转...');
+					//判断是否已被抢完
 					setTimeout(function(){
-						document.location.href = 'info.html?community='+community;
+						var len = $('.btn_farm_gray').length;
+						if(len==46){
+							$("#miaosha").hide();
+							$("#chakan").show();
+							dialogueTips('很遗憾 您来晚了');
+						}
 					},2000);
 				}
 			} else {
@@ -317,59 +261,13 @@ function infos(openId,community){
 			}
 		},'json');
 	}else{
-		//dialogueTips('微信授权错误');
+		dialogueTips('请填写业主信息 正在跳转...');
+		setTimeout(function(){
+			document.location.href = 'info.html';
+		},2000);
 	}
 }
-function getWXUserInfo(){
-	var appid = 'wxe112e7675a5d5f98';
-	var openId = localStorage.getItem("openId-"+appid);
-	var access_code = getUrlParam('code');	
-	if(appid != ""){
-		if (openId == "" || openId == null) {
-			//----------------------------获取code--------------------------------------
-			if(access_code == "" || access_code == null || access_code =="null"){
-				var fromurl = location.href;
-				//https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect
-				var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+ appid +'&redirect_uri=' + encodeURIComponent(fromurl)
-						+ '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
-				location.href = url;
-			} else {
-				$.ajax('https://wu.stephen7.top/Showhand/a-api/wx/authorize', {
-					data : {
-						code : access_code,
-						scope: 'snsapi_base'
-					},
-					async : false,
-					cache : false,
-					dataType : 'json',//服务器返回json格式数据
-					type : 'post',//HTTP请求类型
-					success : function(result) {
-						if (result.success == true) {
-							openId = result.body.wxUser.openId;
-							localStorage.setItem("openId-"+ appid, openId);
-						} else {
-							alert("微信身份识别失败");
-						}
-					},
-					error : function(xhr, type, errorThrown) {
-						
-					}
-				});
-			}
-		}
-	}
-	return openId
-}
-
-function getUrlParam(name) {
-	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-	var r = window.location.search.substr(1).match(reg);
-	if (r != null) {
-		return unescape(r[2]);
-	} else {
-		return null;
-	}
-} 
+ 
 function dialogueTips(txt){
 	var _html = '<div class="dialogue-tips" id="J_error">'+txt+'</div>';
 	if($('.dialogue-tips').size()>0){
