@@ -1,0 +1,2251 @@
+<html><head>    
+    <meta charset="utf-8">    
+    <base href="https://view4.rrxiu.net/">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">  
+    <meta name="author" content="rrxcn - rrx.cn">  
+    <meta name="viewport" id="viewport" content="width=640, initial-scale=0.5859375, maximum-scale=0.5859375, user-scalable=no,viewport-fit=cover">
+            <meta name="description" content="元宵节 · 答·题">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+
+    <link rel="stylesheet" href="assets/main.style.6d8994b6.css">
+    <link rel="apple-touch-icon-precomposed" href="favicon.ico">
+    <link rel="shortcut icon" href="favicon.ico">
+    <title>元宵节 猜灯谜</title>
+    <script type="text/javascript">
+		window.rrxh5OriginUrl=location.href.split('#')[0];
+		var rrxgpara={"renb":false,"rdn":"","henb":true,"hdn":""};
+    </script>
+
+<link href="https://assets.rrxh5.cc/webfont/css/publish/f0ngks/FZHPJW.css?t=1555394579&amp;host=https://aa.rrxiuh5.ccv5.6.4?v=v5.6.4v5.7.2.08" rel="stylesheet">
+<link href="https://assets.rrxh5.cc/plugin/764095471ff59f4122f89dc44d2e0232/11/css/index.css?v=v5.6.4v5.7.2.08" rel="stylesheet">
+<link href="https://assets.rrxh5.cc/plugin/fd92767250cb0cabf58e8d57ce2fb82c/10/css/index.css?v=v5.6.4v5.7.2.08" rel="stylesheet">
+	<style>
+    .form-line{
+        border: 0 none;background-image: linear-gradient(#FD7979,#FD7979),linear-gradient(gray,gray);
+        background-size: 0px 2px,100% 1px;
+        background-repeat: no-repeat;background-position: center bottom,center calc(100% - 1px);
+        background-color: rgba(255,255,255,0);
+    }
+    .input-focus{
+        background-size: 100% 2px,100% 1px;
+        transition: all .3s;
+        border: none;
+        outline: none;
+    }
+
+    select,input{
+        height: 25px;
+        width:100%;
+        font-size:16px;
+        color:#373737;
+        background-color: transparent;
+    }
+    input:focus{
+        outline:none;
+        border-color:transparent;
+    }
+    .item{
+        padding: 3% 10%;
+        position: relative;
+    }
+    .item .item_label{
+        position: absolute;
+        color:#000;
+        font-size: 18px;
+        font-weight: bold;
+        top: -6px;
+    }
+    .item .item_labels{
+        position: absolute;
+        color: #808080;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .room_input{
+   		text-align:center;
+    	width:8%;
+    	border:0;
+    }
+    .item input{
+    	color:#000000;
+    	font-size:20px;
+    	font-weight: bold;
+    	padding-bottom: 10px;
+    	height:60px;
+    	z-index: 100000;
+    }
+</style>
+	<style>
+	#main .pt-wrappers {
+		overflow: hidden;
+    	z-index: 0;
+	    position: relative;
+	    width: 100%;
+	    height: 100%;
+    }
+	.img{position:absolute;width:100%;height:22%;background:url(https://wu.stephen7.top/Showhand/static/questionnaire/lantern_bottom.png) no-repeat 0 0/100% 100%;}
+	.dialogue-tips{background:rgba(0,0,0,.9);width:50%;position:fixed;left:20%;top:40%;margin-top:-25px;z-index:9999;border-radius:20px;color:#fff;text-align:center;padding:3%;line-height:1.5;font-size:20px}
+canvas {
+	cursor: crosshair;
+	display: block;
+}
+.rrx-pg-answer-index .header-progress {
+    position: absolute;
+    font-size: 27px;
+    left: 120px;
+    top: 120px;
+    z-index: 10000;
+    width: 250px;
+    text-align: left;
+    height: 70px;
+    line-height: 70px;
+}
+.rrx-pg-answer-index .header-progress-right {
+    position: absolute;
+    font-size: 27px;
+    right: 120px;
+    top: 120px;
+    z-index: 10000;
+    width: 250px;
+    text-align: right;
+    height: 70px;
+    line-height: 70px;
+}	
+.answer-over{
+	border: 3px solid  #FD7979;
+	border-radius: 17px;
+	background: #fff;
+	background-repeat: repeat-x;
+	margin: 60% 15%;
+	color:#808080;
+	line-height: 70px;
+    font-size: 30px;
+    font-weight: bold;
+	text-align:center;
+	padding-bottom: 30px;
+}
+
+.info{
+    border: 3px solid #FD7979;
+    border-radius: 17px;
+    background: #fff;
+    background-repeat: repeat-x;
+    margin: 4% 10%;
+    color: #808080;
+    line-height: 70px;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    padding-bottom: 20px;
+}
+.answer-item-success{
+    background-image: url();
+    background-color: #28bd70;
+    color: #ffffff;
+}
+.answer-item-fail{
+    background-image: url();
+    background-color: #db050a;
+    color: #ffffff;
+}
+.hongbao-animation{
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	animation: change 5s;
+	-moz-animation: change 5s;    
+	-webkit-animation: change 5s;    
+	-o-animation: change 5s;
+}
+@keyframes change{
+	from {width: 100px;height: 100px;opacity: 1;}
+	to {width: 512px;height: 512px;opacity: 0.3;}
+}
+
+.timer{
+	top: 126px;
+    display: block;
+    color: #fff;
+    border-radius: 50%;
+    background: #000;
+    width: 58px;
+    height: 58px;
+    text-align: center;
+    padding: 50% auto;
+    padding-top: 17.5px;
+    font-weight: bold;
+    opacity: 0.8;
+}
+.info-tip{
+    font-size: 10px;
+    text-align: left;
+    line-height: 10px;
+    padding: 0 10%;
+    margin-top: -10px;
+}
+.info-tip p{ line-height: 16px;margin-top: -6px;}
+	</style>
+</head>
+<body style="background-color: rgb(0, 0, 0);">
+<audio id="_comAudioPlayId" style="height: 0;width: 0;position: absolute;left:-100px;top:-100px;" preload="auto"></audio>
+        
+   <div style=" overflow:hidden; width:0px; height:0; margin:0 auto; position:absolute; top:-800px;">
+    <img src="https://file2.rrxh5.cc/logo_blue_200x200.jpg">
+   </div>
+
+    <script type="text/javascript">
+	var wsiteInfo={"vurl":"https:\/\/aa.rrxiuh5.cc\/v\/f0ngks?v=f0ngks&tpl=1&rrxsrc=2","pushGuid":"","risk":false,"openPoints":false,"isAppEnv":false,"state":true,"authBehind":true,"sid":"b90799986ace8210ce519261430d1854","fg":"74ce579bda51594bfc95db925415d5f1","isOpenInvite":false,"activityType":1,"wxauthedInfo":{"id":"d40ead917f52d7f765f690eb3f9ce984","nickname":"\u4eba\u4eba\u79c0","headimgurl":"https:\/\/assets.rrxh5.cc\/www\/images\/no_head.jpg","rid":"d40ead917f52d7f765f690eb3f9ce984"},"hasShareNickName":false,"team":{"copyrightText":"","copyrightUrl":"","loadingLogo":"","doShow":false,"loadingColor":"","wxMiniSharePagePath":""},"ver":"20210221092203","et":"2019-04-16 14:03:02","wxp":{"focusWechat":false,"modifyWechat":true,"removeWaterMark":true,"showShareMenu":true,"newReview":"1","canStopFlip":true,"isp":false,"canUserShare":false,"shareUserInfo":{"shareTotalCount":"0","shareUseCount":"0","shareMaxCount":"0","shareLeftCount":0},"myWxAuthOpen":false,"isUseMainVer":true,"isSelfRedpack":false},"shareTips":1,"wsiteGuid":"f0ngks","loading":{"imageUrl":"","color":"#25a7fb","show":false,"loadingpage":0,"createTime":"2018-12-29 16:01:41","title":"\u5143\u5bb5\u8282\u731c\u706f\u8c1c\uff01","musicAutoPlay":"1","musicUrl":"\/2016\/01\/06\/1452082320104.mp3"},"copyright":[],"httpsEnabled":true,"flhtps":false,"imgcdn":"file2.rrxh5.cc","datacdn":"data2.rrxh5.cc","assetscdn":"assets.rrxh5.cc","Base_Host":"https:\/\/view4.rrxiu.net\/","imageHost":"https:\/\/file2.rrxh5.cc\/","assetsHost":"https:\/\/assets.rrxh5.cc\/","rrxfp":1,"shareLink":"","countCode":"","fromMode":"","librrxiuhost":"assets.rrxh5.cc\/lib\/rrxiu","version":"v5.7.2.08","rrxtest":0,"visitCount":8685,"currentTimeStamp":1613872575,"noAuthedMsg":"\u8bf7\u5728\u5fae\u4fe1\u91cc\u6253\u5f00\uff01","wsiteType":"1"};
+    var _RRX_PUSHSALE_DATA_=[];
+    </script>
+    <div id="main" style="height: 1234.5px;">
+		<div class="pt-outer" id="pt-outer" style="width: 100%;">
+			<div class="pt-inner" id="pt-inner"
+				style="width: 100%; position: absolute; left: 0px; top: 0px; margin-left: 0px; margin-top: 0px;">
+
+				<!-- loading page -->
+				<div id="pt-loadingpage"
+					class="pt-loadingpage page_loadingpage pt-page-fadeOut animated"
+					style="display: none;">
+					<div class="default-loadingpage">
+						<div class="loading-logo">
+							<img src="../images/loading_logo.png">
+						</div>
+						<div class="loading-line">
+							<div class="line" style="width: 100%;"></div>
+						</div>
+						<div class="percent">100%</div>
+						<div class="loading-welcome">嘘寒科技</div>
+					</div>
+				</div>
+				<!-- share page -->
+				<div class="pt-sharepage page_sharepage"></div>
+				<!-- floor page -->
+				<div class="pt-floorpage page_floorpage"></div>
+				<!-- report page -->
+				<div class="pt-reportpage page_reportpage" style="display: none"></div>
+
+				<!-- choujiang panel -->
+				<div class="page_copyrightPage damu-down" id="answer-over-panel">
+					<div class="answer-over">
+						<div style="background: #FD7979;color:#fff;border-top-left-radius:13px;border-top-right-radius:13px">答题结束</div>
+						<div style="margin-top:20px" id="answer-over-tip">恭喜您</div>
+						<div class="">您的得分：<span class="score">0</span>分</div>
+						<div class="">用时：<span id="spendTime">0</span></div>						
+						<button id="btn-choujiang" onclick="getGift()" class="view-more-button" style="border-radius:15px;width:170px;height:58px;line-height:10px;margin-top:25px;margin-bottom: 25px;background-color:#fff;color:#FD7979;font-size:26px;font-weight: 100;border: solid 1px;">下一步</button>
+					</div>
+					<div class="bottomm-text" style="">
+						<a class="make-rrxiu" href="#"
+							target="blank"> <span></span>
+						</a>
+					</div>
+				</div>
+				<!-- hongbao panel -->
+				<div class="page_copyrightPage damu-down" id="hongbao-panel">
+					<div class="share-image">
+						<img src="https://wu.stephen7.top/Showhand/static/questionnaire/hongbao.png" style="width:512px;height:512px;border:0;">
+						<div style="display: none;position: absolute;top: 48%;left: 39%;font-size: 46px;color: #f9c61e;font-weight: bold;">￥0.00</div>
+						<div style="display: none;position: absolute;top: 58.5%;left: 44%;font-size: 26px;color: #f73c37;">恭喜您</div>
+					</div>				
+					<div class="bottomm-text" style="">
+						<a class="make-rrxiu" href="#"
+							target="blank"> <span></span>
+						</a>
+					</div>
+				</div>
+				
+				<div class="page_copyrightPage damu-down" id="info-panel">
+					<div class="info">
+						<div style="background: #FD7979;color:#fff;border-top-left-radius:13px;border-top-right-radius:13px">信息填写</div>
+						<div style="margin-top:28px">
+								<div class="item">
+							        <label for="" class="item_label">项目名称</label>
+							        <input type="text" class="form-line" id="project" maxlength="50"/> 
+							    </div>
+								<div class="item">
+							        <label for="" class="item_label">房&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号</label>
+							        <input type="text" class="form-line" id="room" maxlength="50"/> 
+							    </div>
+							    <div class="item">
+							        <label for="" class="item_label">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</label>
+							        <input type="text" class="form-line" id="name" maxlength="20"/> 
+							    </div>
+							     <div class="item">
+							        <label for="" class="item_label">手&nbsp;&nbsp;机&nbsp;&nbsp;号</label>
+							        <input type="number" class="form-line" id="phone" maxlength="15"/> 
+							    </div>
+							     <div class="item">
+							        <label for="" class="item_label">礼品邮寄地址</label>
+							        <input type="text" class="form-line" id="address" maxlength="55"/> 
+							    </div>
+						</div>
+						<div class="info-tip">
+							<p>1、活动时间为：2021年2月26日；</p>
+							<p>2、活动仅限融创福建业主参加，每户仅限领取一份，多人参加以最高奖品为准；</p>
+							<p>3、奖品数量有限，发放奖品图片仅供参考，奖品以实际领取为准，如奖品有多种颜色，则随机发送；</p>
+							<p>4、奖品仅按照业主填写地址进行配送，如业主地址变，请在活动结束前及时联系阿融更改，未及时联系阿融，且所提供的联系方式和地址信息错误而导致商品配送失败的，由业主自行承担相关责任；</p>
+							<p>5、所有奖品不设退换服务，若发现损坏请当面与配送员提出，签收后活动方将不承担责任；</p>
+							<p>6、本宣传资料为要约邀请，不作为要约或承诺；</p>
+							<p>7、本活动最终举办或取消的权利归活动主办方所有；活动主办方有权对宣传资料进行修改或在法律允许范围内解释，敬请留意最新资料；</p>
+							<p>8、本资料所发布内容为2020年2月25日前的信息，有效期15天，出卖人将不定期对宣传材料进行修改，敬请留意最新资料。</p>
+						</div>
+						<button onclick="infoSave()" class="view-more-button" style="border-radius:15px;width:270px;height:58px;line-height:10px;margin-top:25px;margin-bottom: 25px;background-color:#fff;color:#FD7979;font-size:26px;font-weight: 100;border: solid 1px;">提交</button>
+					</div>
+				</div>
+
+				<!-- focus panel -->
+				<div class="focus-wechat-panel damu-down"></div>
+				<div class="focus-plugin-wxqr-panel"></div>
+				<!-- menu panel -->
+				<div class="top-menu-panel damu-down"></div>
+				<!-- success panel -->
+				<div class="share-panel damu-down" id="success-panel">
+					<div style="margin-top:40%">
+						<img style="width:100px" src="https://wu.stephen7.top/Showhand/static/questionnaire/success.png">
+					</div>
+					<div class="share-title" style="font-size:28px" id="success-panel-tip">信息提交成功</div>
+					<div class="share-title"">活动结束 感谢您的参与</div>
+				</div>
+				<div class="share-panel damu-down" id="activityTime-panel">
+					<div class="share-title" style="margin-top:40%;font-size:22px" id="activityTime-panel-time"></div>
+					<div class="share-title" style="font-size:26px" id="activityTime-panel-tip">活动未开始</div>
+				</div>
+				<!-- danmu panel -->
+				<div class="danmu-panel damu-down"></div>
+
+				<div class="pt-icons fadeIn" id="pt-icons">
+					<img class="pt-icons-button focus-wechat-button"><img
+						class="pt-icons-button top-menu-button">
+					<div class="pt-icons-button my-points-button"></div>
+					<div class="pt-icons-button myprize-button rrx-icon-sidle-myprize"></div>
+					<div class="pt-icons-button danmu-button rrx-icon-sidle-danmu"></div>
+					<div class="pt-icons-button wxmin-share-button">分享</div>
+					<div class="pt-icons-button danmu-show"></div>
+					<div class="pt-preview-notice"></div>
+					<div class="pt-progress"
+						style="position: absolute; z-index: 100; bottom: 0px; left: 0px; display: none; width: 100%; height: 7px; background-color: rgba(0, 0, 0, 0.2);">
+						<span class="progress-tip" style="display: none;"></span><span
+							class="page-tip" style="display: none;"></span>
+					</div>
+					<div class="arrow-down" style="display: none;">
+						<p></p>
+					</div>
+					<div class="arrow-right">
+						<p></p>
+					</div>
+					<div class="pt-icons-button music"
+						style="right: 23px; top: 38.4px; display: block; background-image: url(&quot;https://view.rrxh5.cc/images/icon_music_off2.png&quot;);">
+						<span class="music1"><s></s></span><span class="music2"><s></s></span><span
+							class="music3"><s></s></span>
+					</div>
+					<div class="pt-icons-button sidle-report timer" id="timer" style="display:none"></div>
+					<div class="pt-icons-button sidle-share rrx-icon-share"
+						style="display: none;"></div>
+					<div class="pt-icons-button sidle-plugin-msg rrx-icon-msg"
+						style="top: 345.6px;"></div>
+				</div>
+				<div class="pt-dialogs" id="pt-dialogs">
+					<div id="rrx-process-dialog" style="display: none;">
+						<div class="dialog-container">
+							<div class="dialog-container-loader">
+								<div class="loader-inner">
+									<div></div>
+									<div></div>
+									<div></div>
+									<div></div>
+									<div></div>
+									<div></div>
+									<div></div>
+									<div></div>
+								</div>
+							</div>
+							<div class="dialog-container-process">请稍等</div>
+						</div>
+					</div>
+					<div class="rrx-prizeinfo-dialog" style="display: none;">
+						<div class="dialog-content bounceOutUpAni"
+							style="background-color: #fff; border: 4px solid #db050a;">
+							<div class="content-close">
+								<img class="content-close-img"
+									src="https://assets.rrxh5.cc/lib/weplus/image/close.png">
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="pt-wrappers">
+					<div class="pt-pagewrapper">
+						<div class="pt-pagelist">
+							<div class="pt-page page_1 pt-page-current" data-id="1" style="">
+								<div class="pt-page-bg-box"
+									style="width: 100%; height: 100%; cursor: default; opacity: 1; background-color: rgb(224, 32, 43);"></div>
+								<div class="pt-page-element-list-box"
+									style="width: 100%; height: 100%; position: absolute; top: 0; left: 0;">
+									<div class="element element_1 "
+										style="position: absolute;left: 35px;top: 20px;width: 220px;height: 30px;z-index: 120;"
+										eletype="img" data-id="1">
+										<div style="width: 100%; height: 100%; overflow: hidden;">
+											<div style="width: 100%; height: 100%; position: relative;"
+												class="element-last-box">
+												<div class="element-mask">
+													<img class="element-last"
+														style="-webkit-user-drag: none; width: 100%; height: 100%; margin-left: -0.2px; margin-top: 1.16667px; transform: none;"
+														src="https://wu.stephen7.top/Showhand/static/questionnaire/lantern_logo.png">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="element element_149 fadeInUp"
+										style="position: absolute; left: 11%; top: 222px; width: 122px; height: auto; z-index: 119; display: block; animation: fadeInUp 1s ease 3.4s 1 both;"
+										eletype="div" data-id="150" id="inner_text_eidtor_150">
+										<div
+											style="text-align: left; width: 100%; height: 100%; -webkit-writing-mode: horizontal-tb; writing-mode: horizontal-tb;">
+											<div class="element-last"
+												style="width: 100%; min-height: inherit; padding: 0px 5px; word-break: break-all; font-size: 100px; line-height: 1.25; text-align: center; font-family: FZHPJW; color: rgb(245, 239, 142); -webkit-text-stroke: 0px;">
+												<!-- <font color="#f5ef8e">猜灯谜</font> -->
+												<img style="height:400px" src="https://wu.stephen7.top/Showhand/static/questionnaire/lantern_main.png">
+											</div>
+										</div>
+									</div>
+									<div class="element element_9 moveInUp"
+										style="position: absolute; left: 48px; top: 697px; width: 561px; height: 311px; z-index: 109; display: block; animation: moveInUp 1s ease 1s 1 both;"
+										eletype="img" data-id="9">
+										<div style="width: 100%; height: 100%; overflow: hidden;">
+											<div style="width: 100%; height: 100%; position: relative;"
+												class="element-last-box">
+												<div class="element-mask">
+													<img class="element-last"
+														style="-webkit-user-drag: none; width: 561px; height: 311px; margin-left: 0px; margin-top: 0px; transform: none;"
+														src="https://file2.rrxh5.cc/g2/c1/2018/12/20/1545296108870.png@!user_image_700x1">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="element element_22 fadeInRight"
+										style="position: absolute; left: 380.667px; top: 456px; width: 38px; height: 197px; z-index: 118; display: block; animation: fadeInRight 1.4s ease 3.8s 1 both;"
+										eletype="div" data-id="22" id="inner_text_eidtor_22">
+										<div
+											style="text-align: left; width: auto; height: 100%; -webkit-writing-mode: vertical-rl; writing-mode: vertical-rl;">
+											<div class="element-last"
+												style="min-height: inherit; padding: 0px 5px; word-break: break-all; font-size: 26px; line-height: 1; text-orientation: upright; height: 100%; letter-spacing: 0em; -webkit-text-stroke: 0px;">
+												<!-- <span style="color: rgb(245, 239, 142); font-size: 26px;">元宵节
+													猜灯谜</span>-->
+											</div>
+										</div>
+									</div>
+									<div class="element element_8 zoomIn"
+										style="position: absolute; left: 153px; top: 568px; width: 32px; height: 28px; z-index: 108; display: block; animation: zoomIn 1s ease 4s 1 both;"
+										eletype="img" data-id="8">
+										<div style="width: 100%; height: 100%; overflow: hidden;">
+											<div style="width: 100%; height: 100%; position: relative;"
+												class="element-last-box">
+												<div class="element-mask">
+													<img class="element-last"
+														style="-webkit-user-drag: none; width: 32px; height: 28px; margin-left: 0px; margin-top: 0px; transform: none;"
+														src="https://file2.rrxh5.cc/g2/c1/2018/12/20/1545296108198.png@!user_image_700x1">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="element element_7 zoomIn"
+										style="position: absolute; left: 486px; top: 542px; width: 32px; height: 28px; z-index: 107; display: block; animation: zoomIn 1s ease 3.8s 1 both;"
+										eletype="img" data-id="7">
+										<div style="width: 100%; height: 100%; overflow: hidden;">
+											<div style="width: 100%; height: 100%; position: relative;"
+												class="element-last-box">
+												<div class="element-mask">
+													<img class="element-last"
+														style="-webkit-user-drag: none; width: 32px; height: 28px; margin-left: 0px; margin-top: 0px; transform: none;"
+														src="https://file2.rrxh5.cc/g2/c1/2018/12/20/1545296108304.png@!user_image_700x1">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="element element_15 fadeInUp"
+										style="position: absolute; left: 3px; top: 768px; width: 656px; height: 107px; z-index: 115; display: block; animation: fadeInUp 1s ease 1s 1 both;"
+										eletype="img" data-id="15">
+										<div style="width: 100%; height: 100%; overflow: hidden;">
+											<div style="width: 100%; height: 100%; position: relative;"
+												class="element-last-box">
+												<div class="element-mask">
+													<img class="element-last"
+														style="-webkit-user-drag: none; width: 656px; height: 107px; margin-left: 0px; margin-top: 0px; transform: none;"
+														src="https://file2.rrxh5.cc/g2/c1/2018/12/20/1545296109947.png@!user_image_700x1">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="element element_16 fadeInUp"
+										style="position: absolute; left: -12px; top: -2px; width: 672px; height: 129px; z-index: 116; display: block; animation: fadeInUp 1s ease 2.4s 1 both;"
+										eletype="img" data-id="16">
+										<div style="width: 100%; height: 100%; overflow: hidden;">
+											<div style="width: 100%; height: 100%; position: relative;"
+												class="element-last-box">
+												<div class="element-mask">
+													<img class="element-last"
+														style="-webkit-user-drag: none; width: 672px; height: 129px; margin-left: 0px; margin-top: 0px; transform: none;"
+														src="https://file2.rrxh5.cc/g2/c1/2018/12/20/1545296109279.png@!user_image_700x1">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="element element_5 zoomIn"
+										style="position: absolute; left: 80px; top: 624px; width: 497px; height: 140px; z-index: 105; display: block; animation: zoomIn 1s ease 4.6s 1 both;"
+										eletype="img" data-id="5">
+										<div style="width: 100%; height: 100%; overflow: hidden;">
+											<div style="width: 100%; height: 100%; position: relative;"
+												class="element-last-box">
+												<div class="element-mask">
+													<img class="element-last"
+														style="-webkit-user-drag: none; width: 497px; height: 140px; margin-left: 0px; margin-top: 0px; transform: none;"
+														src="https://file2.rrxh5.cc/g2/c1/2018/12/20/1545296108302.png@!user_image_700x1">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="element element_12 swing"
+										style="position: absolute; left: 268px; top: 7px; width: 89px; height: 129px; z-index: 112; display: block; animation: swing 3s linear 0s infinite both;"
+										eletype="img" data-id="12">
+										<div style="width: 100%; height: 100%; overflow: hidden;">
+											<div style="width: 100%; height: 100%; position: relative;"
+												class="element-last-box">
+												<div class="element-mask">
+													<img class="element-last"
+														style="-webkit-user-drag: none; width: 89px; height: 129px; margin-left: 0px; margin-top: 0px; transform: none;"
+														src="https://file2.rrxh5.cc/g2/c1/2018/12/20/1545296109837.png@!user_image_700x1">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="element element_14 swing"
+										style="position: absolute; left: 27px; top: 72px; width: 117px; height: 220px; z-index: 114; display: block; animation: swing 2s linear 0s infinite both;"
+										eletype="img" data-id="14">
+										<div style="width: 100%; height: 100%; overflow: hidden;">
+											<div style="width: 100%; height: 100%; position: relative;"
+												class="element-last-box">
+												<div class="element-mask">
+													<img class="element-last"
+														style="-webkit-user-drag: none; width: 117px; height: 220px; margin-left: 0px; margin-top: 0px; transform: none;"
+														src="https://file2.rrxh5.cc/g2/c1/2018/12/20/1545296109494.png@!user_image_700x1">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="element element_13 swing"
+										style="position: absolute; left: 504px; top: 72px; width: 121px; height: 220px; z-index: 113; display: block; animation: swing 2s linear 0s infinite both;"
+										eletype="img" data-id="13">
+										<div style="width: 100%; height: 100%; overflow: hidden;">
+											<div style="width: 100%; height: 100%; position: relative;"
+												class="element-last-box">
+												<div class="element-mask">
+													<img class="element-last"
+														style="-webkit-user-drag: none; width: 121px; height: 220px; margin-left: 0px; margin-top: 0px; transform: none;"
+														src="https://file2.rrxh5.cc/g2/c1/2018/12/20/1545296109182.png@!user_image_700x1">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="element element_11 fadeInRight"
+										style="position: absolute; left: 433px; top: 43px; width: 207px; height: 515px; z-index: 111; display: block; animation: fadeInRight 1.4s ease 2s 1 both;"
+										eletype="img" data-id="11">
+										<div style="width: 100%; height: 100%; overflow: hidden;">
+											<div style="width: 100%; height: 100%; position: relative;"
+												class="element-last-box">
+												<div class="element-mask">
+													<img class="element-last"
+														style="-webkit-user-drag: none; width: 207px; height: 515px; margin-left: 0px; margin-top: 0px; transform: none;"
+														src="https://file2.rrxh5.cc/g2/c1/2018/12/20/1545296109981.png@!user_image_700x1">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="element element_10 fadeInLeft"
+										style="position: absolute; left: 0px; top: 43px; width: 207px; height: 515px; z-index: 110; display: block; animation: fadeInLeft 1.4s ease 2s 1 both;"
+										eletype="img" data-id="10">
+										<div style="width: 100%; height: 100%; overflow: hidden;">
+											<div style="width: 100%; height: 100%; position: relative;"
+												class="element-last-box">
+												<div class="element-mask">
+													<img class="element-last"
+														style="-webkit-user-drag: none; width: 207px; height: 515px; margin-left: 0px; margin-top: 0px; transform: none;"
+														src="https://file2.rrxh5.cc/g2/c1/2018/12/20/1545296108760.png@!user_image_700x1">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="element element_6 zoomIn"
+										style="position: absolute; left: 157px; top: 146px; width: 336px; height: 199px; z-index: 106; display: block; animation: zoomIn 1.4s ease 4.2s 1 both;"
+										eletype="img" data-id="6">
+										<div style="width: 100%; height: 100%; overflow: hidden;">
+											<div style="width: 100%; height: 100%; position: relative;"
+												class="element-last-box">
+												<div class="element-mask">
+													<img class="element-last"
+														style="-webkit-user-drag: none; width: 336px; height: 199px; margin-left: 0px; margin-top: 0px; transform: none;"
+														src="https://file2.rrxh5.cc/g2/c1/2018/12/20/1545296108223.png@!user_image_700x1">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="element element_4 fadeInUp"
+										style="position: absolute; left: 129px; top: 59px; width: 382px; height: 54px; z-index: 104; display: block; animation: fadeInUp 1s ease 2.8s 1 both;"
+										eletype="img" data-id="4">
+										<div style="width: 100%; height: 100%; overflow: hidden;">
+											<div style="width: 100%; height: 100%; position: relative;"
+												class="element-last-box">
+												<div class="element-mask">
+													<img class="element-last"
+														style="-webkit-user-drag: none; width: 382px; height: 54px; margin-left: 0px; margin-top: 0px; transform: none;"
+														src="https://file2.rrxh5.cc/g2/c1/2018/12/20/1545296108362.png@!user_image_700x1">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="element element_3 pullUp"
+										style="position: absolute; left: 0px; top: 827px; width: 640px; height: 181px; z-index: 103; display: block; animation: pullUp 1s ease 0.6s 1 both;"
+										eletype="img" data-id="3">
+										<div style="width: 100%; height: 100%; overflow: hidden;">
+											<div style="width: 100%; height: 100%; position: relative;"
+												class="element-last-box">
+												<div class="element-mask">
+													<img class="element-last"
+														style="-webkit-user-drag: none; width: 640px; height: 181px; margin-left: 0px; margin-top: 0px; transform: none;"
+														src="https://file2.rrxh5.cc/g2/c1/2018/12/20/1545296108568.png@!user_image_700x1">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="element element_149 "
+										style="position: absolute; left: 0px; top: 0px; z-index: 102; width: 640px; height: 1008px; pointer-events: none;"
+										eletype="plugin" data-id="149">
+										<div style="width: 100%; height: 100%; overflow: hidden;">
+											<div class="element-last"
+												style="width: 640px; height: 1008px;">
+												<div class="plugin-specialEffect-container">
+													<div class="plugin-content">
+														<div id="gameCanvas-149">
+															<canvas id="canvas" width="640" height="1008"></canvas>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="element element_2 fadeInUp"
+										style="position: absolute; left: 41px; top: -6px; width: 561px; height: 873px; z-index: 101; display: block; animation: fadeInUp 1s ease 1.6s 1 both;"
+										eletype="img" data-id="2">
+										<div style="width: 100%; height: 100%; overflow: hidden;">
+											<div style="width: 100%; height: 100%; position: relative;"
+												class="element-last-box">
+												<div class="element-mask">
+													<img class="element-last"
+														style="-webkit-user-drag: none; width: 561px; height: 873px; margin-left: 0px; margin-top: 0px; transform: none;"
+														src="https://file2.rrxh5.cc/g2/c1/2018/12/20/1545296108916.png@!user_image_700x1">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="element element_1 "
+										style="position: absolute; left: 0px; top: 0px; width: 640px; height: 1008px; z-index: 100;"
+										eletype="img" data-id="1">
+										<div style="width: 100%; height: 100%; overflow: hidden;">
+											<div style="width: 100%; height: 100%; position: relative;"
+												class="element-last-box">
+												<div class="element-mask">
+													<img class="element-last"
+														style="-webkit-user-drag: none; width: 640px; height: 1008px; margin-left: 0px; margin-top: 0px; transform: none;"
+														src="https://file2.rrxh5.cc/g2/c1/2018/12/20/1545296108653.png@!user_image_700x1">
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="img" id="img-show" style="bottom:50px;z-index:109;"></div>
+							</div>
+							<div class="pt-page page_2" data-id="2" id="page2" style="">
+								<div class="img" style="bottom:0;z-index:22;"></div>
+								<div class="pt-page-bg-box"
+									style="width: 100%; height: 100%; cursor: default; opacity: 1; background-color: rgb(224, 32, 43);"></div>
+								<div class="pt-page-element-list-box"
+									style="width: 100%; height: 100%; position: absolute; top: 0; left: 0;">
+									<div class="element element_164 "
+										style="position: absolute; left: 0px; top: 0px; width: 640px; height: 100%; z-index: 22;"
+										eletype="plugin" data-id="164">
+										<div class="rrx-pg-answer-index">
+											<div class="answer-content-box">
+												<div class="plugin-answer answer-index-0" style="opacity: 1; z-index: 10; display:block">
+													<div class="header-progress"
+														style="color: #f5ef8e; font-weight: normal; background-color:;">
+														进度：<span class="current-pageIndex">1</span>/<span
+															class="all-pageIndex">10</span>
+													</div>
+													<div class="header-progress-right"
+														style="color: #f5ef8e; font-weight: normal; background-color:;">
+														分数：<span class="current-pageIndex score">0</span> <span
+															class="all-pageIndex">分</span>
+													</div>
+													<div class="header-downTime"
+														style="color: #000000; font-weight: normal; background-color:;">
+														<span class="down-time"></span>
+													</div>
+													<div class="answer-header"
+														style="background-image: url(); background-color:;">
+														<div class="question-title" style="color: #f5ef8e;">
+															<span>一语一酸辛（打一调料）</span>
+														</div>
+													</div>
+													<div class="answer-text-list" id="answer1">
+														<input type="hidden" value="B"/>
+														<div class="item-text item-text-index-0" data-id="0-0"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">A.</span>酱油</span>
+														</div>
+														<div class="item-text item-text-index-0" data-id="0-1"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">B.</span>陈醋</span>
+														</div>
+														<div class="item-text item-text-index-0" data-id="0-2"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">C.</span>料酒</span>
+														</div>
+														<div class="item-text item-text-index-0" data-id="0-3"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">D.</span>八角</span>
+														</div>
+													</div>
+												</div>
+												<div class="plugin-answer answer-index-1"
+													style="opacity: 0; z-index: 9;">
+													<div class="header-progress"
+														style="color: #f5ef8e; font-weight: normal; background-color:;">
+														进度：<span class="current-pageIndex">2</span>/<span
+															class="all-pageIndex">10</span>
+													</div>
+													<div class="header-progress-right"
+														style="color: #f5ef8e; font-weight: normal; background-color:;">
+														分数：<span class="current-pageIndex score">0</span> <span
+															class="all-pageIndex">分</span>
+													</div>
+													<div class="header-downTime"
+														style="color: #000000; font-weight: normal; background-color:;">
+														<span class="down-time"></span>
+													</div>
+													<div class="answer-header"
+														style="background-image: url(); background-color:;">
+														<div class="question-title" style="color: #f5ef8e;">
+															<span>凿壁借光（打一三国人物）</span>
+														</div>
+													</div>
+													<div class="answer-text-list" id="answer2">
+														<input type="hidden" value="C"/>
+														<div class="item-text item-text-index-0" data-id="0-0"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">A.</span>刘备</span>
+														</div>
+														<div class="item-text item-text-index-0" data-id="0-1"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">B.</span>孙权</span>
+														</div>
+														<div class="item-text item-text-index-0" data-id="0-2"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">C.</span>孔明</span>
+														</div>
+														<div class="item-text item-text-index-0" data-id="0-3"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">D.</span>曹操</span>
+														</div>
+													</div>
+												</div>
+												<div class="plugin-answer answer-index-2"
+													style="opacity: 0; z-index: 8;">
+													<div class="header-progress"
+														style="color: #f5ef8e; font-weight: normal; background-color:;">
+														进度：<span class="current-pageIndex">3</span>/<span
+															class="all-pageIndex">10</span>
+													</div>
+													<div class="header-progress-right"
+														style="color: #f5ef8e; font-weight: normal; background-color:;">
+														分数：<span class="current-pageIndex score">0</span> <span
+															class="all-pageIndex">分</span>
+													</div>
+													<div class="header-downTime"
+														style="color: #000000; font-weight: normal; background-color:;">
+														<span class="down-time"></span>
+													</div>
+													<div class="answer-header"
+														style="background-image: url(); background-color:;">
+														<div class="question-title" style="color: #f5ef8e;">
+															<span>草木之中有個人 （打一字）</span>
+														</div>
+													</div>
+													<div class="answer-text-list" id="answer3">
+														<input type="hidden" value="D"/>
+														<div class="item-text item-text-index-0" data-id="0-0"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">A.</span>树</span>
+														</div>
+														<div class="item-text item-text-index-0" data-id="0-1"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">B.</span>荼</span>
+														</div>
+														<div class="item-text item-text-index-0" data-id="0-2"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">C.</span>案</span>
+														</div>
+														<div class="item-text item-text-index-0" data-id="0-3"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">D.</span>茶</span>
+														</div>
+													</div>
+												</div>
+												<div class="plugin-answer answer-index-3"
+													style="opacity: 0; z-index: 7;">
+													<div class="header-progress"
+														style="color: #f5ef8e; font-weight: normal; background-color:;">
+														进度：<span class="current-pageIndex">4</span>/<span
+															class="all-pageIndex">10</span>
+													</div>
+													<div class="header-progress-right"
+														style="color: #f5ef8e; font-weight: normal; background-color:;">
+														分数：<span class="current-pageIndex score">0</span> <span
+															class="all-pageIndex">分</span>
+													</div>
+													<div class="header-downTime"
+														style="color: #000000; font-weight: normal; background-color:;">
+														<span class="down-time"></span>
+													</div>
+													<div class="answer-header"
+														style="background-image: url(); background-color:;">
+														<div class="question-title" style="color: #f5ef8e;">
+															<span>小儿二月去南宁 （打一节日）</span>
+														</div>
+													</div>
+													<div class="answer-text-list" id="answer4">
+														<input type="hidden" value="D"/>
+														<div class="item-text item-text-index-0" data-id="0-0"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">A.</span>春节</span>
+														</div>
+														<div class="item-text item-text-index-0" data-id="0-1"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">B.</span>端午</span>
+														</div>
+														<div class="item-text item-text-index-0" data-id="0-2"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">C.</span>中秋</span>
+														</div>
+														<div class="item-text item-text-index-0" data-id="0-3"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">D.</span>元宵</span>
+														</div>
+													</div>
+												</div>
+												<div class="plugin-answer answer-index-4"
+													style="opacity: 0; z-index: 6;">
+													<div class="header-progress"
+														style="color: #f5ef8e; font-weight: normal; background-color:;">
+														进度：<span class="current-pageIndex">5</span>/<span
+															class="all-pageIndex">10</span>
+													</div>
+													<div class="header-progress-right"
+														style="color: #f5ef8e; font-weight: normal; background-color:;">
+														分数：<span class="current-pageIndex score">0</span> <span
+															class="all-pageIndex">分</span>
+													</div>
+													<div class="header-downTime"
+														style="color: #000000; font-weight: normal; background-color:;">
+														<span class="down-time"></span>
+													</div>
+													<div class="answer-header"
+														style="background-image: url(); background-color:;">
+														<div class="question-title" style="color: #f5ef8e;">
+															<span>诗仙随遇而安（打一古代著名诗人）</span>
+														</div>
+													</div>
+													<div class="answer-text-list" id="answer5">
+														<input type="hidden" value="B"/>
+														<div class="item-text item-text-index-4" data-id="4-0"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">A.</span>李白</span>
+														</div>
+														<div class="item-text item-text-index-4" data-id="4-1"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">B.</span>白居易</span>
+														</div>
+														<div class="item-text item-text-index-4" data-id="4-2"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">C.</span>杜甫</span>
+														</div>
+														<div class="item-text item-text-index-4" data-id="4-3"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">D.</span>陆游</span>
+														</div>
+													</div>
+												</div>
+												<div class="plugin-answer answer-index-5"
+													style="opacity: 0; z-index: 5;">
+													<div class="header-progress"
+														style="color: #f5ef8e; font-weight: normal; background-color:;">
+														进度：<span class="current-pageIndex">6</span>/<span
+															class="all-pageIndex">10</span>
+													</div>
+													<div class="header-progress-right"
+														style="color: #f5ef8e; font-weight: normal; background-color:;">
+														分数：<span class="current-pageIndex score">0</span> <span
+															class="all-pageIndex">分</span>
+													</div>
+													<div class="header-downTime"
+														style="color: #000000; font-weight: normal; background-color:;">
+														<span class="down-time"></span>
+													</div>
+													<div class="answer-header"
+														style="background-image: url(); background-color:;">
+														<div class="question-title" style="color: #f5ef8e;">
+															<span>鲸鱼西游 (打一国外城市)</span>
+														</div>
+													</div>
+													<div class="answer-text-list" id="answer6">
+														<input type="hidden" value="A"/>
+														<div class="item-text item-text-index-4" data-id="4-0"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">A.</span>东京</span>
+														</div>
+														<div class="item-text item-text-index-4" data-id="4-1"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">B.</span>纽约</span>
+														</div>
+														<div class="item-text item-text-index-4" data-id="4-2"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">C.</span>伦敦</span>
+														</div>
+														<div class="item-text item-text-index-4" data-id="4-3"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">D.</span>香港</span>
+														</div>
+													</div>
+												</div>
+												<div class="plugin-answer answer-index-6"
+													style="opacity: 0; z-index: 4;">
+													<div class="header-progress"
+														style="color: #f5ef8e; font-weight: normal; background-color:;">
+														进度：<span class="current-pageIndex">7</span>/<span
+															class="all-pageIndex">10</span>
+													</div>
+													<div class="header-progress-right"
+														style="color: #f5ef8e; font-weight: normal; background-color:;">
+														分数：<span class="current-pageIndex score">0</span> <span
+															class="all-pageIndex">分</span>
+													</div>
+													<div class="header-downTime"
+														style="color: #000000; font-weight: normal; background-color:;">
+														<span class="down-time"></span>
+													</div>
+													<div class="answer-header"
+														style="background-image: url(); background-color:;">
+														<div class="question-title" style="color: #f5ef8e;">
+															<span>一物生来身穿三百多件衣， 每天脱一件， 年底剩张皮（打一日常用品）</span>
+														</div>
+													</div>
+													<div class="answer-text-list" id="answer7">
+														<input type="hidden" value="B"/>
+														<div class="item-text item-text-index-6" data-id="6-0"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">A.</span>扫帚</span>
+														</div>
+														<div class="item-text item-text-index-6" data-id="6-1"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">B.</span>日历</span>
+														</div>
+														<div class="item-text item-text-index-6" data-id="6-2"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">C.</span>便利贴</span>
+														</div>
+														<div class="item-text item-text-index-6" data-id="6-3"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">D.</span>相册</span>
+														</div>
+													</div>
+												</div>
+												<div class="plugin-answer answer-index-7"
+													style="opacity: 0; z-index: 3;">
+													<div class="header-progress"
+														style="color: #f5ef8e; font-weight: normal; background-color:;">
+														进度：<span class="current-pageIndex">8</span>/<span
+															class="all-pageIndex">10</span>
+													</div>
+													<div class="header-progress-right"
+														style="color: #f5ef8e; font-weight: normal; background-color:;">
+														分数：<span class="current-pageIndex score">0</span> <span
+															class="all-pageIndex">分</span>
+													</div>
+													<div class="header-downTime"
+														style="color: #000000; font-weight: normal; background-color:;">
+														<span class="down-time"></span>
+													</div>
+													<div class="answer-header"
+														style="background-image: url(); background-color:;">
+														<div class="question-title" style="color: #f5ef8e;">
+															<span>北风吹 (打一省名)</span>
+														</div>
+													</div>
+													<div class="answer-text-list" id="answer8">
+														<input type="hidden" value="C"/>
+														<div class="item-text item-text-index-6" data-id="6-0"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">A.</span>河北</span>
+														</div>
+														<div class="item-text item-text-index-6" data-id="6-1"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">B.</span>海南</span>
+														</div>
+														<div class="item-text item-text-index-6" data-id="6-2"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">C.</span>云南</span>
+														</div>
+														<div class="item-text item-text-index-6" data-id="6-3"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">D.</span>湖北</span>
+														</div>
+													</div>
+												</div>
+												<div class="plugin-answer answer-index-8"
+													style="opacity: 0; z-index: 2;">
+													<div class="header-progress"
+														style="color: #f5ef8e; font-weight: normal; background-color:;">
+														进度：<span class="current-pageIndex">9</span>/<span
+															class="all-pageIndex">10</span>
+													</div>
+													<div class="header-progress-right"
+														style="color: #f5ef8e; font-weight: normal; background-color:;">
+														分数：<span class="current-pageIndex score">0</span> <span
+															class="all-pageIndex">分</span>
+													</div>
+													<div class="header-downTime"
+														style="color: #000000; font-weight: normal; background-color:;">
+														<span class="down-time"></span>
+													</div>
+													<div class="answer-header"
+														style="background-image: url(); background-color:;">
+														<div class="question-title" style="color: #f5ef8e;">
+															<span>固若金汤 (打河北一地名)</span>
+														</div>
+													</div>
+													<div class="answer-text-list" id="answer9">
+														<input type="hidden" value="B"/>
+														<div class="item-text item-text-index-8" data-id="8-0"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">A.</span>石家庄</span>
+														</div>
+														<div class="item-text item-text-index-8" data-id="8-1"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">B.</span>保定</span>
+														</div>
+														<div class="item-text item-text-index-8" data-id="8-2"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">C.</span>沧州</span>
+														</div>
+														<div class="item-text item-text-index-8" data-id="8-3"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">D.</span>邯郸</span>
+														</div>
+													</div>
+												</div>
+												<div class="plugin-answer answer-index-9"
+													style="opacity: 0; z-index: 1;">
+													<div class="header-progress"
+														style="color: #f5ef8e; font-weight: normal; background-color:;">
+														进度：<span class="current-pageIndex">10</span>/<span
+															class="all-pageIndex">10</span>
+													</div>
+													<div class="header-progress-right"
+														style="color: #f5ef8e; font-weight: normal; background-color:;">
+														分数：<span class="current-pageIndex score">0</span> <span
+															class="all-pageIndex">分</span>
+													</div>
+													<div class="header-downTime"
+														style="color: #000000; font-weight: normal; background-color:;">
+														<span class="down-time"></span>
+													</div>
+													<div class="answer-header"
+														style="background-image: url(); background-color:;">
+														<div class="question-title" style="color: #f5ef8e;">
+															<span>四四方方一糍粑,一世也难吃光它 (打一物)</span>
+														</div>
+													</div>
+													<div class="answer-text-list" id="answer10">
+														<input type="hidden" value="A"/>
+														<div class="item-text item-text-index-9" data-id="9-0"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">A.</span>书</span>
+														</div>
+														<div class="item-text item-text-index-9" data-id="9-1"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">B.</span>土</span>
+														</div>
+														<div class="item-text item-text-index-9" data-id="9-1"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">C.</span>房</span>
+														</div>
+														<div class="item-text item-text-index-9" data-id="9-1"
+															style="background-image: url(); background-color: #f5ef8e; color: #db050a;">
+															<span class="span-value"><span class="span-mark">D.</span>糕</span>
+														</div>
+													</div>
+												</div>
+												</div>
+												<audio class="audio-plugin-answer"
+													style="width: 1px; height: 1px; opacity: 0; position: absolute"
+													preload="true"></audio>
+												<audio class="audio-plugin-sound-effect"
+													style="width: 1px; height: 1px; opacity: 0; position: absolute"
+													preload="true"></audio>
+											</div>
+										</div>
+									</div>
+									<div class="element element_166 "
+										style="position: absolute; left: 87px; top: 752px; width: 466px; height: 259px; z-index: 21;"
+										eletype="img" data-id="166">
+										<div style="width: 100%; height: 100%; overflow: hidden;">
+											<div style="width: 100%; height: 100%; position: relative;"
+												class="element-last-box">
+												<div class="element-mask">
+													<img class="element-last"
+														style="-webkit-user-drag: none; width: 466px; height: 259px; margin-left: -0.133047px; margin-top: 0.257799px; transform: none;"
+														src="https://file2.rrxh5.cc/g2/c1/2018/12/20/1545296108870.png@!user_image_500x1">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="element element_27 "
+										style="position: absolute; left: -9px; top: 72px; width: 117px; height: 220px; z-index: 20;"
+										eletype="img" data-id="27">
+										<div style="width: 100%; height: 100%; overflow: hidden;">
+											<div style="width: 100%; height: 100%; position: relative;"
+												class="element-last-box">
+												<div class="element-mask">
+													<img class="element-last"
+														style="-webkit-user-drag: none; width: 117px; height: 220px; margin-left: 0px; margin-top: 0px; transform: none;"
+														src="https://file2.rrxh5.cc/g2/c1/2018/12/20/1545296109494.png@!user_image_700x1">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="element element_28 "
+										style="position: absolute; left: 530px; top: 72px; width: 121px; height: 220px; z-index: 19;"
+										eletype="img" data-id="28">
+										<div style="width: 100%; height: 100%; overflow: hidden;">
+											<div style="width: 100%; height: 100%; position: relative;"
+												class="element-last-box">
+												<div class="element-mask">
+													<img class="element-last"
+														style="-webkit-user-drag: none; width: 121px; height: 220px; margin-left: 0px; margin-top: 0px; transform: none;"
+														src="https://file2.rrxh5.cc/g2/c1/2018/12/20/1545296109182.png@!user_image_700x1">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="element element_160 "
+										style="position: absolute; left: 3px; top: 768px; width: 656px; height: 107px; z-index: 18;"
+										eletype="img" data-id="160">
+										<div style="width: 100%; height: 100%; overflow: hidden;">
+											<div style="width: 100%; height: 100%; position: relative;"
+												class="element-last-box">
+												<div class="element-mask">
+													<img class="element-last"
+														style="-webkit-user-drag: none; width: 656px; height: 107px; margin-left: 0px; margin-top: 0px; transform: none;"
+														src="https://file2.rrxh5.cc/g2/c1/2018/12/20/1545296109947.png@!user_image_700x1">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="element element_26 "
+										style="position: absolute; left: 3px; top: 768px; width: 656px; height: 107px; z-index: 17;"
+										eletype="img" data-id="26">
+										<div style="width: 100%; height: 100%; overflow: hidden;">
+											<div style="width: 100%; height: 100%; position: relative;"
+												class="element-last-box">
+												<div class="element-mask">
+													<img class="element-last"
+														style="-webkit-user-drag: none; width: 656px; height: 107px; margin-left: 0px; margin-top: 0px; transform: none;"
+														src="https://file2.rrxh5.cc/g2/c1/2018/12/20/1545296109947.png@!user_image_700x1">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="element element_25 "
+										style="position: absolute; left: -12px; top: -2px; width: 672px; height: 129px; z-index: 16;"
+										eletype="img" data-id="25">
+										<div style="width: 100%; height: 100%; overflow: hidden;">
+											<div style="width: 100%; height: 100%; position: relative;"
+												class="element-last-box">
+												<div class="element-mask">
+													<img class="element-last"
+														style="-webkit-user-drag: none; width: 672px; height: 129px; margin-left: 0px; margin-top: 0px; transform: none;"
+														src="https://file2.rrxh5.cc/g2/c1/2018/12/20/1545296109279.png@!user_image_700x1">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="element element_29 "
+										style="position: absolute; left: 268px; top: 7px; width: 89px; height: 129px; z-index: 15;"
+										eletype="img" data-id="29">
+										<div style="width: 100%; height: 100%; overflow: hidden;">
+											<div style="width: 100%; height: 100%; position: relative;"
+												class="element-last-box">
+												<div class="element-mask">
+													<img class="element-last"
+														style="-webkit-user-drag: none; width: 89px; height: 129px; margin-left: 0px; margin-top: 0px; transform: none;"
+														src="https://file2.rrxh5.cc/g2/c1/2018/12/20/1545296109837.png@!user_image_700x1">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="element element_37 "
+										style="position: absolute; left: 129px; top: 59px; width: 382px; height: 54px; z-index: 14;"
+										eletype="img" data-id="37">
+										<div style="width: 100%; height: 100%; overflow: hidden;">
+											<div style="width: 100%; height: 100%; position: relative;"
+												class="element-last-box">
+												<div class="element-mask">
+													<img class="element-last"
+														style="-webkit-user-drag: none; width: 382px; height: 54px; margin-left: 0px; margin-top: 0px; transform: none;"
+														src="https://file2.rrxh5.cc/g2/c1/2018/12/20/1545296108362.png@!user_image_700x1">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="element element_38 "
+										style="position: absolute; left: 0px; top: 827px; width: 640px; height: 181px; z-index: 13;"
+										eletype="img" data-id="38">
+										<div style="width: 100%; height: 100%; overflow: hidden;">
+											<div style="width: 100%; height: 100%; position: relative;"
+												class="element-last-box">
+												<div class="element-mask">
+													<img class="element-last"
+														style="-webkit-user-drag: none; width: 640px; height: 181px; margin-left: 0px; margin-top: 0px; transform: none;"
+														src="https://file2.rrxh5.cc/g2/c1/2018/12/20/1545296108568.png@!user_image_700x1">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="element element_151 "
+										style="position: absolute; left: 0px; top: 0px; z-index: 12; width: 640px; height: 1008px; pointer-events: none;"
+										eletype="plugin" data-id="151">
+										<div style="width: 100%; height: 100%; overflow: hidden;">
+											<div class="element-last"
+												style="width: 640px; height: 1008px;">
+												<div class="plugin-specialEffect-container">
+													<div class="plugin-content">
+														<div id="gameCanvas-151">
+															<canvas width="640" height="1008"></canvas>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="element element_165 "
+										style="position: absolute; left: 10px; top: -2px; width: 622px; height: 873px; z-index: 11;"
+										eletype="img" data-id="165">
+										<div style="width: 100%; height: 100%; overflow: hidden;">
+											<div style="width: 100%; height: 100%; position: relative;"
+												class="element-last-box">
+												<div class="element-mask">
+													<img class="element-last"
+														style="-webkit-user-drag: none; width: 622px; height: 873px; margin-left: 0px; margin-top: 0px; transform: none;"
+														src="https://file2.rrxh5.cc/g2/c1/2018/12/29/1546070867726.png@!user_image_700x1">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="element element_40 "
+										style="position: absolute; left: 0px; top: 0px; width: 640px; height: 1008px; z-index: 10;"
+										eletype="img" data-id="40">
+										<div style="width: 100%; height: 100%; overflow: hidden;">
+											<div style="width: 100%; height: 100%; position: relative;"
+												class="element-last-box">
+												<div class="element-mask">
+													<img class="element-last"
+														style="-webkit-user-drag: none; width: 640px; height: 1008px; margin-left: 0px; margin-top: 0px; transform: none;"
+														src="https://file2.rrxh5.cc/g2/c1/2018/12/20/1545296108653.png@!user_image_700x1">
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+<input type="hidden" id="timer-hidden"/>
+	<script src="https://wu.stephen7.top/Showhand/static/questionnaire/jquery-2.2.0.min.js"></script>
+	<script type="text/javascript">
+	var activity_flag = false, click_flag = true, timer;
+	var score = 0;
+	var date = new Date();
+	var run_flag = true;
+	var status = 0;
+	getActivityTime();//活动时间
+	if(activity_flag){
+		var openId = getWXUserInfo();
+		if(openId){
+			var lanternArray = new Array();
+			lanternArray = getInfo(openId);
+			status = lanternArray[0];
+			if(status==0){
+				var count = 0,date = new Date();
+				timer = setInterval(function() {
+			                var h = parseInt(count / 1000 / 60 / 60);
+			                var m = parseInt(count / 1000 / 60) % 60;
+			                var s = parseInt(count / 1000) % 60;
+			                var ms = parseInt(count / 10) % 100;
+			                h = h < 10 ? '0' + h : h;
+			                m = m < 10 ? '0' + m : m;
+			                s = s < 10 ? '0' + s : s;
+			                ms = ms < 10 ? '0' + ms : ms;
+			                $("#timer").text(m + ':' + s);
+			                $("#timer-hidden").val(h + ':' + m + ':' + s + ':'+ms);
+			                count += 10;
+			            }, 10);
+				$("#timer").show();
+				updateAnwserStartTime(openId,formatDate(date));
+			}else if(status==1){
+				$(".score").text(lanternArray[1]);
+				$("#spendTime").text(lanternArray[2]);
+				if(lanternArray[1]<90){
+					$("#answer-over-tip").text('非常遗憾');
+					$("#btn-choujiang").hide();
+				}else{
+					$("#answer-over-tip").text('恭喜您');
+					$("#btn-choujiang").show();
+				}
+				setTimeout(function(){
+					$("#answer-over-panel").attr('style','top:0; display:block');
+				}, 1000);
+			}else if(status==2){
+				setTimeout(function(){
+					$("#success-panel-tip").text("您已参与此次活动啦");
+					$("#success-panel").attr('style','top:0; display:block');
+				}, 1000);
+			}
+		}
+	}
+	
+	function getActivityTime(){
+		$.ajax('https://wu.stephen7.top/Showhand/abc-api/lantern/activityTime', {
+			data : {},
+			async : false,
+			cache : false,
+			dataType : 'json',//服务器返回json格式数据
+			type : 'post',//HTTP请求类型
+			success : function(result) {
+				if (result.success == true) {
+					var time = result.body.activityTime;
+					if(time){
+						var startTime = time.startTime;
+						var endTime = time.endTime;
+						var date = new Date();
+						if(startTime && startTime>date.getTime()){
+							var startDate = new Date(startTime);
+							var endDate = new Date(endTime);
+							$("#activityTime-panel-time").text(formatDate(startDate)+" ~ "+formatDate(endDate));
+							$("#activityTime-panel-tip").text("活动未开始呢");
+							$("#activityTime-panel").attr('style','top:0; display:block');
+						}else if(endTime && date.getTime()>endTime){
+							var startDate = new Date(startTime);
+							var endDate = new Date(endTime);
+							$("#activityTime-panel-time").text(formatDate(startDate)+" ~ "+formatDate(endDate));
+							$("#activityTime-panel-tip").text("活动已经结束啦");
+							$("#activityTime-panel").attr('style','top:0; display:block');
+						}else if(startTime<=date.getTime()<=endTime){
+							activity_flag = true;
+						}else{
+							var startDate = new Date(startTime);
+							var endDate = new Date(endTime);
+							$("#activityTime-panel-time").text(formatDate(startDate)+" ~ "+formatDate(endDate));
+							$("#activityTime-panel-tip").text("活动未进行");
+							$("#activityTime-panel").attr('style','top:0; display:block');
+						}
+					}else{
+						$("#activityTime-panel-tip").text("未设置活动时间");
+						$("#activityTime-panel").attr('style','top:0; display:block');
+					}
+				} else {
+					console.log("获取活动时间失败");
+				}
+			},
+			error : function(xhr, type, errorThrown) {
+				console.log("获取用户信息失败");
+			}
+		});	
+	}
+	
+	function updateAnwserStartTime(openId,answerStartTime){
+		$.ajax('https://wu.stephen7.top/Showhand/abc-api/lantern/answer/startTime', {
+			data : {
+				openId: openId,
+				answerStartTime: answerStartTime
+			},
+			async : false,
+			cache : false,
+			dataType : 'json',//服务器返回json格式数据
+			type : 'post',//HTTP请求类型
+			success : function(result) {
+				if (result.success == true) {
+					
+				} else {
+					console.log("跟新开始答题时间失败1");
+				}
+			},
+			error : function(xhr, type, errorThrown) {
+				console.log("跟新开始答题时间失败2");
+			}
+		});	
+	}
+	
+	function getWXUserInfo(){
+		var appid = 'wxe112e7675a5d5f98';
+		var openId = localStorage.getItem("l-openId-"+appid);
+		var access_code = getUrlParam('code');	
+		if (!openId) {
+			//----------------------------获取code--------------------------------------
+			if(!access_code){
+				var fromurl = location.href;
+				//https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect
+				var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+ appid +'&redirect_uri=' + encodeURIComponent(fromurl)
+						+ '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect';
+				location.href = url;
+			} else {
+				$.ajax('https://wu.stephen7.top/Showhand/abc-api/lantern/authorize', {
+					data : {
+						code : access_code,
+						scope: 'snsapi_base'
+					},
+					async : false,
+					cache : false,
+					dataType : 'json',//服务器返回json格式数据
+					type : 'post',//HTTP请求类型
+					success : function(result) {
+						if (result.success == true) {
+							openId = result.body.lantern.openId;
+							localStorage.setItem("l-openId-"+ appid, openId);
+						} else {
+							alert("微信身份识别失败");
+						}
+					},
+					error : function(xhr, type, errorThrown) {
+						
+					}
+				});
+			}
+		}
+		return openId;
+	}
+	function getUrlParam(name) {
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+		var r = window.location.search.substr(1).match(reg);
+		if (r != null) {
+			return unescape(r[2]);
+		} else {
+			return null;
+		}
+	} 
+	
+	function anwserInfo(score, spendTime, answerEndTime){
+		$.ajax('https://wu.stephen7.top/Showhand/abc-api/lantern/answer/info', {
+			data : {
+				openId: openId,
+				score: score,
+				spendTime: spendTime,
+				answerEndTime: answerEndTime
+			},
+			async : false,
+			cache : false,
+			dataType : 'json',//服务器返回json格式数据
+			type : 'post',//HTTP请求类型
+			success : function(result) {
+				if (result.success == true) {
+					setTimeout(function(){
+						$("#answer-over-panel").attr('style','top:0; display:block');
+					}, 600);
+				} else {
+					console.log("跟新开始答题时间失败1");
+				}
+			},
+			error : function(xhr, type, errorThrown) {
+				console.log("跟新开始答题时间失败2");
+			}
+		});	
+	}
+	function getInfo(openId){
+		var status, score, spendTime;
+		$.ajax('https://wu.stephen7.top/Showhand/abc-api/lantern/info', {
+			data : {
+				openId: openId
+			},
+			async : false,
+			cache : false,
+			dataType : 'json',//服务器返回json格式数据
+			type : 'post',//HTTP请求类型
+			success : function(result) {
+				if (result.success == true) {
+					status = result.body.lantern.status;
+					score = result.body.lantern.score;
+					answerStartTime = result.body.lantern.answerStartTime;
+					answerEndTime = result.body.lantern.answerEndTime;
+					spendTime = result.body.lantern.spendTime;
+				} else {
+					console.log("获取用户信息失败");
+				}
+			},
+			error : function(xhr, type, errorThrown) {
+				console.log("获取用户信息失败");
+			}
+		});	
+		return [status, score, spendTime]
+	}
+	function diffTimeStamp(startTimeStamp, endTimeStamp){
+		var runTime = parseInt((endTimeStamp-startTimeStamp) / 1000);
+		var hour = Math.floor(runTime / 3600);
+		runTime = runTime % 3600;
+		var minute = Math.floor(runTime / 60);
+		runTime = runTime % 60;
+		var second = runTime;
+		if(hour>0) return hour+':'+minute+':'+second;
+		if(minute>0) return '00:'+minute+':'+second;
+		if(runTime>0) return '00:00:'+second;
+		return second;
+	}
+
+	$(".answer-text-list").children().on('click',function() {
+		$("#img-show").attr('style','bottom:0;z-index:109');
+		 if(click_flag){
+			 click_flag = false;
+			 var answer = $(this).parent().children('input').val();
+			 var choose = $(this).children().text().split('.')[0];
+			 if(answer == choose){
+				$(this).removeAttr('style');
+				$(this).addClass('answer-item-success');
+				score += 10;
+				successPlay();
+			 }else{
+				$(this).removeAttr('style');
+				$(this).addClass('answer-item-fail');
+				failPlay();
+			 }
+			 $(".score").text(score);
+			 if($(this).parent().attr('id')=="answer10"){
+				if(score<90){
+					$("#answer-over-tip").text('非常遗憾');
+					$("#btn-choujiang").hide();
+				}else{
+					$("#answer-over-tip").text('恭喜您');
+					$("#btn-choujiang").show();
+				}
+				var endDate = new Date();
+				//var startTimeStamp = date.getTime();
+				//var spendTime = diffTimeStamp(startTimeStamp,endDate.getTime());
+				var spendTime = $("#timer-hidden").val();
+				clearInterval(timer);//停止计时
+				$("#spendTime").text(spendTime);
+				anwserInfo(score, spendTime, formatDate(endDate));
+				//setTimeout(function(){
+					//$("#answer-over-panel").attr('style','top:0; display:block');
+				//}, 600);	
+			 }else{
+				var _this = $(this);
+				setTimeout(function(){
+					$(".answer-content-box").children().removeAttr('style');
+					_this.parent().parent().next().attr('style','opacity: 1; z-index: 10; display:block');
+				}, 600);	
+			 } 
+			 setTimeout(function(){
+				 click_flag = true;
+			}, 700);
+		 }
+    })
+	
+	function getGift(){
+		$("#answer-over-panel").attr('style','top:100%; display:none');
+		$("#info-panel").attr('style','top:0; display:block');
+		//$("#info-panel").addClass('hongbao-animation');
+	}
+	
+	function infoSave(){
+		var phoneReg = /^[1][3,4,5,7,8][0-9]{9}$/;
+		var project = $("#project").val();
+		var room = $("#room").val();
+		var name = $("#name").val();
+		var phone = $("#phone").val();
+		var address = $("#address").val();
+		
+		if(project == ''){
+			dialogueTips('请填写项目名称');
+		}else if(room == ''){
+			dialogueTips('请填写房间号码');
+		}else if(name == ''){
+			dialogueTips('请填写业主姓名');
+		}else if(phone == ''){
+			dialogueTips('请填写手机号码');
+		}else if(!phoneReg.test(phone)){
+			dialogueTips('手机号码格式不正确');
+		}else if(address == ''){
+			dialogueTips('请填写收货地址');
+		}else{
+			if(run_flag){
+				run_flag = false;
+				$.ajax('https://wu.stephen7.top/Showhand/abc-api/lantern/save/info', {
+					data : {
+						openId : openId,
+						project : project,
+						room : room,
+						name : name,
+						phone : phone,
+						address : address
+					},
+					async : false,
+					cache : false,
+					dataType : 'json',//服务器返回json格式数据
+					type : 'post',//HTTP请求类型
+					success : function(result) {
+						if (result.success == true) {
+							$("#answer-over-panel").attr('style','top:100%; display:none');
+							$("#info-panel").attr('style','top:100%; display:none');
+							$("#success-panel").attr('style','top:0; display:block');
+						}
+					},
+					error : function(xhr, type, errorThrown) {
+						console.log("保存信息失败");
+					}
+				});	
+			}else{
+				dialogueTips('正在提交');
+			}
+		}
+	}
+	
+	var items = ['￥6.66','￥8.88'];
+	function choujiang(){
+		$("#answer-over-panel").attr('style','top:100%; display:none');
+		$("#hongbao-panel").attr('style','top:0; display:block');
+		$("#hongbao-panel img").addClass('hongbao-animation');
+		setTimeout(function(){
+			var money = items[Math.floor(Math.random()*items.length)];
+			$("#hongbao-panel .share-image").children('div').eq(0).text(money);
+			$("#hongbao-panel .share-image").children('div').eq(1).text('恭喜您');
+			$("#hongbao-panel .share-image").children('div').eq(0).show();
+			$("#hongbao-panel .share-image").children('div').eq(1).show();
+		}, 5000);
+	}
+	
+	function dialogueTips(txt){
+		var _html = '<div class="dialogue-tips" id="J_error">'+txt+'</div>';
+		if($('.dialogue-tips').size()>0){
+			$('.dialogue-tips').remove();
+			clearTimeout(t);
+		}
+		$('body').append(_html);
+		var t = setTimeout(function(){
+			$('#J_error').remove();
+			clearTimeout(t);
+		},1500);
+	}
+	//3.js解析时间（格式：YYYY-MM-DD HH:mm:ss）
+	function formatDate(date){
+		Y = date.getFullYear() + '-';
+		M =((date.getMonth()+1) < 10 ? '0'+(date.getMonth()+1) : (date.getMonth()+1)) + '-';
+		D = (date.getDate() < 10 ? ('0'+date.getDate()) : date.getDate()) + ' ';
+		h = (date.getHours() < 10 ? ('0'+date.getHours()) : date.getHours())+ ':';
+		m = (date.getMinutes() < 10 ? ('0'+date.getMinutes()) : date.getMinutes())+ ':';
+		s =date.getSeconds() < 10 ? ('0'+date.getSeconds()) : date.getSeconds();
+		var ndate = Y+M+D+h+m+s
+		return ndate;
+	}
+	</script>
+    	    <script type="text/javascript">
+        var width = document.documentElement.clientWidth;
+        var height = document.documentElement.clientHeight;
+        var canvasDefaultWidth=640;
+        var canvasRealHeight=(height*1.0/width)*canvasDefaultWidth;
+        scale=parseFloat(width*1.0/canvasDefaultWidth);
+        window.rrxMobileViewportScale=scale;
+        _pt_inner_scale_value=scale;
+        scaleY=parseFloat(height/canvasRealHeight);
+        $outer=document.getElementById('pt-outer');
+        $inner=document.getElementById("pt-inner");
+
+        window.rrxMobileContentHeight = height;
+
+        var $pgLoadingPage = document.getElementById('pt-loadingpage');
+        var useMeta=false;
+        var validWidth=window.innerWidth; //window.screen.availWidth window.innerWidth
+        if(checkIsMobile()){
+            useMeta=true;
+        }
+        else{
+            useMeta=false;
+        }
+        console.log(useMeta);
+        if(useMeta){
+            var widthList=[window.screen.availWidth,window.innerWidth,document.documentElement.clientWidth];
+            validWidth=Math.min.apply(null, widthList);
+
+        	/* if(window.screen.availWidth){
+                validWidth=window.screen.availWidth;
+            }
+            else{
+                validWidth=window.screen.width;
+            } */
+
+            if(!validWidth){
+                //validWidth=document.documentElement.clientWidth;
+                
+                if(window.screen.availWidth){
+                    validWidth=window.screen.availWidth;
+                }
+                else{
+                    validWidth=window.screen.width;
+                }
+            }
+        }
+        else{
+            validWidth=document.documentElement.clientWidth;
+        }
+        console.log('111',window.innerWidth,document.documentElement.clientWidth);
+
+        var viewportScale=validWidth/640;
+        var $viewport=document.getElementById('viewport');
+        if(useMeta){
+        	console.log('222',useMeta,viewportScale)
+            window.rrxMobileViewportScale=viewportScale;
+            var viewprotContent = "width=640, initial-scale=" + viewportScale + ", maximum-scale=" + viewportScale + ", user-scalable=no,viewport-fit=cover";
+            $viewport.setAttribute('content',viewprotContent);
+
+            //height:'+canvasRealHeight+'px;
+            $inner.style='width:100%;position:absolute;left:0;top:0;margin-left:0;margin-top:0;';
+            //$outer.style.height=height+"px";
+            $outer.style.width="100%";
+			 console.log('====mobile===')
+        }else{
+            //pc 端 打开
+            window.rrxMobileViewportScale=scale;
+            var viewprotContent = "user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1,viewport-fit=cover";
+            $viewport.setAttribute('content',viewprotContent);
+
+            $inner.style.height=canvasRealHeight+"px";
+            $inner.style.marginTop=-1*canvasRealHeight/2.0+"px";
+            $inner.style.webkitTransform="scale(" + scale + ")";
+            $inner.style.mozTransform="scale(" + scale + ")";
+            $inner.style.transform="scale(" + scale + ")";
+
+            $outer.style.height=height+"px";
+            $outer.style.width=width+"px";
+			 console.log('====PC===')
+        }        
+        console.log('====height===',height)
+        console.log('====canvasRealHeight===',canvasRealHeight)
+		$("#main").attr('style','height:'+height+'px')
+        window.rrxMobileContentHeight = canvasRealHeight;
+
+        //$pgLoadingPage.innerHTML = buildLoadingContent();
+
+        function buildLoadingContent(){
+            if(wsiteInfo.wsiteType>1){
+                //<div class='c-loading'>加载中...</div>
+                return '';
+                // return "<div class=\"pt-loadingpage page_loadingpage\"></div>";
+            }
+            var imageUrl='';
+            var color='';
+            var show=getIsShowCustomLoadingLogo();
+            imageUrl=getLoadingImageUrl();
+            if(imageUrl!='' || show){                
+                color=getLoadingColor();
+            }
+            else{
+                // 特殊加载页
+                if(getHasLoadingpage()){
+                    return '';
+                    //return "<div class=\"pt-wrapper\" style='margin:0 auto;height:100%;width:100%;'><div class=\"pt-loadingpage page_loadingpage\"></div></div>";
+                    // return "<div class=\"pt-loadingpage page_loadingpage\"></div>";
+                }
+            }
+
+            var initPercent=0;
+
+            var strVar = "";
+                // strVar += "<div class=\"pt-loadingpage page_loadingpage\">";
+                strVar += " <div class=\"default-loadingpage\">";
+                strVar += "     <div class=\"loading-logo\">";
+                //strVar += "           <img src=\"../images/loading_logo.png\">";
+                if(imageUrl!=''){
+                    strVar += "         <img src=\""+imageUrl+"\">";
+                }
+                else{
+                    strVar += "         <img src=\"../images/loading_logo.png\">";
+                }
+                strVar += "     <\/div>";
+                if(show){
+                    strVar += "     <div class=\"loading-line\" style=\"border-color:"+color+";\">";
+                    strVar += "         <div class=\"line\" style=\"width:"+initPercent+"px;background-color:"+color+";\">";
+                    strVar += "         <\/div>";
+                    strVar += "     <\/div>";
+                    strVar += "     <div class=\"percent\" style=\"color:"+color+";\">";
+                    strVar += initPercent+"%";
+                    strVar += "     <\/div>";
+                }
+                else{
+                    strVar += "     <div class=\"loading-line\">";
+                    strVar += "         <div class=\"line\" style=\"width:"+initPercent+"px;\">";
+                    strVar += "         <\/div>";
+                    strVar += "     <\/div>";
+                    strVar += "     <div class=\"percent\">";
+                    strVar += initPercent+"%";
+                    strVar += "     <\/div>";
+                }
+                // strVar += " <\/div>";
+                if(!show){
+                    strVar += " <div class=\"loading-welcome\">";
+                    strVar += "     嘘寒科技";
+                    strVar += " <\/div>";               
+                }
+                strVar += "<\/div>";
+                return strVar;
+        }
+        function getIsShowCustomLoadingLogo(){
+            if(wsiteInfo.loading.show){
+                return true;
+            }
+
+            if(wsiteInfo.team && wsiteInfo.team.doShow){
+                return true;
+            }
+
+            return false;
+        }
+        function getLoadingImageUrl(){
+            $img=document.getElementById('llImage');
+            if($img){
+                return $img.src;
+            }
+            return '';
+        }
+        function getLoadingColor(){
+        	return wsiteInfo.loading.color;
+        }
+        function getHasLoadingpage(){
+            return wsiteInfo.loading.loadingpage==1;
+        }
+        function getUrlParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.href);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+        function checkIsMobile(){if(navigator.userAgent.toLowerCase().match(/MicroMessenger/i)=="micromessenger"){if(navigator.userAgent.match(/WindowsWechat/i)=="WindowsWechat"){return false}if(navigator.userAgent.match(/MacWechat/i)=="MacWechat"){return false}return true}return/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobi/i.test(navigator.userAgent)};
+    </script>
+    <script src="assets/main.lib.34393784.js"></script>
+
+        
+    
+    <script src="assets/main.app.07fa3822.js"></script>
+    
+<script language="javascript">
+function successPlay()
+    {
+      var borswer = window.navigator.userAgent.toLowerCase();
+      if ( borswer.indexOf( "ie" ) >= 0 )
+      {
+        //IE内核浏览器
+        var strEmbed = '<embed name="embedPlay" src="https://img.tukuppt.com/newpreview_music/08/99/14/5c88e51592cdf1272.mp3" autostart="true" hidden="true" loop="false"></embed>';
+        //if ( $( "body" ).find( "embed" ).length <= 0 )
+          $( "body" ).append( strEmbed );
+        var embed = document.embedPlay;
+
+        //浏览器不支持 audion，则使用 embed 播放
+        embed.volume = 100;
+        //embed.play();这个不需要
+      } else
+      {
+        //非IE内核浏览器
+        var strAudio = "<audio id='audioPlay' src='https://img.tukuppt.com/newpreview_music/08/99/14/5c88e51592cdf1272.mp3' hidden='true'>";
+        //if ( $( "body" ).find( "audio" ).length <= 0 )
+          $( "body" ).append( strAudio );
+        var audio = document.getElementById( "audioPlay" );
+
+        //浏览器支持 audion
+        audio.play();
+      }
+    }
+	function failPlay()
+    {
+      var borswer = window.navigator.userAgent.toLowerCase();
+      if ( borswer.indexOf( "ie" ) >= 0 )
+      {
+        //IE内核浏览器
+        var strEmbed = '<embed name="embedPlay" src="https://wu.stephen7.top/Showhand/userfiles/1/files/touch/2021/02/fail.mp3" autostart="true" hidden="true" loop="false"></embed>';
+        //if ( $( "body" ).find( "embed" ).length <= 0 )
+          $( "body" ).append( strEmbed );
+        var embed = document.embedPlay;
+
+        //浏览器不支持 audion，则使用 embed 播放
+        embed.volume = 100;
+        //embed.play();这个不需要
+      } else
+      {
+        //非IE内核浏览器
+        var strAudio = "<audio id='audioPlays' src='https://wu.stephen7.top/Showhand/userfiles/1/files/touch/2021/02/fail.mp3' hidden='true'>";
+        //if ( $( "body" ).find( "audio" ).length <= 0 )
+          $( "body" ).append( strAudio );
+        var audio = document.getElementById( "audioPlays" );
+
+        //浏览器支持 audion
+        audio.play();
+      }
+    }
+</script>
+<script>
+// when animating on canvas, it is best to use requestAnimationFrame instead of setTimeout or setInterval
+// not supported in all browsers though and sometimes needs a prefix, so we need a shim
+window.requestAnimFrame = ( function() {
+	return window.requestAnimationFrame ||
+				window.webkitRequestAnimationFrame ||
+				window.mozRequestAnimationFrame ||
+				function( callback ) {
+					window.setTimeout( callback, 1000 / 60 );
+				};
+})();
+
+// now we will setup our basic variables for the demo
+var canvas = document.getElementById( 'canvas' ),
+		ctx = canvas.getContext( '2d' ),		
+		// full screen dimensions
+		cw = window.innerWidth,
+		ch = window.innerHeight,
+		// firework collection
+		fireworks = [],
+		// particle collection
+		particles = [],
+		// starting hue
+		hue = 120,
+		// when launching fireworks with a click, too many get launched at once without a limiter, one launch per 5 loop ticks
+		limiterTotal = 5,
+		limiterTick = 0,
+		// this will time the auto launches of fireworks, one launch per 80 loop ticks
+		timerTotal = 80,
+		timerTick = 0,
+		mousedown = false,
+		// mouse x coordinate,
+		mx,
+		// mouse y coordinate
+		my;
+		
+// set canvas dimensions
+canvas.width = cw;
+canvas.height = ch;
+console.log(cw+'====sss===',ch)
+// now we are going to setup our function placeholders for the entire demo
+
+// get a random number within a range
+function random( min, max ) {
+	return Math.random() * ( max - min ) + min;
+}
+
+// calculate the distance between two points
+function calculateDistance( p1x, p1y, p2x, p2y ) {
+	var xDistance = p1x - p2x,
+			yDistance = p1y - p2y;
+	return Math.sqrt( Math.pow( xDistance, 2 ) + Math.pow( yDistance, 2 ) );
+}
+
+// create firework
+function Firework( sx, sy, tx, ty ) {
+	// actual coordinates
+	this.x = sx;
+	this.y = sy;
+	// starting coordinates
+	this.sx = sx;
+	this.sy = sy;
+	// target coordinates
+	this.tx = tx;
+	this.ty = ty;
+	// distance from starting point to target
+	this.distanceToTarget = calculateDistance( sx, sy, tx, ty );
+	this.distanceTraveled = 0;
+	// track the past coordinates of each firework to create a trail effect, increase the coordinate count to create more prominent trails
+	this.coordinates = [];
+	this.coordinateCount = 3;
+	// populate initial coordinate collection with the current coordinates
+	while( this.coordinateCount-- ) {
+		this.coordinates.push( [ this.x, this.y ] );
+	}
+	this.angle = Math.atan2( ty - sy, tx - sx );
+	this.speed = 2;
+	this.acceleration = 1.05;
+	this.brightness = random( 50, 70 );
+	// circle target indicator radius
+	this.targetRadius = 1;
+}
+
+// update firework
+Firework.prototype.update = function( index ) {
+	// remove last item in coordinates array
+	this.coordinates.pop();
+	// add current coordinates to the start of the array
+	this.coordinates.unshift( [ this.x, this.y ] );
+	
+	// cycle the circle target indicator radius
+	if( this.targetRadius < 8 ) {
+		this.targetRadius += 0.3;
+	} else {
+		this.targetRadius = 1;
+	}
+	
+	// speed up the firework
+	this.speed *= this.acceleration;
+	
+	// get the current velocities based on angle and speed
+	var vx = Math.cos( this.angle ) * this.speed,
+			vy = Math.sin( this.angle ) * this.speed;
+	// how far will the firework have traveled with velocities applied?
+	this.distanceTraveled = calculateDistance( this.sx, this.sy, this.x + vx, this.y + vy );
+	
+	// if the distance traveled, including velocities, is greater than the initial distance to the target, then the target has been reached
+	if( this.distanceTraveled >= this.distanceToTarget ) {
+		createParticles( this.tx, this.ty );
+		// remove the firework, use the index passed into the update function to determine which to remove
+		fireworks.splice( index, 1 );
+	} else {
+		// target not reached, keep traveling
+		this.x += vx;
+		this.y += vy;
+	}
+}
+
+// draw firework
+Firework.prototype.draw = function() {
+	ctx.beginPath();
+	// move to the last tracked coordinate in the set, then draw a line to the current x and y
+	ctx.moveTo( this.coordinates[ this.coordinates.length - 1][ 0 ], this.coordinates[ this.coordinates.length - 1][ 1 ] );
+	ctx.lineTo( this.x, this.y );
+	ctx.strokeStyle = 'hsl(' + hue + ', 100%, ' + this.brightness + '%)';
+	ctx.stroke();
+	
+	ctx.beginPath();
+	// draw the target for this firework with a pulsing circle
+	ctx.arc( this.tx, this.ty, this.targetRadius, 0, Math.PI * 2 );
+	ctx.stroke();
+}
+
+// create particle
+function Particle( x, y ) {
+	this.x = x;
+	this.y = y;
+	// track the past coordinates of each particle to create a trail effect, increase the coordinate count to create more prominent trails
+	this.coordinates = [];
+	this.coordinateCount = 5;
+	while( this.coordinateCount-- ) {
+		this.coordinates.push( [ this.x, this.y ] );
+	}
+	// set a random angle in all possible directions, in radians
+	this.angle = random( 0, Math.PI * 2 );
+	this.speed = random( 1, 10 );
+	// friction will slow the particle down
+	this.friction = 0.95;
+	// gravity will be applied and pull the particle down
+	this.gravity = 1;
+	// set the hue to a random number +-20 of the overall hue variable
+	this.hue = random( hue - 20, hue + 20 );
+	this.brightness = random( 50, 80 );
+	this.alpha = 1;
+	// set how fast the particle fades out
+	this.decay = random( 0.015, 0.03 );
+}
+
+// update particle
+Particle.prototype.update = function( index ) {
+	// remove last item in coordinates array
+	this.coordinates.pop();
+	// add current coordinates to the start of the array
+	this.coordinates.unshift( [ this.x, this.y ] );
+	// slow down the particle
+	this.speed *= this.friction;
+	// apply velocity
+	this.x += Math.cos( this.angle ) * this.speed;
+	this.y += Math.sin( this.angle ) * this.speed + this.gravity;
+	// fade out the particle
+	this.alpha -= this.decay;
+	
+	// remove the particle once the alpha is low enough, based on the passed in index
+	if( this.alpha <= this.decay ) {
+		particles.splice( index, 1 );
+	}
+}
+
+// draw particle
+Particle.prototype.draw = function() {
+	ctx. beginPath();
+	// move to the last tracked coordinates in the set, then draw a line to the current x and y
+	ctx.moveTo( this.coordinates[ this.coordinates.length - 1 ][ 0 ], this.coordinates[ this.coordinates.length - 1 ][ 1 ] );
+	ctx.lineTo( this.x, this.y );
+	ctx.strokeStyle = 'hsla(' + this.hue + ', 100%, ' + this.brightness + '%, ' + this.alpha + ')';
+	ctx.stroke();
+}
+
+// create particle group/explosion
+function createParticles( x, y ) {
+	// increase the particle count for a bigger explosion, beware of the canvas performance hit with the increased particles though
+	var particleCount = 30;
+	while( particleCount-- ) {
+		particles.push( new Particle( x, y ) );
+	}
+}
+
+// main demo loop
+function loop() {
+
+	// this function will run endlessly with requestAnimationFrame
+	requestAnimFrame( loop );
+	
+	// increase the hue to get different colored fireworks over time
+	hue += 0.5;
+	
+	// normally, clearRect() would be used to clear the canvas
+	// we want to create a trailing effect though
+	// setting the composite operation to destination-out will allow us to clear the canvas at a specific opacity, rather than wiping it entirely
+	ctx.globalCompositeOperation = 'destination-out';
+	// decrease the alpha property to create more prominent trails
+	ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+	ctx.fillRect( 0, 0, cw, ch );
+	// change the composite operation back to our main mode
+	// lighter creates bright highlight points as the fireworks and particles overlap each other
+	ctx.globalCompositeOperation = 'lighter';
+	
+	// loop over each firework, draw it, update it
+	var i = fireworks.length;
+	while( i-- ) {
+		fireworks[ i ].draw();
+		fireworks[ i ].update( i );
+	}
+	
+	// loop over each particle, draw it, update it
+	var i = particles.length;
+	while( i-- ) {
+		particles[ i ].draw();
+		particles[ i ].update( i );
+	}
+	
+	// launch fireworks automatically to random coordinates, when the mouse isn't down
+	if( timerTick >= timerTotal ) {
+		if( !mousedown ) {
+			// start the firework at the bottom middle of the screen, then set the random target coordinates, the random y coordinates will be set within the range of the top half of the screen
+			fireworks.push( new Firework( cw / 2, ch, random( 0, cw ), random( 0, ch / 2 ) ) );
+			timerTick = 0;
+		}
+	} else {
+		timerTick++;
+	}
+	
+	// limit the rate at which fireworks get launched when mouse is down
+	if( limiterTick >= limiterTotal ) {
+		if( mousedown ) {
+			// start the firework at the bottom middle of the screen, then set the current mouse coordinates as the target
+			fireworks.push( new Firework( cw / 2, ch, mx, my ) );
+			limiterTick = 0;
+		}
+	} else {
+		limiterTick++;
+	}
+}
+
+// mouse event bindings
+// update the mouse coordinates on mousemove
+canvas.addEventListener( 'mousemove', function( e ) {
+	mx = e.pageX - canvas.offsetLeft;
+	my = e.pageY - canvas.offsetTop;
+});
+
+// toggle mousedown state and prevent canvas from being selected
+canvas.addEventListener( 'mousedown', function( e ) {
+	e.preventDefault();
+	mousedown = true;
+});
+
+canvas.addEventListener( 'mouseup', function( e ) {
+	e.preventDefault();
+	mousedown = false;
+});
+
+// once the window loads, we are ready for some fireworks!
+loop();
+</script>
+ <script>
+    $(function(){
+        //输入框点击事件
+        $(".form-line").click(function(){
+            $(this).prev().animate({'top':"-28px","font-size":"18px"},300);
+        });
+        //输入框获取到焦点
+        $(".form-line").focus(function(){
+            $(this).addClass("input-focus");
+            $(this).prev().removeClass("item_label");
+            $(this).prev().addClass("item_labels");
+        });
+        //输入框失去焦点事件
+        $(".form-line").blur(function(){
+            if(!$(this).val()){
+                $(this).prev().animate({'top':"-6px","font-size":"20px"},300);  
+                $(this).removeClass("input-focus"); 
+                $(this).prev().removeClass("item_labels");
+                $(this).prev().addClass("item_label");
+            }else{
+            	$(this).addClass("input-focus");
+            	$(this).prev().removeClass("item_label");
+                $(this).prev().addClass("item_labels");
+            } 
+        });    
+        
+    })
+
+</script>  
+ <script>
+    function onBridgeReady() {
+        WeixinJSBridge.call('hideOptionMenu');
+    }
+
+    if (typeof WeixinJSBridge == "undefined") {
+        if (document.addEventListener) {
+            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+        } else if (document.attachEvent) {
+            document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+        }
+    } else {
+        onBridgeReady();
+    }
+    setTimeout(function(){
+    	 $(".pt-wrapper").remove();
+	}, 2000);
+    var timerss = setInterval(function() {
+    	$(".element_150").remove();
+    	$(".element_22").remove();
+    }, 500);
+</script>   
+
+
+
+<script src="https://view.rrxh5.cc/data/tpl_f0ngks.js?v=20210221092203" type="text/javascript"></script>
+<script src="https://assets.rrxh5.cc/plugin/fd92767250cb0cabf58e8d57ce2fb82c/10/index.js?v=v5.6.4v5.7.2.08" type="text/javascript"></script>
+<audio src="https://data2.rrxh5.cc//2016/01/06/1452082320104.mp3" id="viewBgMusicId" preload="true" autoplay="autoplay" loop="loop"></audio>
+<script src="https://assets.rrxh5.cc/plugin/764095471ff59f4122f89dc44d2e0232/11/index.js?v=v5.6.4v5.7.2.08" type="text/javascript"></script>
+<script src="https://assets.rrxh5.cc/plugin/fd92767250cb0cabf58e8d57ce2fb82c/10/lib/fireworksEffect.min.js?v=v5.6.4v5.7.2.08" type="text/javascript"></script>
+<!--<script src="https://mapapi.qq.com/c/=/jsapi_v2/2/4/139/main.js,jsapi_v2/2/4/139/mods/geometry.js"></script>-->
+</body></html>

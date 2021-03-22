@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.abc.questionnaire.dao.QuestionnaireDao">
+    
+	<sql id="questionnaireColumns">
+		a.questionnaireId AS "questionnaireId",
+		a.community AS "community",
+		a.room AS "room",
+		a.name AS "name",
+		a.inspector AS "inspector",
+		a.question1 AS "question1",
+		a.question2 AS "question2",
+		a.question3 AS "question3",
+		a.question4 AS "question4",
+		a.question5 AS "question5",
+		a.question6 AS "question6",
+		a.remark AS "remark",
+		a.create_time AS "createTime"
+	</sql>
+	   
+	<select id="get" resultType="Questionnaire">
+		SELECT 
+			<include refid="questionnaireColumns"/>
+		FROM abc_questionnaire a
+		WHERE a.questionnaireId = #{questionnaireId}
+	</select>
+	
+	<select id="findList" resultType="Questionnaire">
+		SELECT 
+			<include refid="questionnaireColumns"/>
+		FROM abc_questionnaire a
+		<where>	
+			<if test="community != null and community != ''">
+				 AND a.community = #{community}
+			</if>		
+			<if test="name != null and name != ''">
+				 AND a.name LIKE concat('%',#{name},'%')
+			</if>
+			<if test="room != null and room != ''">
+				 AND a.room = #{room}
+			</if>
+			<if test="inspector != null and inspector != ''">
+				 AND a.inspector = #{inspector}
+			</if>
+		</where>
+		ORDER BY a.questionnaireId DESC
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert"  parameterType="Questionnaire" useGeneratedKeys="true" keyProperty="questionnaireId">
+		INSERT INTO abc_questionnaire(
+			community,
+			room,
+			name,
+			inspector,
+			question1,
+			question2,
+			question3,
+			question4,
+			question5,
+			question6,
+			remark,
+			create_time
+		) VALUES (
+			#{community},
+			#{room},
+			#{name},
+			#{inspector},
+			#{question1},
+			#{question2},
+			#{question3},
+			#{question4},
+			#{question5},
+			#{question6},
+			#{remark},
+			#{createTime}
+		)
+	</insert>
+	
+	<update id="update" parameterType="Questionnaire" useGeneratedKeys="true" keyProperty="questionnaireId">
+		UPDATE abc_questionnaire 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="room != null">room = #{room},</if>
+			<if test="name != null">name = #{name},</if>
+			<if test="inspector != null">inspector = #{inspector},</if>
+			<if test="question1 != null">question1 = #{question1},</if>
+			<if test="question2 != null">question2 = #{question2},</if>
+			<if test="question3 != null">question3 = #{question3},</if>
+			<if test="question4 != null">question4 = #{question4},</if>
+			<if test="question5 != null">question5 = #{question5},</if>
+			<if test="question6 != null">question6 = #{question6},</if>
+			<if test="remark != null">remark = #{remark}</if>
+		 </trim>
+		WHERE questionnaireId = #{questionnaireId}
+	</update>
+		
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM abc_questionnaire
+		WHERE questionnaireId = #{questionnaireId}
+	</update>
+</mapper>

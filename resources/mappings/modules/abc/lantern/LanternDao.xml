@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.abc.lantern.dao.LanternDao">
+    
+	<sql id="lanternColumns">
+		a.openId AS "openId",
+		a.status AS "status",
+		a.score AS "score",
+		a.spend_time AS "spendTime",
+		a.answer_start_time AS "answerStartTime",
+		a.answer_end_time AS "answerEndTime",
+		a.project AS "project",
+		a.room AS "room",
+		a.name AS "name",
+		a.phone AS "phone",
+		a.address AS "address",
+		a.info_time AS "infoTime",
+		a.create_time AS "createTime",
+		a.update_time AS "updateTime"
+	</sql>
+	   
+	<select id="get" resultType="Lantern">
+		SELECT 
+			<include refid="lanternColumns"/>
+		FROM abc_lantern a
+		WHERE a.openId = #{openId}
+	</select>
+	
+	<select id="findList" resultType="Lantern">
+		SELECT 
+			<include refid="lanternColumns"/>
+		FROM abc_lantern a
+		<where>	
+			<if test="status != null and status != ''">
+				 AND a.status = #{status}
+			</if>	
+			<if test="project != null and project != ''">
+				 AND a.project = #{project}
+			</if>
+			<if test="room != null and room != ''">
+				 AND a.room = #{room}
+			</if>
+			<if test="name != null and name != ''">
+				 AND a.name = #{name}
+			</if>
+			<if test="phone != null and phone != ''">
+				 AND a.phone = #{phone}
+			</if>
+			<if test="filter == 1">
+				 AND a.openId &lt;&gt; 'o4Mijw951Gcknqw4nvNyekXFKlFw'
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				<choose>
+					<when test="filter == 1">
+						<!-- ORDER BY TIMESTAMPDIFF(SECOND,a.answer_start_time,a.answer_end_time), a.answer_start_time LIMIT 3  -->
+						ORDER BY a.spend_time, a.answer_start_time LIMIT 100
+					</when>
+					<otherwise>
+				    	 ORDER BY a.update_time DESC
+					</otherwise>
+				</choose>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert"  parameterType="Lantern" useGeneratedKeys="true" keyProperty="openId">
+		INSERT INTO abc_lantern(
+			openId,
+			status,
+			score,
+			spend_time,
+			answer_start_time,
+			answer_end_time,
+			project,
+			room,
+			name,
+			phone,
+			address,
+			info_time,
+			create_time,
+			update_time
+		) VALUES (
+			#{openId},
+			#{status},
+			#{score},
+			#{spendTime},
+			#{answerStartTime},
+			#{answerEndTime},
+			#{project},
+			#{room},
+			#{name},
+			#{phone},
+			#{address},
+			#{infoTime},
+			#{createTime},
+			#{updateTime}
+		)
+	</insert>
+	
+	<update id="update" parameterType="Lantern" useGeneratedKeys="true" keyProperty="openId">
+		UPDATE abc_lantern 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="status != null">status = #{status},</if>
+			<if test="score != null">score = #{score},</if>
+			<if test="spendTime != null">spend_time = #{spendTime},</if>
+			<if test="answerStartTime != null">answer_start_time = #{answerStartTime},</if>
+			<if test="answerEndTime != null">answer_end_time = #{answerEndTime},</if>
+			<if test="project != null">project = #{project},</if>
+			<if test="room != null">room = #{room},</if>
+			<if test="name != null">name = #{name},</if>
+			<if test="phone != null">phone = #{phone},</if>
+			<if test="address != null">address = #{address},</if>
+			<if test="infoTime != null">info_time = #{infoTime},</if>
+			<if test="updateTime != null">update_time = #{updateTime}</if>
+		 </trim>
+		WHERE openId = #{openId}
+	</update>
+		
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM abc_lantern
+		WHERE openId = #{openId}
+	</update>
+</mapper>
