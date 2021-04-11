@@ -195,8 +195,6 @@ $questionnaire.on('change','input[type="radio"]',function(){
 	var roomReg = /^[0-9](?![0-9]+$)(?![\-]+$)[0-9\-]*[0-9]$/;
 	if(form.room.value == ''){
 		dialogueTips('请填写房号');
-	}else if(!roomReg.test(form.room.value)){
-		dialogueTips('房号格式不正确');
 	}else if(form.name.value == ''){
 		dialogueTips('请填写姓名');
 	}else if(form.id.value == ''){
